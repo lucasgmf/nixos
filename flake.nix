@@ -47,9 +47,9 @@
     };
 
     user = {
-      name = "dvalinn";
-      description = "Tiago Amorim";
-      email = "tiago.andre.amorim@gmail.com";
+      name = "lucasgmf";
+      description = "Lucas Freitas";
+      email = "lucasgalvaomfreitas@gmail.com";
       uid = 1000;
     };
 
@@ -62,6 +62,7 @@
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
+          backupFileExtension = "backup";
 
           extraSpecialArgs = {
             inherit inputs user pkgs-stable;
@@ -83,18 +84,6 @@
             ./hosts/nix-laptop
           ]
           ++ homeConfig ./homeManagerModules/laptop.nix;
-      };
-
-      nix-desktop = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs user pkgs-stable;
-        };
-
-        modules =
-          [
-            ./hosts/nix-desktop
-          ]
-          ++ homeConfig ./homeManagerModules/desktop.nix;
       };
     };
   };

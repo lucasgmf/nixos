@@ -1,6 +1,6 @@
 -- This file is automatically loaded by lazyvim.config.init.
 local function augroup(name)
-  return vim.api.nvim_create_augroup("dvalinn_" .. name, { clear = true })
+  return vim.api.nvim_create_augroup("lucasgmf_" .. name, { clear = true })
 end
 
 -- Highlight on yank
