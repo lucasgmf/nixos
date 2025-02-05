@@ -6,7 +6,7 @@
   ...
 }: {
   options = {
-    user.enable = lib.mkEnableOption "enables default user (dvalinn) as a trusted user and with zsh and default shell";
+    user.enable = lib.mkEnableOption "enables default user as a trusted user and with zsh and default shell";
   };
 
   config = lib.mkIf config.user.enable {

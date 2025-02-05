@@ -26,11 +26,6 @@
     # Wayland widgets lib
     ags.url = "github:Aylur/ags";
     swww.url = "github:LGFae/swww";
-
-    nvf = {
-      url = "github:notashelf/nvf";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
   outputs = {
@@ -62,6 +57,7 @@
         home-manager = {
           useGlobalPkgs = true;
           useUserPackages = true;
+
           backupFileExtension = "backup";
 
           extraSpecialArgs = {
@@ -84,6 +80,19 @@
             ./hosts/nix-laptop
           ]
           ++ homeConfig ./homeManagerModules/laptop.nix;
+      };
+
+      nix-desktop = nixpkgs.lib.nixosSystem {
+        specialArgs = {
+          inherit inputs user pkgs-stable;
+        };
+
+  nixpkgs.config.allowUnfree = true;
+        modules =
+          [
+            ./hosts/nix-desktop
+          ]
+          ++ homeConfig ./homeManagerModules/desktop.nix;
       };
     };
   };

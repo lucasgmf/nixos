@@ -16,8 +16,6 @@
       git
       pciutils # lspci
       usbutils # lsusb
-
-      qbittorrent-enhanced
     ];
   };
 }

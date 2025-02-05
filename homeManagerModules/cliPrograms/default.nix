@@ -13,8 +13,7 @@
     ./kitty.nix
 
     # editors
-    ./nvim/regular.nix
-    ./nvim/nvf.nix
+    ./nvim
     ./helix.nix
 
     # terminal multiplexers
@@ -30,6 +29,7 @@
     # custom scripts
     ./scripts/rebuild.nix
     ./scripts/update.nix
+    ./scripts/copytorasp.nix
   ];
 
   options = {
@@ -44,7 +44,6 @@
     kitty.enable = lib.mkDefault false;
 
     nvim.enable = lib.mkDefault true;
-    nvf.enable = lib.mkDefault false;
 
     tmux.enable = lib.mkDefault true;
     zellij.enable = lib.mkDefault false;

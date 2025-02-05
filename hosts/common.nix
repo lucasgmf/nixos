@@ -1,8 +1,4 @@
-{
-  pkgs,
-  user,
-  ...
-}: {
+{pkgs, ...}: {
   nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
@@ -39,11 +35,6 @@
 
   autoStyling.enable = true;
 
-  environment.systemPackages = with pkgs; [
-    xorg.xinit
-    xorg.xrandr
-  ];
-
   services.xserver = {
     enable = true;
     xkb = {
@@ -51,6 +42,23 @@
       variant = "";
     };
   };
+
+  virtualisation.virtualbox.host.enable = true;
+  users.extraGroups.vboxusers.members = [ "user-with-access-to-virtualbox" ];
+  
+  users.users.lucasgmf.extraGroups = [ "docker" ];
+  systemd.services.noip2.enable = false;
+
+  virtualisation.docker = {
+    enable = true;
+  };
+
+  users.users.greekish = {
+    isNormalUser = true;
+    extraGroups = [ "wheel" "docker" ];
+  };
+
+  networking.nameservers = ["1.1.1.1" "8.8.8.8"];
 
   services.avahi = {
     enable = true;
@@ -69,19 +77,5 @@
       userServices = true;
     };
   };
-
-  virtualisation.docker = {
-    enable = true;
-    rootless = {
-      enable = true;
-      setSocketVariable = true;
-    };
-  };
-
-  # make the user not have to type the sudo password for poweroff/reboot
-  security.sudo.extraConfig = let
-    systemctl = "/run/current-system/sw/bin/systemctl";
-  in ''
-    ${user.name} ALL=NOPASSWD: ${systemctl} poweroff, ${systemctl} reboot
-  '';
+  services.displayManager.sddm.enable = true;
 }

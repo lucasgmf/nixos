@@ -26,10 +26,13 @@
       mpc-cli
       mpd
       scrot
+      unclutter
       xorg.xbacklight
       xsel
       slock
       rofi
     ];
+
+    # services.picom.enable = true; #TODO: place this under enable option
   };
 }

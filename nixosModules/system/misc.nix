@@ -23,7 +23,7 @@
     services.printing.enable = true;
 
     # Audio
-    services.pulseaudio.enable = false;
+    hardware.pulseaudio.enable = false;
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;

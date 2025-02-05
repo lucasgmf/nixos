@@ -4,8 +4,5 @@
     ./windowManagers
   ];
 
-  awesomeWM.enable = false;
-
-  nvim.enable = true;
-  nvf.enable = false;
+  awesomeWM.enable = true;
 }
