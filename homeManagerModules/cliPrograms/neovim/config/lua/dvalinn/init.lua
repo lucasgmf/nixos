@@ -1,3 +1,3 @@
-require("dvalinn.remap")
-require("dvalinn.opt")
-require("dvalinn.autocmds")
+require("lucasgmf.remap")
+require("lucasgmf.opt")
+require("lucasgmf.autocmds")

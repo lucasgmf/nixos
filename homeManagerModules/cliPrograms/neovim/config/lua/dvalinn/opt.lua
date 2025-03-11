@@ -9,7 +9,7 @@ g.loaded_netrwPlugin = 1
 o.swapfile = false
 o.backup = false
 o.undofile = true
-o.undodir = "/home/dvalinn/.cache/"
+o.undodir = "/home/lucasgmf/.cache/"
 
 -- Indentation
 o.smartindent = true
