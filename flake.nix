@@ -28,9 +28,9 @@
       lib = nixpkgs.lib;
 
       user = {
-        name = "dvalinn";
-        description = "Tiago Amorim";
-        email = "tiago.andre.amorim@gmail.com";
+        name = "lucasgmf";
+        description = "Lucas Freitas";
+        email = "lucasgalvaomfreitas@gmail.com";
         uid = 1000;
       };
 
