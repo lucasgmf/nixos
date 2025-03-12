@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   imports = [
     ./steam.nix
     ./hamachi.nix

@@ -2,8 +2,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options = {
     misc.enable = lib.mkEnableOption "enable miscelaneous essentials";
   };
@@ -19,7 +18,7 @@
         # Alternative nixpkgs mirrors
       ];
 
-      trusted-public-keys = [ ];
+      trusted-public-keys = [];
       builders-use-substitutes = true;
     };
 

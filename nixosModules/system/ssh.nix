@@ -2,8 +2,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options = {
     openSSH.enable = lib.mkEnableOption "enables openshh daemon config";
   };

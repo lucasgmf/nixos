@@ -4,8 +4,7 @@
   config,
   user,
   ...
-}:
-{
+}: {
   options = {
     user.enable = lib.mkEnableOption "enables default user (dvalinn) as a trusted user";
   };
@@ -22,11 +21,11 @@
         "plugdev"
         "wireshark"
       ];
-      openssh.authorizedKeys.keys = [ ];
+      openssh.authorizedKeys.keys = [];
       shell = pkgs.nushell;
       uid = user.uid;
     };
 
-    nix.settings.trusted-users = [ "${user.name}" ];
+    nix.settings.trusted-users = ["${user.name}"];
   };
 }

@@ -2,8 +2,7 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   options = {
     sunshine.enable = lib.mkEnableOption "enables sunshine programs and options";
   };

@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   options = {
     awesomeWM.enable = lib.mkEnableOption "enables awesomeWM rice and dependencies";
   };
