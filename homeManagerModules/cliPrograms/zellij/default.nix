@@ -12,10 +12,10 @@
   config = lib.mkIf config.zellij.enable {
     programs.zellij = {
       enable = true;
-      enableZshIntegration = lib.mkDefault false;
+      enableZshIntegration = lib.mkDefault true;
     };
 
-    stylix.targets.zellij.enable = false;
+    stylix.targets.zellij.enable = true;
     home.file =
       let
         colors = config.lib.stylix.colors.withHashtag;
