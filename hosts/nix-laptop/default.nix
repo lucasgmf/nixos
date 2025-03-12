@@ -43,7 +43,6 @@ in
 
   autoStyling.colorScheme = gruvbox-dark-medium;
   gaming.enable = true;
-  homelabCifs.enable = true;
 
   virtualisation.docker = {
     enable = true;

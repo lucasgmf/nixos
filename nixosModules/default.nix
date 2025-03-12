@@ -13,7 +13,6 @@
     ./system
     ./stylix
     ./rules
-    ./homelabCifs
 
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "${user.name}"])
   ];
