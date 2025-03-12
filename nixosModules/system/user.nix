@@ -6,7 +6,7 @@
   ...
 }: {
   options = {
-    user.enable = lib.mkEnableOption "enables default user (dvalinn) as a trusted user";
+    user.enable = lib.mkEnableOption "enables default user (lucasgmf) as a trusted user";
   };
 
   config = lib.mkIf config.user.enable {
