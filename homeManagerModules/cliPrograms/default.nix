@@ -40,10 +40,10 @@
   };
 
   config = lib.mkIf config.cliPrograms.enable {
-    zsh.enable = lib.mkDefault false;
-    ohMyPosh.enable = lib.mkDefault false;
+    zsh.enable = lib.mkDefault true;
+    ohMyPosh.enable = lib.mkDefault true;
 
-    nushell.enable = lib.mkDefault true;
+    nushell.enable = lib.mkDefault false;
     direnv.enable = lib.mkDefault true;
     zoxide.enable = lib.mkDefault true;
     eza.enable = lib.mkDefault true;
@@ -54,8 +54,8 @@
 
     nvim.enable = lib.mkDefault true;
 
-    tmux.enable = lib.mkDefault true;
-    zellij.enable = lib.mkDefault false;
+    tmux.enable = lib.mkDefault false;
+    zellij.enable = lib.mkDefault true;
 
     git.enable = lib.mkDefault true;
   };
