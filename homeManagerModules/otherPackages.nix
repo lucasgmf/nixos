@@ -36,5 +36,9 @@
     drawio
     postman
     wireshark
+
+    picoprobe-udev-rules # probe-rs udev rules
+    platformio-core.udev # platformio
+    openocd # platformio
   ];
 }
