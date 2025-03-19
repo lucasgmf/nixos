@@ -33,6 +33,7 @@
     ./scripts/rebuild.nix
     ./scripts/update.nix
     ./scripts/build-iso.nix
+    ./scripts/encr.nix
   ];
 
   options = {
