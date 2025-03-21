@@ -4,12 +4,12 @@
   config,
   ...
 }: let
-  catppuccin = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
+  sakura = "${pkgs.base16-schemes}/share/themes/sakura.yaml";
 in {
   options = {
     autoStyling = {
       enable = lib.mkEnableOption "enables stylix auto styling";
-      colorScheme = lib.mkOption {default = catppuccin;};
+      colorScheme = lib.mkOption {default = sakura;};
       image = lib.mkOption {default = ./default.png;};
     };
   };
