@@ -3,14 +3,16 @@
   lib,
   config,
   ...
-}: let
+}:
+let
   sakura = "${pkgs.base16-schemes}/share/themes/sakura.yaml";
-in {
+in
+{
   options = {
     autoStyling = {
       enable = lib.mkEnableOption "enables stylix auto styling";
-      colorScheme = lib.mkOption {default = sakura;};
-      image = lib.mkOption {default = ./default.png;};
+      colorScheme = lib.mkOption { default = sakura; };
+      image = lib.mkOption { default = ./default.png; };
     };
   };
 
