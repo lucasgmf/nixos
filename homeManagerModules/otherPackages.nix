@@ -49,6 +49,7 @@
     ffmpeg-full # Includes NVDEC support for video decoding
     libvdpau # Video Decode and Presentation API
     parsec-bin
+    libvdpau-va-gl
     libva1
   ];
 }
