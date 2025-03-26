@@ -5,6 +5,7 @@
   ...
 }:
 {
+
   options = {
     nvidiaDrivers.enable = lib.mkEnableOption "Enable Nvidia drivers";
   };
@@ -14,6 +15,8 @@
     hardware.graphics = {
       enable = true;
     };
+
+    boot.blacklistedKernelModules = [ "nouveau" ];
 
     # Load Nvidia driver for Xorg and Wayland
     services.xserver.videoDrivers = [ "nvidia" ];
