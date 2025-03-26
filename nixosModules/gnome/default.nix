@@ -41,7 +41,7 @@
             document-font-name = "Noto Serif  11";
             enable-animations = true;
             font-name = "Noto Sans 12";
-            gtk-theme = lib.mkForce "Otis";
+            gtk-theme = "adw-gtk3";
             icon-theme = "Adwaita";
             monospace-font-name = "FiraMono Nerd Font 12";
             scaling-factor = mkUint32 1;

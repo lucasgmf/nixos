@@ -41,5 +41,8 @@
     platformio-core.udev # platformio
     openocd # platformio
     platformio
+
+    # remote access
+    moonlight-qt
   ];
 }
