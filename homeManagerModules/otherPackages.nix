@@ -44,5 +44,10 @@
 
     # remote access
     moonlight-qt
+
+    # Enable NVDEC support for hardware video decoding
+    ffmpeg-full # Includes NVDEC support for video decoding
+    libvdpau # Video Decode and Presentation API
+    libva # Video Acceleration API
   ];
 }
