@@ -70,7 +70,7 @@
 
         pyrepl = "nix run nixpkgs#python3"; # run python3 repl
 
-        home-log = "sudo journalctl -xeu home-manager-dvalinn.service";
+        home-log = "sudo journalctl -xeu home-manager-lucasgmf.service";
       };
     };
   };
