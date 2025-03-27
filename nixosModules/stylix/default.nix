@@ -5,7 +5,7 @@
   ...
 }:
 let
-  colorSchemeLink = "${pkgs.base16-schemes}/share/themes/materia.yaml";
+  colorSchemeLink = "${pkgs.base16-schemes}/share/themes/tokyo-city-terminal-dark.yaml";
 in
 {
   options = {
