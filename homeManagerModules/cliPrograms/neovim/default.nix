@@ -59,6 +59,7 @@
 
         catppuccin-nvim
         gruvbox-nvim
+        cyberdream-nvim
 
         # props to ThePrimeagen
         harpoon2
