@@ -5,13 +5,13 @@
   ...
 }:
 let
-  sakura = "${pkgs.base16-schemes}/share/themes/hopscotch.yaml";
+  colorSchemeLink = "${pkgs.base16-schemes}/share/themes/materia.yaml";
 in
 {
   options = {
     autoStyling = {
       enable = lib.mkEnableOption "enables stylix auto styling";
-      colorScheme = lib.mkOption { default = sakura; };
+      colorScheme = lib.mkOption { default = colorSchemeLink; };
       image = lib.mkOption { default = ./default.jpg; };
     };
   };
