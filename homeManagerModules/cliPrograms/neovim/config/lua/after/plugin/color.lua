@@ -43,4 +43,4 @@ require "catppuccin".setup({
     },
 })
 
-vim.cmd.colorscheme("oceanic-next")
+vim.cmd.colorscheme("OceanicNext")
