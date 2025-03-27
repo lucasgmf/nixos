@@ -5,7 +5,7 @@
   ...
 }:
 let
-  sakura = "${pkgs.base16-schemes}/share/themes/sakura.yaml";
+  sakura = "${pkgs.base16-schemes}/share/themes/hopscotch.yaml";
 in
 {
   options = {
