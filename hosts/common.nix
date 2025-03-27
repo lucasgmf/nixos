@@ -71,7 +71,7 @@
     };
   };
 
-  nvidiaDrivers.enable = true;
+  nvidiaDrivers.enable = false;
 
   # make the user not have to type the sudo password for poweroff/reboot
   security.sudo.extraConfig =

@@ -42,14 +42,5 @@
     openocd # platformio
     platformio
 
-    # remote access
-    moonlight-qt
-
-    # Enable NVDEC support for hardware video decoding
-    ffmpeg-full # Includes NVDEC support for video decoding
-    libvdpau # Video Decode and Presentation API
-    parsec-bin
-    libvdpau-va-gl
-    libva1
   ];
 }
