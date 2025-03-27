@@ -41,7 +41,7 @@ in
     };
   };
 
-  autoStyling.colorScheme = sakura;
+  autoStyling.enable = true;
   gaming.enable = true;
 
   virtualisation.docker = {
