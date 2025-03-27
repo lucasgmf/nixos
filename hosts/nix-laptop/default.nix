@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { pkgs, ... }:
 let
-  sakura = "${pkgs.base16-schemes}/share/themes/sakura.yaml";
+  sakura = "${pkgs.base16-schemes}/share/themes/tokyo-city-terminal-dark.yaml";
 in
 {
   imports = [
