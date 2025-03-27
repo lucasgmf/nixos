@@ -3,7 +3,7 @@
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { pkgs, ... }:
 let
-  gruvbox-dark-medium = "${pkgs.base16-schemes}/share/themes/gruvbox-dark-medium.yaml";
+  sakura = "${pkgs.base16-schemes}/share/themes/sakura.yaml";
 in
 {
   imports = [
@@ -41,7 +41,7 @@ in
     };
   };
 
-  autoStyling.colorScheme = gruvbox-dark-medium;
+  autoStyling.colorScheme = sakura;
   gaming.enable = true;
 
   virtualisation.docker = {
