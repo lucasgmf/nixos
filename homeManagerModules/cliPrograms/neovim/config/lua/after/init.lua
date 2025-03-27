@@ -1,4 +1,4 @@
-require("after.plugin.color")
+-- require("after.plugin.color")
 require("after.plugin.gitsigns")
 require("after.plugin.harpoon")
 require("after.plugin.lualine")
