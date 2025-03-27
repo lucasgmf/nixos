@@ -12,7 +12,7 @@ in
     autoStyling = {
       enable = lib.mkEnableOption "enables stylix auto styling";
       colorScheme = lib.mkOption { default = sakura; };
-      image = lib.mkOption { default = ./default.png; };
+      image = lib.mkOption { default = ./default.jpg; };
     };
   };
 
