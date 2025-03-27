@@ -27,7 +27,7 @@
     programs.skim.enable = true;
 
     programs.nushell = {
-      enable = false;
+      enable = true;
       configFile.source = ./config.nu;
 
       plugins = with pkgs.nushellPlugins; [
