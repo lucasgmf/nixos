@@ -36,7 +36,7 @@
 
           "org/gnome/desktop/interface" = {
             color-scheme = "default";
-            cursor-size = 32;
+            cursor-size = 64;
             cursor-theme = "Vanilla-DMZ";
             document-font-name = "Noto Serif  11";
             enable-animations = true;
