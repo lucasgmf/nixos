@@ -11,7 +11,7 @@
   config = lib.mkIf config.kitty.enable {
     programs.kitty = {
       enable = true;
-      shellIntegration.enableZshIntegration = true;
+      shellIntegration.enableZshIntegration = if config.zsh.enable then true else false;
     };
   };
 }
