@@ -8,7 +8,6 @@
     # shell configuration
     ./shell/zsh.nix
     ./shell/ohMyPosh
-    ./shell/nushell
 
     ./shell/direnv.nix
     ./shell/zoxide.nix
@@ -44,7 +43,6 @@
     zsh.enable = lib.mkDefault true;
     ohMyPosh.enable = lib.mkDefault true;
 
-    nushell.enable = lib.mkDefault false;
     direnv.enable = lib.mkDefault true;
     zoxide.enable = lib.mkDefault true;
     eza.enable = lib.mkDefault true;

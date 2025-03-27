@@ -11,8 +11,7 @@
   config = lib.mkIf config.direnv.enable {
     programs.direnv = {
       enable = true;
-      enableZshIntegration = if config.zsh.enable then true else false;
-      enableNushellIntegration = if config.nushell.enable then true else false;
+      enableZshIntegration = true;
 
       nix-direnv.enable = true;
     };

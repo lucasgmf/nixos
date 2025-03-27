@@ -11,8 +11,7 @@
   config = lib.mkIf config.eza.enable {
     programs.eza = {
       enable = true;
-      enableZshIntegration = if config.zsh.enable then true else false;
-      enableNushellIntegration = false;
+      enableZshIntegration = true;
 
       git = true;
       icons = "auto";
