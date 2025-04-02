@@ -1,6 +1,7 @@
 -- Lua
 require('onedark').setup {
     -- Main options --
+    theme = 'onedark',
     style = 'dark',               -- Default theme style. Choose between 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer' and 'light'
     transparent = false,          -- Show/hide background
     term_colors = true,           -- Change terminal color as per the selected theme style
@@ -8,7 +9,7 @@ require('onedark').setup {
     cmp_itemkind_reverse = false, -- reverse item kind highlights in cmp menu
 
     -- toggle theme style ---
-    toggle_style_key = '<leader>ts',                                                   -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
+    toggle_style_key = '<leader>ts',                                                     -- keybind to toggle theme style. Leave it nil to disable it, or set it to a string, for example "<leader>ts"
     toggle_style_list = { 'dark', 'darker', 'cool', 'deep', 'warm', 'warmer', 'light' }, -- List of styles to toggle between
 
     -- Change code style ---
