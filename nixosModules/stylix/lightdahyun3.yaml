@@ -4,10 +4,10 @@ author: "Dahyun"
 variant: "dark" # dark or light
 palette:
   base00: "#32181B" 
-  base01: "#503034" 
-  base02: "#73464C"
+  base01: "#503034" # Background
+  base02: "#73464C" # above bar
   base03: "#BF4E5D"
-  base04: "#FE95A3"
+  base04: "#3A4092"
   base05: "#f8f8f2"
   base06: "#f5f4f1"
   base07: "#f9f8f5"
