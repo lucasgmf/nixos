@@ -60,6 +60,7 @@
         catppuccin-nvim
         gruvbox-nvim
         rose-pine
+        onedark-nvim
 
         # props to ThePrimeagen
         harpoon2
