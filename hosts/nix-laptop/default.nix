@@ -43,6 +43,7 @@ in
 
   autoStyling.enable = true;
   gaming.enable = true;
+  programs.nix-ld.enable = true;
 
   virtualisation.docker = {
     enable = true;
