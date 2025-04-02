@@ -20,6 +20,7 @@
         "docker"
         "plugdev"
         "wireshark"
+        "dialout"
       ];
       openssh.authorizedKeys.keys = [];
       shell = pkgs.nushell;
