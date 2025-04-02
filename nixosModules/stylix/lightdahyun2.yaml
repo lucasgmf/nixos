@@ -1,7 +1,7 @@
 system: "base16"
 name: "Cute"
 author: "Dahyun"
-variant: "dark" # dark or light
+variant: "light" # dark or light
 palette:
   base00: "#FE95A3" 
   base01: "#F3687B" 
