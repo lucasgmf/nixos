@@ -1,3 +1,4 @@
+require("after.plugin.ccc")
 require("after.plugin.color")
 require("after.plugin.gitsigns")
 require("after.plugin.harpoon")

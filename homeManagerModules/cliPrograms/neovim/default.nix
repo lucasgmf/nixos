@@ -96,6 +96,8 @@
         crates-nvim
 
         vim-nix # better nix language support
+
+        ccc-nvim # Hex visualizer
       ];
     };
   };
