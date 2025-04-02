@@ -1,0 +1,18 @@
+scheme: "My Custom Scheme"
+author: "Your Name"
+base00: "000000" # Black (Background)
+base01: "1a1a1a" # Dark Gray
+base02: "333333" # Selection Background
+base03: "4d4d4d" # Comments
+base04: "666666" # Dark Foreground
+base05: "ffffff" # White (Default Foreground)
+base06: "e6e6e6" # Light Gray
+base07: "f2f2f2" # Lighter Foreground
+base08: "ff5555" # Red
+base09: "ff8700" # Orange
+base0A: "f1fa8c" # Yellow
+base0B: "50fa7b" # Green
+base0C: "8be9fd" # Cyan
+base0D: "bd93f9" # Blue
+base0E: "ff79c6" # Magenta
+base0F: "b26400" # Brown
