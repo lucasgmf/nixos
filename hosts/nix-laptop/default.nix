@@ -46,7 +46,7 @@ in
   programs.nix-ld = {
     enable = true;
     package = pkgs.nix-ld-rs; # or pkgs.nix-ld
-    libraries = with pkgs; [ libusb1 ];
+    libraries = with pkgs; [ libusb1 cmake ];
   };
 
   virtualisation.docker = {
