@@ -14,7 +14,6 @@
     ./stylix
     ./rules
     ./nvidia
-    ./nixld
 
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "${user.name}"])
   ];
