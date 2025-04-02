@@ -42,5 +42,6 @@
     openocd # platformio
     platformio
 
+    python312
   ];
 }
