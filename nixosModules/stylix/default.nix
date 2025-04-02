@@ -8,7 +8,7 @@ let
   # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/tokyo-city-terminal-dark.yaml";
   # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/horizon-dark.yaml";
   # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/horizon-light.yaml";
-  colorSchemeLink = ./mytheme.yaml;
+  colorSchemeLink = ./lightdahyun.yaml;
 in
 {
   options = {
