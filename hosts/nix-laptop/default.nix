@@ -43,7 +43,11 @@ in
 
   autoStyling.enable = true;
   gaming.enable = true;
-  programs.nix-ld.enable = true;
+  programs.nix-ld = {
+    enable = true;
+    package = pkgs.nix-ld-rs; # or pkgs.nix-ld
+    libraries = with pkgs; [ libusb1 ];
+  };
 
   virtualisation.docker = {
     enable = true;
