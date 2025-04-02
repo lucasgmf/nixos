@@ -21,6 +21,7 @@
         "plugdev"
         "wireshark"
         "dialout"
+        "uucp"
       ];
       openssh.authorizedKeys.keys = [];
       shell = pkgs.nushell;
