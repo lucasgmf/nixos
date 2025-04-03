@@ -1,0 +1,21 @@
+
+
+  #  bg = "#1b1d1e",
+  #  fg = "#f8f8f2",
+  #  fg_gutter = "#808080",
+  #  dark3 = "#464741", 
+  #  comment = "#7e8e91",
+  #  blue = "#819aff",
+  #  cyan = "#66d9ef",
+  #  magenta = "#f92672",
+  #  purple = "#ae81ff",
+  #  orange = "#fd971f",
+  #  yellow = "#e6db74",
+  #  green = "#a6e22e",
+  #  springgreen = "#00ff87",
+  #  red = "#ff4a44",
+  #
+  #  error = "#ff4a44",
+  #  warning = "#cd9731",
+  #  info = "#6796e6",
+  #  hint = "#b267e6",

@@ -3,9 +3,9 @@ name: "Cute"
 author: "Dahyun"
 variant: "light" # dark or light
 palette:
-  base00: "#fe97a4" # terminal Background
-  base01: "#503034" #
-  base02: "#ff5fa2" # top bar
+  base00: "#1b1d1e" # terminal Background
+  base01: "#ff8fab"
+  base02: "#ff5fa2" 
   base03: "#BF4E5D"
   base04: "#3A4092"
   base05: "#f8f8f2"
