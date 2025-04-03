@@ -1,10 +1,10 @@
 system: "base16"
 name: "Cute"
 author: "Dahyun"
-variant: "light" # dark or light
+variant: "dark" # dark or light
 palette:
   base00: "#1b1d1e" # terminal Background
-  base01: "#ff8fab"
+  base01: "#ff8791"  	#ff8791 	#ffacd9  	#a088c6
   base02: "#ff5fa2" 
   base03: "#BF4E5D"
   base04: "#3A4092"
@@ -14,7 +14,7 @@ palette:
   base08: "#f92672"
   base09: "#fd971f"
   base0A: "#f4bf75"
-  base0B: "#a6e22e"
+  base0B: "#fdb3a5"  #a6e22e
   base0C: "#a1efe4" # fixe
   base0D: "#66d9ef" # fixe
   base0E: "#ae81ff" # fixe
