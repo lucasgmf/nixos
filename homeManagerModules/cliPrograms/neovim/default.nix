@@ -61,6 +61,7 @@
         gruvbox-nvim
         rose-pine
         onedark-nvim
+        molokai
 
         # props to ThePrimeagen
         harpoon2

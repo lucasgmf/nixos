@@ -43,5 +43,5 @@ require "catppuccin".setup({
     },
 })
 
--- vim.cmd.colorscheme("gruvbox")
-
+vim.cmd.colorscheme("molokai")
+-- #fddce3#1d2021
