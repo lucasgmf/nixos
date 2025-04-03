@@ -28,8 +28,8 @@ require "catppuccin".setup({
     },
     color_overrides = {
         all = {
-            text = "ffffff",
-            orange= "ff00ff",
+            text = "#ffffff",
+            orange= "#ff00ff",
         },
     },
     custom_highlights = {},
