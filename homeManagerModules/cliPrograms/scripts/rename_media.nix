@@ -5,7 +5,6 @@
     (pkgs.writeShellScriptBin "rename_media" ''
       set -euo pipefail
 
-      # Default to current directory if no argument provided
       DIR="''${1:-.}"
 
       find "$DIR" -type d ! -path "$DIR" -exec bash -c '
@@ -16,9 +15,10 @@
           ext="''${f##*.}"
           ext="''${ext,,}"
           base="''${f##*/}"
-          if [[ ! "$base" =~ ^[0-9]+\\.''${ext}$ ]]; then
-            mv "$f" "$1/$((i++)).$ext"
+          if [[ "$base" =~ ^[0-9]+\\.''${ext}$ ]]; then
+            continue  # Skip already renamed files
           fi
+          mv "$f" "$1/$((i++)).$ext"
         done
       ' bash {} \;
     '')
