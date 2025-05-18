@@ -34,6 +34,8 @@
     ./scripts/update.nix
     ./scripts/build-iso.nix
     ./scripts/encr.nix
+    ./scripts/rename_media.nix
+    ./scripts/clean_photo.nix
   ];
 
   options = {
