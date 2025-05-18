@@ -5,13 +5,12 @@
     (pkgs.writeShellScriptBin "clean_photo_metadata" ''
       set -e
 
-      # Ensure exiftool is available via nix-shell
       nix-shell -p exiftool --run '
         TARGET_DIR="$1"
 
+        # Use current directory if none is given
         if [ -z "$TARGET_DIR" ]; then
-          echo "Usage: clean_photo_metadata <directory>"
-          exit 1
+          TARGET_DIR="."
         fi
 
         echo "Removing metadata from images in: $TARGET_DIR"
