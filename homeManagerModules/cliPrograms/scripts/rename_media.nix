@@ -10,7 +10,7 @@
       find "$DIR" -type d ! -path "$DIR" -exec bash -c '
         shopt -s nullglob
         i=1
-        for f in "$1"/*.{jpg,JPG,jpeg,JPEG,png,PNG,mp4,MP4,mkv,MKV}; do
+        for f in "$1"/*.{jpg,JPG,jpeg,JPEG,png,PNG,mp4,MP4,mkv,MKV,mov,MOV}; do
           [ -f "$f" ] || continue
           ext="''${f##*.}"
           ext="''${ext,,}"
