@@ -43,5 +43,6 @@
     platformio
 
     python312
+    discord
   ];
 }
