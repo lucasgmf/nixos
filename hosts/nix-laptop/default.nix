@@ -20,8 +20,11 @@ in
     # networking.proxy.default = "http://user:password@proxy:port/";
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
     firewall.allowedTCPPorts = [ ];
-    firewall.allowedUDPPorts = [ ];
+    networkmanager.insertNameservers = [ "1.1.1.1" "8.8.8.8"];
+    firewall.enable = true;
   };
+
+  services.resolved.enable = true;
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
@@ -43,6 +46,7 @@ in
 
   autoStyling.enable = true;
   gaming.enable = true;
+
   programs.nix-ld = {
     enable = true;
     package = pkgs.nix-ld-rs; # or pkgs.nix-ld

@@ -27,79 +27,81 @@
       defaultEditor = true;
 
       extraPackages = with pkgs; [
-        # global servers
-
-        nil # nix
-        nixfmt-rfc-style
-
-        lua-language-server
-
-        # python
-        python312Packages.python-lsp-server
-        python312Packages.python-lsp-ruff
-
-        # html, css, json, eslint
-        vscode-langservers-extracted
+      #   # global servers
+      #
+         nil # nix
+      #   nixfmt-rfc-style
+      #
+      #   lua-language-server
+      #
+      #   # python
+      #   python312Packages.python-lsp-server
+      #   python312Packages.python-lsp-ruff
+      #
+      #   # html, css, json, eslint
+      #   vscode-langservers-extracted
       ];
 
-      plugins = with pkgs.vimPlugins; [
-        # misc
-        mini-nvim
-        persistence-nvim
-        vim-tmux-navigator
-        zellij-nav-nvim
-
-        # user interface
-        lualine-nvim
-        vim-startify # starter page
-        gitsigns-nvim
-        todo-comments-nvim
-        rainbow-delimiters-nvim
-        indent-blankline-nvim
-
-        catppuccin-nvim
-        gruvbox-nvim
-        rose-pine
-        onedark-nvim
-        molokai
-
-        # props to ThePrimeagen
-        harpoon2
-        undotree
-
-        # File tree
-        nvim-web-devicons
-        nvim-tree-lua
-
-        # Telescope
-        plenary-nvim # telescope dependency
-        dressing-nvim # better telescope ui
-        telescope-nvim
-        telescope-fzf-native-nvim
-
-        # Treesitter and language grammar packs
-        nvim-treesitter.withAllGrammars
-        nvim-treesitter-textobjects
-        nvim-ts-autotag
-
-        lsp-zero-nvim
-        nvim-lspconfig
-        luasnip
-
-        cmp-nvim-lsp
-        cmp-buffer
-        cmp-path
-        cmp-cmdline
-        nvim-cmp
-        copilot-vim
-
-        rustaceanvim # rust specific features
-        crates-nvim
-
-        vim-nix # better nix language support
-
-        ccc-nvim # Hex visualizer
-      ];
+       plugins = with pkgs.vimPlugins; [
+      #   # misc
+      #   mini-nvim
+      #   persistence-nvim
+      #   vim-tmux-navigator
+      #   zellij-nav-nvim
+      #
+      #   # user interface
+      #   lualine-nvim
+      #   vim-startify # starter page
+      #   gitsigns-nvim
+      #   todo-comments-nvim
+      #   rainbow-delimiters-nvim
+      #   indent-blankline-nvim
+      #
+      # colorschemes !
+ 	catppuccin-nvim
+      #   gruvbox-nvim
+      #   rose-pine
+      #   onedark-nvim
+      #   molokai
+      #
+      #   # props to ThePrimeagen
+      #   harpoon2
+      #   undotree
+      #
+      #   # File tree
+      #   nvim-web-devicons
+      #   nvim-tree-lua
+      #
+      #   # Telescope
+	plenary-nvim # telescope dependency
+	telescope-nvim
+      #   dressing-nvim # better telescope ui
+      #   telescope-fzf-native-nvim
+      #
+      #   # Treesitter and language grammar packs
+	 nvim-treesitter
+         nvim-treesitter.withAllGrammars
+         nvim-treesitter-textobjects
+         nvim-ts-autotag
+      #
+      #   lsp-zero-nvim
+      #   nvim-lspconfig
+      #   luasnip
+      #
+      #   cmp-nvim-lsp
+      #   cmp-buffer
+      #   cmp-path
+      #   cmp-cmdline
+      #   nvim-cmp
+      #   copilot-vim
+      #
+      #   rustaceanvim # rust specific features
+      #   crates-nvim
+      #
+      #   vim-nix # better nix language support
+      #
+      #   ccc-nvim # Hex visualizer
+       ];
     };
   };
 }
