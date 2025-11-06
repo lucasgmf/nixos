@@ -29,9 +29,18 @@ in
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
-  # gnomeDE.enable = true;
-  programs.hyprland.enable = true;
+  hardware = {
+	opengl.enable = true;
 
+	nvidia.modesetting.enable = true;
+  };
+
+  # gnomeDE.enable = true;
+  programs.hyprland = {
+	enable = true;
+	xwayland.enable = true;
+  };
+  
   services = {
     # Enable touchpad support (enabled default in most desktopManager).
     libinput.enable = true;
