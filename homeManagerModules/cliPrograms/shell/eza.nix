@@ -12,7 +12,6 @@
     programs.eza = {
       enable = true;
       enableZshIntegration = if config.zsh.enable then true else false;
-      enableNushellIntegration = false;
 
       git = true;
       icons = "auto";

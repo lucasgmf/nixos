@@ -12,7 +12,6 @@
     programs.direnv = {
       enable = true;
       enableZshIntegration = if config.zsh.enable then true else false;
-      enableNushellIntegration = if config.nushell.enable then true else false;
 
       nix-direnv.enable = true;
     };
