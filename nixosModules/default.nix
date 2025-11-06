@@ -6,6 +6,7 @@
   imports = [
     # desktop environments / window managers
     # ./gnome
+    ./hyprland
 
     # other modules
     ./system
