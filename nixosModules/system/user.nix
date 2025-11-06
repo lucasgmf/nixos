@@ -10,6 +10,7 @@
   };
 
   config = lib.mkIf config.user.enable {
+    programs.zsh.enable = true;
     users.users.${user.name} = {
       isNormalUser = true;
       description = user.description;
@@ -24,7 +25,7 @@
         "uucp"
       ];
       openssh.authorizedKeys.keys = [];
-      shell = pkgs.nushell;
+      shell = pkgs.zsh;
       uid = user.uid;
     };
 
