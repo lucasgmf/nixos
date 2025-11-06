@@ -29,14 +29,16 @@ in
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
-  gnomeDE.enable = true;
+  # gnomeDE.enable = true;
+  programs.hyprland.enable = true;
+
   services = {
     # Enable touchpad support (enabled default in most desktopManager).
     libinput.enable = true;
     libinput.touchpad.naturalScrolling = true;
 
-    displayManager.defaultSession = "gnome-xorg";
-    xserver.displayManager.gdm.wayland = false;
+    # displayManager.defaultSession = "gnome-xorg";
+    #xserver.displayManager.gdm.wayland = false;
 
     zerotierone = {
       enable = true;

@@ -5,7 +5,7 @@
 }: {
   imports = [
     # desktop environments / window managers
-    ./gnome
+    # ./gnome
 
     # other modules
     ./system
