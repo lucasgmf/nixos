@@ -20,7 +20,6 @@
 
     # editors
     ./neovim
-    ./helix.nix
 
     # terminal multiplexers
     ./zellij
