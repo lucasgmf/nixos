@@ -29,7 +29,6 @@ in
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
-
   gnomeDE.enable = false;
   hyprlandDE.enable = true;
 
