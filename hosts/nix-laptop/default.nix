@@ -30,8 +30,8 @@ in
   hardware.bluetooth.enable = true;
 
 
-  gnomeDE.enable = true;
-  hyprlandDE.enable = false;
+  gnomeDE.enable = false;
+  hyprlandDE.enable = true;
 
   services = {
     # Enable touchpad support (enabled default in most desktopManager).
