@@ -4,7 +4,6 @@
     (pkgs.writeShellScriptBin "rebuild" ''
       set -e
       pushd ~/nixos/
-      nvim
       git add .
       git diff -U0 *.nix
       echo "NixOS Rebuilding..."
