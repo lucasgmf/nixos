@@ -2,21 +2,19 @@
 {
   home.packages = [
     (pkgs.writeShellScriptBin "update" ''
-      set -e  # Exit on error
+      set -euo pipefail
       
-      reset_flake() {
-        echo "Error occurred, resetting flake..."
-        cd ~/nixos/
-        git reset --hard
-      }
-      trap reset_flake ERR
+      cd ~/nixos/
       
       echo "NixOS Updating..."
-      cd ~/nixos/
-      nh os switch --update --ask
-      
-      gen=$(nixos-rebuild list-generations | grep current)
-      git commit -am "$gen"
+      if nh os switch --update --ask; then
+        gen=$(nixos-rebuild list-generations | grep current)
+        git commit -am "$gen" || echo "Nothing to commit"
+      else
+        echo "Update failed, resetting flake..."
+        git reset --hard
+        exit 1
+      fi
     '')
   ];
 }
