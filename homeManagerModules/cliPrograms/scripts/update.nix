@@ -7,7 +7,8 @@
       cd ~/nixos/
       
       echo "NixOS Updating..."
-      if nh os switch --update --ask; then
+      
+      if nh os switch --update ~/nixos; then
         gen=$(nixos-rebuild list-generations | grep current)
         git commit -am "$gen" || echo "Nothing to commit"
       else
