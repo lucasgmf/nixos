@@ -7,7 +7,7 @@
       git add .
       git diff -U0 *.nix
       echo "NixOS Rebuilding..."
-      nh os switch --ask
+      nh os switch
       gen=$(nixos-rebuild list-generations | grep current)
       git commit -am "$gen"
       popd
