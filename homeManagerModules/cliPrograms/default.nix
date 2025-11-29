@@ -34,7 +34,7 @@
     ./scripts/rename_media.nix
     ./scripts/clean_photo.nix
 
-    ]++ (if builtins.pathExists ../../secrets/scripts then [ ../../secrets/scripts ] else []);
+    ]++ (if builtins.pathExists ../../../secrets/scripts then [ ../../../secrets/scripts ] else []);
 
   options = {
     cliPrograms.enable = lib.mkEnableOption "enable various cli programs and tools";
