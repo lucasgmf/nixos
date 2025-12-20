@@ -8,8 +8,8 @@
       git diff -U0 *.nix
       echo "NixOS Rebuilding..."
       nh os switch .
-      gen=$(nixos-rebuild list-generations | grep current)
-      git commit -am "$gen"
+      current=$(readlink /nix/var/nix/profiles/system | cut -d- -f2)
+      git commit -am "Generation $current"
       popd
     '')
   ];

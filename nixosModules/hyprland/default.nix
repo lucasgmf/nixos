@@ -17,21 +17,23 @@
     hardware = {
 	opengl.enable = true;
 	nvidia.modesetting.enable = true;
-  	};
+	};
 
     # desktop portals / screensharing / opening links ...
     xdg.portal.enable = true;
     xdg.portal.extraPortals = [ pkgs.xdg-desktop-portal-gtk ];
 
-
     environment.systemPackages = with pkgs; [
 
     # my not be needed?
+
     # display workspaces correctly
+
 	(pkgs.waybar.overrideAttrs (oldAttrs: {
-		mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
-		})
+	mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];
+	})
 	)
+
       # terminal
       kitty
 
@@ -54,7 +56,7 @@
       swww
 
       #app launcher
-      rofi-wayland
+      rofi
 
       #gtk rofi
       wofi
@@ -69,7 +71,6 @@
 	WLR_NO_HARDWARE_CURSOS = "1";
 	NIXOS_OZONE_WL = "1";
     };
-
 
     # hm = {lib, ...}: {
       # dconf = with lib.hm.gvariant; {
