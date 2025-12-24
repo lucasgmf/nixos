@@ -6,11 +6,10 @@
       pushd ~/nixos/
       nvim
       git add .
-      git diff -U0 *.nix
+      git diff --cached -U0 *.nix
       echo "NixOS Rebuilding..."
       nh os switch --ask
-      gen=$(nixos-rebuild list-generations | grep current)
-      git commit -am "$gen"
+      git commit -m "$(date '+%Y-%m-%d %H:%M:%S')"
       popd
     '')
   ];

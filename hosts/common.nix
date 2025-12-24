@@ -40,6 +40,7 @@
 
   autoStyling.enable = true; # # stylix module
 
+  # TODO remove x pkgs
   environment.systemPackages = with pkgs; [
     xorg.xinit
     xorg.xrandr
