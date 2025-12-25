@@ -2,8 +2,6 @@
   pkgs,
   lib,
   config,
-  user,
-  inputs,
   ...
 }: {
   options = {
@@ -11,18 +9,18 @@
   };
   
   config = lib.mkIf config.customControls.enable {
-    programs.hyprland = {
-      # usual Nixpkgs module options
-      plugins = [
-      #...
-    ];
-    settings = {
-      # ...
+    hm = {
+      wayland.windowManager.hyprland.settings = {
+        input = {
+          kb_layout = "pt";
+        };
+      };
+      
+      wayland.windowManager.hyprland.extraConfig = ''
+      '';
     };
   };
-  };
 }
-
 
   # keyboard layout
   # gestures & swipes {add hold 1 to change to workspace 1...}
