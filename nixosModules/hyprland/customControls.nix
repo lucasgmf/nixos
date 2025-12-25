@@ -117,9 +117,9 @@
           };
           
           # Gestures
-          gestures = {
-            workspace_swipe = true;
-          };
+          #gestures = {
+          #  workspace_swipe = true;
+          #};
           
           # Window rules
           windowrulev2 = [
