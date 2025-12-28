@@ -15,7 +15,8 @@
         
         settings = {
           # Monitor configuration
-          monitor = ",preferred,auto,auto,2";
+	  # monitor = [port], resolution, position, scale
+          monitor = "eDPI-1,2880x1800@90,auto,2";
           
           # Environment variables
           env = [
