@@ -15,7 +15,7 @@
         
         settings = {
           # Monitor configuration
-          monitor = ",preferred,auto,auto";
+          monitor = ",preferred,auto,auto,2";
           
           # Environment variables
           env = [
