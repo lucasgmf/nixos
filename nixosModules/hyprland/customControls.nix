@@ -15,7 +15,7 @@
         
         settings = {
           # Monitor configuration
-          monitor = "eDP-1, 2880x1880@85 ,auto, 2";
+          monitor = "eDP-1, 2880x1800@85 ,auto, 2";
           
           # Environment variables
           env = [
