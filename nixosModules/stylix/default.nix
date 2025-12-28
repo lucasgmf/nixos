@@ -8,7 +8,7 @@ let
   # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/tokyo-city-terminal-dark.yaml";
   # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/horizon-dark.yaml";
   # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/horizon-light.yaml";
-  colorSchemeLink = ./lightdahyun3.yaml;
+  colorSchemeLink = ./darkdahyun.yaml;
 in
 {
   options = {
@@ -39,7 +39,7 @@ in
           name = "Noto Serif";
         };
         emoji = {
-          package = pkgs.noto-fonts-emoji;
+          package = pkgs.noto-fonts-color-emoji;
           name = "Noto Color Emoji";
         };
       };

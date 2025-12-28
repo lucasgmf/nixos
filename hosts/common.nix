@@ -40,6 +40,7 @@
 
   autoStyling.enable = true; # # stylix module
 
+  # TODO remove x pkgs
   environment.systemPackages = with pkgs; [
     xorg.xinit
     xorg.xrandr
@@ -52,26 +53,6 @@
       variant = "";
     };
   };
-
-  # services.avahi = {
-  #   enable = true;
-  #
-  #   ipv4 = true;
-  #   nssmdns4 = true;
-  #
-  #   ipv6 = true;
-  #   nssmdns6 = true;
-  #
-  #   publish = {
-  #     enable = true;
-  #     addresses = true;
-  #     domain = true;
-  #     hinfo = true;
-  #     userServices = true;
-  #   };
-  # };
-
-  nvidiaDrivers.enable = false;
 
   # make the user not have to type the sudo password for poweroff/reboot
   security.sudo.extraConfig =

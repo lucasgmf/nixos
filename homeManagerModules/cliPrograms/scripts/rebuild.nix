@@ -6,11 +6,11 @@
       pushd ~/nixos/
       nvim
       git add .
-      git diff -U0 *.nix
+      git diff --cached -U0 *.nix
       echo "NixOS Rebuilding..."
       nh os switch --ask
-      gen=$(nixos-rebuild list-generations | grep current)
-      git commit -am "$gen"
+      gen=$(readlink /nix/var/nix/profiles/system | grep -oP 'system-\K\d+')
+      git commit -m "$gen current  $(date '+%Y-%m-%d %H:%M:%S')  $(nixos-version)  $(uname -r)"
       popd
     '')
   ];

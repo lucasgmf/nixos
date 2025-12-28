@@ -24,10 +24,12 @@
     fd
     gh
 
+    kitty
+
     # GUI apps
     firefox
     vesktop # alternative discord client
-    stremio
+    # stremio
     obsidian
     vscode-fhs
     spotify

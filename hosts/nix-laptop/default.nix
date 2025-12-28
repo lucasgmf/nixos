@@ -29,27 +29,18 @@ in
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 
-  gnomeDE.enable = true;
+  gnomeDE.enable = false;
+  hyprlandDE.enable = true;
+
   services = {
     # Enable touchpad support (enabled default in most desktopManager).
     libinput.enable = true;
     libinput.touchpad.naturalScrolling = true;
-
-    displayManager.defaultSession = "gnome-xorg";
-    xserver.displayManager.gdm.wayland = false;
-
-    zerotierone = {
-      enable = true;
-      joinNetworks = [ ];
-    };
   };
-
-  autoStyling.enable = true;
-  gaming.enable = true;
 
   programs.nix-ld = {
     enable = true;
-    package = pkgs.nix-ld-rs; # or pkgs.nix-ld
+    package = pkgs.nix-ld;
     libraries = with pkgs; [ libusb1 cmake ];
   };
 
