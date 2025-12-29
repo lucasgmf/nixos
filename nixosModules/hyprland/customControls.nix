@@ -37,7 +37,7 @@
         
         settings = {
 
-	exec-once = "caelestia";
+	exec-once = "caelestia-shell";
 
           # Monitor configuration
 	  # monitor = [port], resolution, position, scale
