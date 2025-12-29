@@ -14,10 +14,10 @@
 	enable = true;
 	xwayland.enable = true;
     };
-
+      
     # disable systemd integration, as it conflicts with UWSM
     # wayland.windowManager.hyprland.systemd.enable = false;
-
+    
     hardware = {
 	opengl.enable = true;
 	nvidia.modesetting.enable = true;

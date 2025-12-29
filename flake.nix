@@ -21,6 +21,7 @@
     {
       self,
       nixpkgs,
+      caelestia-shell,
       ...
     }@inputs:
     let
@@ -36,7 +37,6 @@
       homeConfig = homeConfigPath: [
         ./nixosModules
         inputs.stylix.nixosModules.stylix
-
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -48,6 +48,9 @@
             };
 
             users.${user.name} = import homeConfigPath;
+            sharedModules = [
+              inputs.caelestia-shell.homeManagerModules.default
+            ];
           };
         }
       ];
