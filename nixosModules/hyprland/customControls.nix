@@ -16,6 +16,8 @@
         
         settings = {
 
+	  exec-once = "gnome-keyring-daemon --start --components=secrets,ssh";
+
           # Monitor configuration
 	  # monitor = [port], resolution, position, scale
           monitor = "eDPI-1,2880x1800@90,auto,2";

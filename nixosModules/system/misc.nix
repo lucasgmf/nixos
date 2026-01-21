@@ -29,6 +29,8 @@
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
 
+    security.pam.services.lightdm.enableGnomeKeyring = true;
+
     services.pipewire = {
       enable = true;
       alsa = {

@@ -3,6 +3,8 @@
   home.packages = with pkgs; [
     #network management
     networkmanagerapplet
+    gnome-keyring
+    seahorse
 
     # feup l2tp vpn
     networkmanager_strongswan
