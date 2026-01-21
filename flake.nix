@@ -4,11 +4,6 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     
-    caelestia-shell = {
-      url = "github:caelestia-dots/shell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -21,7 +16,6 @@
     {
       self,
       nixpkgs,
-      caelestia-shell,
       ...
     }@inputs:
     let
@@ -49,7 +43,6 @@
 
             users.${user.name} = import homeConfigPath;
             sharedModules = [
-              inputs.caelestia-shell.homeManagerModules.default
             ];
           };
         }
