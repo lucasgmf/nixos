@@ -16,12 +16,14 @@
         
         settings = {
 
-	  exec-once = "gnome-keyring-daemon --start --components=secrets,ssh &
-			swww init &
-			swww img ~/Pictures/Dahyun/amimirr.jpg &
-			nm-applet --indicator &
-			waybar &
-			dunst"; 
+	exec-once = [
+		"gnome-keyring-daemon --start --components=secrets,ssh"
+			"swww-daemon"
+			"swww img ~/Pictures/Dahyun/amimirr.jpg"
+			"nm-applet --indicator"
+			"waybar"
+			"dunst"
+	];
 
           # Monitor configuration
 	  # monitor = [port], resolution, position, scale
