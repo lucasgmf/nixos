@@ -38,7 +38,7 @@
   # Keymap configuration for console
   console.keyMap = "pt-latin1";
 
-  autoStyling.enable = true; # # stylix module
+  autoStyling.enable = false; # # stylix module
 
   # TODO remove x pkgs
   environment.systemPackages = with pkgs; [

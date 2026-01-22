@@ -21,7 +21,7 @@ in
 
   config = lib.mkIf config.autoStyling.enable {
     stylix = {
-      enable = true;
+      enable = false;
       base16Scheme = config.autoStyling.colorScheme;
       image = config.autoStyling.image;
 
