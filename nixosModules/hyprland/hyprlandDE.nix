@@ -3,6 +3,7 @@
   lib,
   config,
   user,
+  inputs,
   ...
 }: {
   options = {
@@ -12,19 +13,19 @@
   config = lib.mkIf config.hyprlandDE.enable {
     programs.hyprland = {
 	enable = true;
+	package = inputs.hyprland.packages."${pkgs.system}".hyprland;
 	xwayland.enable = true; # enable x applications within wayland compositor
     };
       
     hardware = {
 	opengl.enable = true;
-	nvidia.modesetting.enable = true;
     };
 
     # desktop portals / screensharing / opening links ...
-    xdg.portal = {
-	    enable = true;
-	    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
-    };
+    # xdg.portal = {
+	    # enable = true;
+	    # extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+    # };
 
     environment.systemPackages = with pkgs; [
 
