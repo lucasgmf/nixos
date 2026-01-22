@@ -12,12 +12,9 @@
   config = lib.mkIf config.hyprlandDE.enable {
     programs.hyprland = {
 	enable = true;
-	xwayland.enable = true;
+	xwayland.enable = true; # enable x applications within wayland compositor
     };
       
-    # disable systemd integration, as it conflicts with UWSM
-    # wayland.windowManager.hyprland.systemd.enable = false;
-    
     hardware = {
 	opengl.enable = true;
 	nvidia.modesetting.enable = true;
@@ -25,12 +22,13 @@
 
     # desktop portals / screensharing / opening links ...
     xdg.portal = {
-    enable = true;
-    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
+	    enable = true;
+	    extraPortals = with pkgs; [ xdg-desktop-portal-hyprland ];
     };
 
     environment.systemPackages = with pkgs; [
 
+    # enables workspaces displayed correctly? test without it!
     (pkgs.waybar.overrideAttrs (oldAttrs: {
 	mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];})
     )
@@ -40,12 +38,12 @@
 
       # simple waybar
       waybar
+
       # customizable waybar
       # eww
 
       # notifications
       dunst
-
       # notifications dependency 
       libnotify
 

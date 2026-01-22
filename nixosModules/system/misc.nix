@@ -21,6 +21,8 @@
       trusted-public-keys = [];
       builders-use-substitutes = true;
     };
+    # wifi password management? 
+    security.pam.services.lightdm.enableGnomeKeyring = true;
 
     # Enable CUPS to print documents
     services.printing.enable = true;
@@ -29,7 +31,6 @@
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
 
-    security.pam.services.lightdm.enableGnomeKeyring = true;
 
     services.pipewire = {
       enable = true;
