@@ -12,10 +12,13 @@
   config = lib.mkIf config.hyprland.enable {
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-      xwayland.enable = true; # enable x applications within wayland compositor
 
+      # broken
+      #package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+
+      xwayland.enable = true; # enable x applications within wayland compositor
     };
+
     services.xserver.displayManager.lightdm.enable = true;
     hardware.graphics.enable = true;
 
