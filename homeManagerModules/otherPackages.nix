@@ -48,5 +48,7 @@
 
     python312
     discord
+
+    kdePackages.dolphin
   ];
 }

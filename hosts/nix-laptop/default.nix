@@ -2,9 +2,6 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 { pkgs, ... }:
-let
-  sakura = "${pkgs.base16-schemes}/share/themes/tokyo-city-terminal-dark.yaml";
-in
 {
   imports = [
     # Include the results of the hardware scan.
@@ -29,9 +26,6 @@ in
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
-
-  gnomeDE.enable = false;
-  hyprlandDE.enable = true;
 
   services = {
     # Enable touchpad support (enabled default in most desktopManager).

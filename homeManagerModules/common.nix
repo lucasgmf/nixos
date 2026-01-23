@@ -2,11 +2,15 @@
 {
   imports = [
     ./cliPrograms
+    ./windowManagers
     ./otherPackages.nix
   ];
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
-  nixpkgs.overlays = lib.mkForce null;
+  # nixpkgs.overlays = lib.mkForce null;
+
+  # Enable and configure Hyprland
+  hyprlandConf.enable = true;
 
   home = {
     username = user.name;
@@ -23,6 +27,7 @@
   };
 
   cliPrograms.enable = true;
+
   nvim.enable = true;
   zsh.enable = true;
 
