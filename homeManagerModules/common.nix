@@ -10,7 +10,7 @@
   # nixpkgs.overlays = lib.mkForce null;
 
   # Enable and configure Hyprland
-  hyprlandConf.enable = false;
+  hyprlandConf.enable = true;
 
   home = {
     username = user.name;
