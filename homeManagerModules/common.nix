@@ -10,18 +10,7 @@
   # nixpkgs.overlays = lib.mkForce null;
 
   # Enable and configure Hyprland
-  hyprlandDE = {
-    enable = true;
-    wallpaper ="~/Pictures/Dahyun/amimirr.jpg";
-    monitors = [ "eDPI-1,2880x1800@90,auto,2" ];
-    keyboardLayout = "pt";
-    terminal = "kitty";
-    launcher = "wofi --show drun";
-    gaps = {
-      inner = 5;
-      outer = 20;
-    };
-  };
+  hyprlandConf.enable = true;
 
   home = {
     username = user.name;

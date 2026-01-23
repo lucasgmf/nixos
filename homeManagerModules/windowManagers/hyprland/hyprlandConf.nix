@@ -1,61 +1,9 @@
 { pkgs, lib, config, ... }: {
-  options.hyprlandDE = {
+  options.hyprlandConf = {
     enable = lib.mkEnableOption "Hyprland desktop environment";
-    
-    wallpaper = lib.mkOption {
-      type = lib.types.nullOr lib.types.str;  # Changed from lib.types.path
-      default = null;
-      description = "Path to wallpaper image (as string)";
-      example = "~/Pictures/wallpaper.jpg";
     };
-    
-    monitors = lib.mkOption {
-      type = lib.types.listOf lib.types.str;
-      default = [ ",preferred,auto,1" ];  # Sane default
-      description = "Monitor configurations";
-      example = [ "eDPI-1,2880x1800@90,auto,2" ];
-    };
-    
-    keyboardLayout = lib.mkOption {
-      type = lib.types.str;
-      default = "us";
-      description = "Keyboard layout";
-    };
-    
-    terminal = lib.mkOption {
-      type = lib.types.str;
-      default = "kitty";
-      description = "Default terminal emulator";
-    };
-    
-    launcher = lib.mkOption {
-      type = lib.types.str;
-      default = "wofi --show drun";
-      description = "Application launcher command";
-    };
-    
-    enableAnimations = lib.mkOption {
-      type = lib.types.bool;
-      default = true;
-      description = "Enable window animations (disable for performance)";
-    };
-    
-    gaps = {
-      inner = lib.mkOption {
-        type = lib.types.int;
-        default = 5;
-        description = "Inner gaps between windows";
-      };
-      
-      outer = lib.mkOption {
-        type = lib.types.int;
-        default = 20;
-        description = "Outer gaps from screen edges";
-      };
-    };
-  };
-  
-  config = lib.mkIf config.hyprlandDE.enable {
+
+    config = lib.mkIf config.hyprlandConf.enable {
       wayland.windowManager.hyprland = {
         enable = true;
         
@@ -66,19 +14,18 @@
             "nm-applet --indicator"
             "waybar"
             "dunst"
-          ] ++ lib.optionals (config.hyprlandDE.wallpaper != null) [
-            "swww img ${config.hyprlandDE.wallpaper}"
-          ];
+            "swww img ~/Pictures/Dahyun/amimirr.jpg"
+	    ];
 
-          monitor = config.hyprlandDE.monitors;
-          
+          monitor = [ "eDPI-1,2880x1800@90,auto,2" ];
+
           env = [
             "XCURSOR_SIZE,24"
             "HYPRCURSOR_SIZE,24"
           ];
           
           input = {
-            kb_layout = config.hyprlandDE.keyboardLayout;
+            kb_layout = "pt";
             follow_mouse = 1;
             sensitivity = 0;
             
@@ -86,8 +33,8 @@
           };
           
           general = {
-            gaps_in = config.hyprlandDE.gaps.inner;
-            gaps_out = config.hyprlandDE.gaps.outer;
+            gaps_in = 5;
+            gaps_out = 20;
             border_size = 2;
             resize_on_border = false;
             allow_tearing = false;
@@ -114,9 +61,9 @@
           };
           
           animations = {
-            enabled = config.hyprlandDE.enableAnimations;
+            enabled = true;
             
-            bezier = lib.mkIf config.hyprlandDE.enableAnimations [
+            bezier = [
               "easeOutQuint,0.23,1,0.32,1"
               "easeInOutCubic,0.65,0.05,0.36,1"
               "linear,0,0,1,1"
@@ -124,7 +71,7 @@
               "quick,0.15,0,0.1,1"
             ];
             
-            animation = lib.mkIf config.hyprlandDE.enableAnimations [
+            animation =  [
               "global, 1, 10, default"
               "border, 1, 5.39, easeOutQuint"
               "windows, 1, 4.79, easeOutQuint"
@@ -160,9 +107,9 @@
         };
         
         extraConfig = ''
-          $terminal = ${config.hyprlandDE.terminal}
+          $terminal = kitty
           $fileManager = dolphin
-          $menu = ${config.hyprlandDE.launcher}
+          $menu = wofi --show drun
           $mainMod = SUPER
           
           # Keybindings

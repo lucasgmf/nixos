@@ -1,7 +1,8 @@
 {lib, ...}: {
   imports = [
-    ./hyprlandDefaults.nix
+    ./hyprlandConf.nix
     # ./config.nix
     # ./plugins.nix
   ];
+
 }
