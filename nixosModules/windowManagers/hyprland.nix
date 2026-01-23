@@ -14,12 +14,13 @@
       enable = true;
       package = inputs.hyprland.packages."${pkgs.system}".hyprland;
       xwayland.enable = true; # enable x applications within wayland compositor
+
     };
-    hardware = {
-	    opengl.enable = true;
-    };
+    services.xserver.displayManager.lightdm.enable = true;
+    hardware.graphics.enable = true;
 
     environment.systemPackages = with pkgs; [
+
 
     # enables workspaces displayed correctly? test without it!
     (pkgs.waybar.overrideAttrs (oldAttrs: {

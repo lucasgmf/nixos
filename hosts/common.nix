@@ -38,6 +38,8 @@
   # Keymap configuration for console
   console.keyMap = "pt-latin1";
 
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
+
   #environment.systemPackages = with pkgs; [
   #  xorg.xinit
     # xorg.xrandr
