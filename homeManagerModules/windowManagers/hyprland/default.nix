@@ -1,7 +1,7 @@
 { pkgs, lib, config, ... }: {
   
   imports = [
-    ./hyprconf/keys.nix
+    # ./hyprconf/keys.nix
   ];
 
   options.hyprlandConf = {
