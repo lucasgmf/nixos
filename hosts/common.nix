@@ -38,14 +38,10 @@
   # Keymap configuration for console
   console.keyMap = "pt-latin1";
 
-  # autoStyling.enable = false; # # stylix module
-
   #environment.systemPackages = with pkgs; [
   #  xorg.xinit
     # xorg.xrandr
   # ];
-
-  hyprland.enable = true;
 
   services.xserver = {
     enable = true;
