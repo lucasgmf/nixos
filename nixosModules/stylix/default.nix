@@ -5,9 +5,6 @@
   ...
 }:
 let
-  # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/tokyo-city-terminal-dark.yaml";
-  # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/horizon-dark.yaml";
-  # colorSchemeLink = "${pkgs.base16-schemes}/share/themes/horizon-light.yaml";
   colorSchemeLink = ./darkdahyun.yaml;
 in
 {
@@ -21,7 +18,7 @@ in
 
   config = lib.mkIf config.autoStyling.enable {
     stylix = {
-      enable = true;
+      enable = false;
       base16Scheme = config.autoStyling.colorScheme;
       image = config.autoStyling.image;
 

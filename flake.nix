@@ -3,13 +3,15 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-
+    
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     stylix.url = "github:danth/stylix";
+
+    hyprland.url = "github:hyprwm/Hyprland";
   };
 
   outputs =
@@ -30,8 +32,6 @@
 
       homeConfig = homeConfigPath: [
         ./nixosModules
-        inputs.stylix.nixosModules.stylix
-
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {
@@ -43,6 +43,8 @@
             };
 
             users.${user.name} = import homeConfigPath;
+            sharedModules = [
+            ];
           };
         }
       ];
