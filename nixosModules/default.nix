@@ -5,12 +5,12 @@
 }: {
   imports = [
     # desktop environments / window managers
-    ./gnome
-    ./hyprland
+    ./windowManagers/gnome
+    ./windowManagers/hyprland.nix
 
     # other modules
     ./system
-    ./stylix
+    # ./stylix
 
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "${user.name}"])
   ];

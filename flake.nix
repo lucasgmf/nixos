@@ -32,7 +32,6 @@
 
       homeConfig = homeConfigPath: [
         ./nixosModules
-        inputs.stylix.nixosModules.stylix
         inputs.home-manager.nixosModules.home-manager
         {
           home-manager = {

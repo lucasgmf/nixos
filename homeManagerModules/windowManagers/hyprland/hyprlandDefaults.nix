@@ -1,64 +1,99 @@
-{
-  pkgs,
-  lib,
-  config,
-  ...
-}: {
-  options = {
-    customControls.enable = lib.mkEnableOption "enables hyprland custom configuration controls";
+{ pkgs, lib, config, ... }: {
+  options.hyprlandDE = {
+    enable = lib.mkEnableOption "Hyprland desktop environment";
+    
+    wallpaper = lib.mkOption {
+      type = lib.types.nullOr lib.types.str;  # Changed from lib.types.path
+      default = null;
+      description = "Path to wallpaper image (as string)";
+      example = "~/Pictures/wallpaper.jpg";
+    };
+    
+    monitors = lib.mkOption {
+      type = lib.types.listOf lib.types.str;
+      default = [ ",preferred,auto,1" ];  # Sane default
+      description = "Monitor configurations";
+      example = [ "eDPI-1,2880x1800@90,auto,2" ];
+    };
+    
+    keyboardLayout = lib.mkOption {
+      type = lib.types.str;
+      default = "us";
+      description = "Keyboard layout";
+    };
+    
+    terminal = lib.mkOption {
+      type = lib.types.str;
+      default = "kitty";
+      description = "Default terminal emulator";
+    };
+    
+    launcher = lib.mkOption {
+      type = lib.types.str;
+      default = "wofi --show drun";
+      description = "Application launcher command";
+    };
+    
+    enableAnimations = lib.mkOption {
+      type = lib.types.bool;
+      default = true;
+      description = "Enable window animations (disable for performance)";
+    };
+    
+    gaps = {
+      inner = lib.mkOption {
+        type = lib.types.int;
+        default = 5;
+        description = "Inner gaps between windows";
+      };
+      
+      outer = lib.mkOption {
+        type = lib.types.int;
+        default = 20;
+        description = "Outer gaps from screen edges";
+      };
+    };
   };
   
-  config = lib.mkIf config.customControls.enable {
-
-  hm = {
-    wayland.windowManager.hyprland = {
+  config = lib.mkIf config.hyprlandDE.enable {
+      wayland.windowManager.hyprland = {
         enable = true;
         
         settings = {
+          exec-once = [
+            "gnome-keyring-daemon --start --components=secrets,ssh"
+            "swww-daemon"
+            "nm-applet --indicator"
+            "waybar"
+            "dunst"
+          ] ++ lib.optionals (config.hyprlandDE.wallpaper != null) [
+            "swww img ${config.hyprlandDE.wallpaper}"
+          ];
 
-	exec-once = [
-		"gnome-keyring-daemon --start --components=secrets,ssh"
-			"swww-daemon"
-			"swww img ~/Pictures/Dahyun/amimirr.jpg"
-			"nm-applet --indicator"
-			"waybar"
-			"dunst"
-	];
-
-          # Monitor configuration
-	  # monitor = [port], resolution, position, scale
-          monitor = "eDPI-1,2880x1800@90,auto,2";
+          monitor = config.hyprlandDE.monitors;
           
-          # Environment variables
           env = [
             "XCURSOR_SIZE,24"
             "HYPRCURSOR_SIZE,24"
           ];
           
-          # Input configuration
           input = {
-            kb_layout = "pt"; 
+            kb_layout = config.hyprlandDE.keyboardLayout;
             follow_mouse = 1;
             sensitivity = 0;
             
-            touchpad = {
-              natural_scroll = false;
-            };
+            touchpad.natural_scroll = false;
           };
           
-          # General settings
           general = {
-            gaps_in = 5;
-            gaps_out = 20;
+            gaps_in = config.hyprlandDE.gaps.inner;
+            gaps_out = config.hyprlandDE.gaps.outer;
             border_size = 2;
-            #"col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
-            #"col.inactive_border" = "rgba(595959aa)";
             resize_on_border = false;
             allow_tearing = false;
             layout = "dwindle";
           };
           
-          # Decoration
           decoration = {
             rounding = 10;
             active_opacity = 1.0;
@@ -68,7 +103,6 @@
               enabled = true;
               range = 4;
               render_power = 3;
-              # color = "rgba(1a1a1aee)";
             };
             
             blur = {
@@ -79,11 +113,10 @@
             };
           };
           
-          # Animations
           animations = {
-            enabled = true;
+            enabled = config.hyprlandDE.enableAnimations;
             
-            bezier = [
+            bezier = lib.mkIf config.hyprlandDE.enableAnimations [
               "easeOutQuint,0.23,1,0.32,1"
               "easeInOutCubic,0.65,0.05,0.36,1"
               "linear,0,0,1,1"
@@ -91,7 +124,7 @@
               "quick,0.15,0,0.1,1"
             ];
             
-            animation = [
+            animation = lib.mkIf config.hyprlandDE.enableAnimations [
               "global, 1, 10, default"
               "border, 1, 5.39, easeOutQuint"
               "windows, 1, 4.79, easeOutQuint"
@@ -111,29 +144,15 @@
             ];
           };
           
-          # Dwindle layout
           dwindle = {
             pseudotile = true;
             preserve_split = true;
           };
           
-          # Master layout
-          master = {
-            new_status = "master";
-          };
+          master.new_status = "master";
           
-          # Misc settings
-          misc = {
-            force_default_wallpaper = -1;
-            # disable_hyprland_logo = false;
-          };
+          misc.force_default_wallpaper = -1;
           
-          # Gestures
-          #gestures = {
-          #  workspace_swipe = true;
-          #};
-          
-          # Window rules
           windowrulev2 = [
             "suppressevent maximize, class:.*"
             "nofocus,class:^$,title:^$,xwayland:1,floating:1,fullscreen:0,pinned:0"
@@ -141,17 +160,10 @@
         };
         
         extraConfig = ''
-          # Programs
-          $terminal = kitty
+          $terminal = ${config.hyprlandDE.terminal}
           $fileManager = dolphin
-          $menu = wofi --show drun
+          $menu = ${config.hyprlandDE.launcher}
           $mainMod = SUPER
-          
-          # Per-device config
-          device {
-              name = epic-mouse-v1
-              sensitivity = -0.5
-          }
           
           # Keybindings
           bind = $mainMod, Q, exec, $terminal
@@ -220,99 +232,5 @@
           bindl = , XF86AudioPrev, exec, playerctl previous
         '';
       };
-    };
   };
 }
-
-  # keyboard layout
-  # gestures & swipes {add hold 1 to change to workspace 1...}
-  # keybindings
-  # change audio & brightness
-
-    # old gnome configuration bellow...
-
-    # hm = {lib, ...}: {
-      # dconf = with lib.hm.gvariant; {
-        # enable = true;
-        # settings = {
-          # "org/gnome/shell" = {
-            # disable-user-extensions = false;
-            # enabled-extensions = with pkgs.gnomeExtensions; [
-              # system-monitor.extensionUuid
-            # ];
-          # };
-# 
-          # "org/gnome/desktop/interface" = {
-            # color-scheme = "default";
-            # cursor-size = 64;
-            # cursor-theme = "Vanilla-DMZ";
-            # document-font-name = "Noto Serif  11";
-            # enable-animations = true;
-            # font-name = "Noto Sans 12";
-            # gtk-theme = "adw-gtk3";
-            # icon-theme = "Adwaita";
-            # monospace-font-name = "FiraMono Nerd Font 12";
-            # scaling-factor = mkUint32 1;
-            # text-scaling-factor = 1.0;
-            # toolbar-style = "text";
-          # };
-# 
-          # "org/gnome/desktop/wm/keybindings" = {
-            # close = ["<Super>q"];
-            # move-to-workspace-1 = ["<Shift><Super>1"];
-            # move-to-workspace-2 = ["<Shift><Super>2"];
-            # move-to-workspace-3 = ["<Shift><Super>3"];
-            # move-to-workspace-4 = ["<Shift><Super>4"];
-            # panel-run-dialog = ["<Super>space"];
-            # switch-input-source = [];
-            # switch-input-source-backward = [];
-            # switch-to-workspace-1 = ["<Super>1"];
-            # switch-to-workspace-2 = ["<Super>2"];
-            # switch-to-workspace-3 = ["<Super>3"];
-            # switch-to-workspace-4 = ["<Super>4"];
-            # toggle-fullscreen = ["<Shift><Super>f"];
-            # toggle-maximized = ["<Super>f"];
-          # };
-# 
-          # "org/gnome/desktop/wm/preferences" = {
-            # auto-raise = true;
-            # button-layout = "icon:minimize,maximize,close";
-            # focus-mode = "mouse";
-            # num-workspaces = 4;
-            # resize-with-right-button = true;
-          # };
-# 
-          # "org/gnome/mutter" = {
-            # center-new-windows = false;
-            # dynamic-workspaces = false;
-            # edge-tiling = true;
-            # overlay-key = "Super_L";
-            # workspaces-only-on-primary = true;
-          # };
-# 
-          # "org/gnome/settings-daemon/plugins/media-keys" = {
-            # calculator = ["<Super>c"];
-            # custom-keybindings = [
-              # "/org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0/"
-            # ];
-            # home = ["<Super>e"];
-            # magnifier-zoom-in = ["<Alt><Super>plus"];
-            # www = ["<Super>b"];
-          # };
-# 
-          # "org/gnome/settings-daemon/plugins/media-keys/custom-keybindings/custom0" = {
-            # binding = "<Super>Return";
-            # command = "alacritty";
-            # name = "terminal";
-          # };
-# 
-          # "org/gnome/shell/keybindings" = {
-            # switch-to-application-1 = [];
-            # switch-to-application-2 = [];
-            # switch-to-application-3 = [];
-            # switch-to-application-4 = [];
-          # };
-        # };
-      # };
-    # };
-
