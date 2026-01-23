@@ -10,33 +10,33 @@
 
     config = lib.mkIf config.hyprlandConf.enable {
       wayland.windowManager.hyprland = {
-        enable = true;
-        settings = {
-           exec-once = [
-            "gnome-keyring-daemon --start --components=secrets,ssh"
-            "swww-daemon"
-            "nm-applet --indicator"
-            "waybar"
-            "dunst"
-            "swww img /home/lucasgmf/Pictures/Dahyun/amimirr.jpg"
-	    ];
-
-           monitor = "eDPI-1,2880x1800@90,auto,2";
-
-           input = {
-             kb_layout = "pt";
-             follow_mouse = 1;
-             sensitivity = 0;
-            
-             touchpad.natural_scroll = false;
-            };
-
-        extraConfig = ''
-          $terminal = kitty
-          $fileManager = dolphin
-          $menu = wofi --show drun
-        '';
-      };
+        # enable = true;
+        # settings = {
+           # exec-once = [
+            # "gnome-keyring-daemon --start --components=secrets,ssh"
+            # "swww-daemon"
+            # "nm-applet --indicator"
+            # "waybar"
+            # "dunst"
+            # "swww img /home/lucasgmf/Pictures/Dahyun/amimirr.jpg"
+	    # ];
+# 
+           # monitor = "eDPI-1,2880x1800@90,auto,2";
+# 
+           # input = {
+             # kb_layout = "pt";
+             # follow_mouse = 1;
+             # sensitivity = 0;
+            # 
+             # touchpad.natural_scroll = false;
+            # };
+# 
+        # extraConfig = ''
+          # $terminal = kitty
+          # $fileManager = dolphin
+          # $menu = wofi --show drun
+        # '';
+      # };
       };
   };
 }
