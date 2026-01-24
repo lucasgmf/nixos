@@ -13,7 +13,7 @@
         enable = true;
         settings = {
            exec-once = [
-	    "hyprctl setcursor rose-pine-hyprcursor 24"
+	    "hyprctl setcursor rose-pine-hyprcursor 32"
             "gnome-keyring-daemon --start --components=secrets,ssh"
             "swww-daemon"
             "nm-applet --indicator"

@@ -25,7 +25,7 @@
           # Keybindings
           "$mainMod, return, exec, $terminal"
           "$mainMod, Q, killactive,"
-          # "$mainMod, M, exit,"
+          "$mainMod, M, exit,"
           "$mainMod, E, exec, $fileManager"
           "$mainMod, V, togglefloating,"
           "$mainMod, R, exec, $menu"
@@ -33,10 +33,10 @@
           "$mainMod, J, togglesplit,"
           
           # Move focus
-          "$mainMod, left, movefocus, l"
-          "$mainMod, right, movefocus, r"
-          "$mainMod, up, movefocus, u"
-          "$mainMod, down, movefocus, d"
+          "$mainMod, l, movefocus, l"
+          "$mainMod, h, movefocus, r"
+          "$mainMod, k, movefocus, u"
+          "$mainMod, j, movefocus, d"
           
           # Switch workspaces
           "$mainMod, 1, workspace, 1"
@@ -92,8 +92,8 @@
           ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
           ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-          ", XF86MonBrightnessUp, exec, brightnessctl s 10%+"
-          ", XF86MonBrightnessDown, exec, brightnessctl s 10%-"
+          ", XF86MonBrightnessUp, exec, brightnessctl s 5%+"
+          ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
 	  ];
 	};
 }
