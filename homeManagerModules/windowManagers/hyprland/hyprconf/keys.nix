@@ -7,7 +7,10 @@
     "$fileManager" = "dolphin";
     "$menu" = "wofi --show drun";
 
-	input.touchpad.natural_scroll = lib.mkForce true;
+	input.touchpad = {
+		natural_scroll = lib.mkForce true;
+		scroll_factor = 0.75;
+	};
 
 	bind = [
           # Keybindings
