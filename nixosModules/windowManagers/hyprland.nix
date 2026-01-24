@@ -44,6 +44,9 @@
       # terminal
       kitty
 
+      # control brightness
+      brightnessctl
+
       # simple waybar
       waybar
 
