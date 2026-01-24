@@ -1,13 +1,15 @@
-{...}: {
+{lib, ...}: {
   wayland.windowManager.hyprland.settings = {
     # variables
+    # remove this?
     "$mainMod" = "SUPER";
     "$terminal" = "alacritty";
     "$fileManager" = "dolphin";
     "$menu" = "wofi --show drun";
 
-	bind = [
+	input.touchpad.natural_scroll = lib.mkForce true;
 
+	bind = [
           # Keybindings
           "$mainMod, Q, exec, $terminal"
           "$mainMod, C, killactive,"
