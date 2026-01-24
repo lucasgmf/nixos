@@ -23,9 +23,9 @@
     services.gnome.gnome-keyring.enable = true;
   
     # Ensure proper session environment setup
-    services.xserver.displayManager.sessionPackages = [ pkgs.hyprland ];
+    services.displayManager.sessionPackages = [ pkgs.hyprland ];
 
-    services.xserver.displayManager.gdm = {
+    services.displayManager.gdm = {
   		enable = true;
   		wayland = true;
     };
