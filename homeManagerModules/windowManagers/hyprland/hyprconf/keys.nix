@@ -10,6 +10,7 @@
 	input.touchpad = {
 		natural_scroll = lib.mkForce true;
 		scroll_factor = 0.45;
+		drag_3fg = 1; # 3 fingers drag to move windows 
 	};
 
 	bind = [
