@@ -38,14 +38,12 @@
   # Keymap configuration for console
   console.keyMap = "pt-latin1";
 
-  # autoStyling.enable = false; # # stylix module
+  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
   #environment.systemPackages = with pkgs; [
   #  xorg.xinit
     # xorg.xrandr
   # ];
-
-  hyprland.enable = true;
 
   services.xserver = {
     enable = true;
