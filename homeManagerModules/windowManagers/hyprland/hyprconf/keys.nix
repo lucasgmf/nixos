@@ -14,7 +14,11 @@
 	};
 
 	# 4 finger swipe to change between workspaces
-	gesture.workspace_swipe = true; 
+	gesture = [
+		"3, up, fullscreen"
+		"3, down, float"
+		"4, horizontal, workspace"
+	];
 	
 
 	bind = [
