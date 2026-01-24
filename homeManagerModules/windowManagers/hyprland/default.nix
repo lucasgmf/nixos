@@ -7,12 +7,13 @@
   options.hyprlandConf = {
     enable = lib.mkEnableOption "Hyprland desktop environment";
     };
-
+    
     config = lib.mkIf config.hyprlandConf.enable {
       wayland.windowManager.hyprland = {
         enable = true;
         settings = {
            exec-once = [
+	    "hyprctl setcursor rose-pine-hyprcursor 24"
             "gnome-keyring-daemon --start --components=secrets,ssh"
             "swww-daemon"
             "nm-applet --indicator"

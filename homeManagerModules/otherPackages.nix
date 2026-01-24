@@ -50,5 +50,9 @@
     discord
 
     kdePackages.dolphin
+    
+    # hyprland cursor 
+    # TODO: remove this from here
+    rose-pine-hyprcursor
   ];
 }
