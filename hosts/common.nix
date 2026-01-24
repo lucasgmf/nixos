@@ -37,11 +37,6 @@
 
   # Keymap configuration for console
   console.keyMap = "pt-latin1";
-  console = {
-    font = "ter-v32n";
-    packages = [ pkgs.terminus_font ];
-    earlySetup = true;
-  };
 
   environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
 
