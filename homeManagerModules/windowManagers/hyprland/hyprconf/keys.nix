@@ -9,7 +9,7 @@
 
 	input.touchpad = {
 		natural_scroll = lib.mkForce true;
-		scroll_factor = 0.75;
+		scroll_factor = 0.45;
 	};
 
 	bind = [
