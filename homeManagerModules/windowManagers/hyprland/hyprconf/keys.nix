@@ -7,19 +7,19 @@
     "$fileManager" = "dolphin";
     "$menu" = "wofi --show drun";
 
-	input.touchpad = {
-		natural_scroll = lib.mkForce true;
-		scroll_factor = 0.45;
-		drag_3fg = 1; # 3 fingers drag to move windows + super
+	input = {
+		touchpad = {
+			natural_scroll = lib.mkForce true;
+			scroll_factor = 0.45;
+			drag_3fg = 1; # 3 fingers drag to move windows + super
+		};
+		kb_options = caps:swapescape;
 	};
 
 	# 4 finger swipe to change between workspaces
 	gesture = [
-		"3, up, fullscreen"
-		"3, down, float"
 		"4, horizontal, workspace"
 	];
-	
 
 	bind = [
           # Keybindings
