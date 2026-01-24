@@ -2,7 +2,7 @@
   pkgs,
   lib,
   config,
-  # inputs,
+  inputs,
   ...
 }: {
   options = {
@@ -12,10 +12,7 @@
   config = lib.mkIf config.hyprland.enable {
     programs.hyprland = {
       enable = true;
-
-      # broken
-      #package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-
+      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
       xwayland.enable = true; # enable x applications within wayland compositor
     };
 
@@ -27,12 +24,12 @@
     # Ensure proper session environment setup
     services.xserver.displayManager.sessionPackages = [ pkgs.hyprland ];
 
-    # brooooooo this user session env is aaaaaaaaaaaaaaaaaaaaaaa
     services.xserver.displayManager.gdm = {
   		enable = true;
   		wayland = true;
     };
 
+    # brooooooo this lightdm env with hyprland aaaaaaaaaaa is aaaaaaaaaaaaaaaaaaaaaaa
     # services.xserver.displayManager.lightdm.enable = true;
     hardware.graphics.enable = true;
 
