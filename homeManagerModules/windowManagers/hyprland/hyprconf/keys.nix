@@ -24,6 +24,7 @@
 	bind = [
           # Keybindings
           "$mainMod, return, exec, $terminal"
+          "$mainMod, B, exec, firefox"
           "$mainMod, Q, killactive,"
           "$mainMod, M, exit,"
           "$mainMod, E, exec, $fileManager"
