@@ -8,6 +8,7 @@
 			drag_3fg = 1; # 3 fingers drag to move windows + super
 		};
 		# kb_options = caps:swapescape;
+		kb_options = compose:ralt;
 	};
 
 	# 4 finger swipe to change between workspaces
