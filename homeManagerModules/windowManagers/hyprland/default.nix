@@ -2,17 +2,24 @@
   
   imports = [
     ./hyprconf/keys.nix
+    ./hyprconf/xcompose.nix
   ];
 
   options.hyprlandConf = {
     enable = lib.mkEnableOption "Hyprland desktop environment";
     };
-
+    
     config = lib.mkIf config.hyprlandConf.enable {
       wayland.windowManager.hyprland = {
         enable = true;
         settings = {
+	    "$mainMod" = "SUPER";
+	    "$terminal" = "alacritty";
+	    "$fileManager" = "dolphin";
+	    "$menu" = "wofi --show drun";
+
            exec-once = [
+	    "hyprctl setcursor rose-pine-hyprcursor 32"
             "gnome-keyring-daemon --start --components=secrets,ssh"
             "swww-daemon"
             "nm-applet --indicator"
