@@ -2,6 +2,7 @@
   
   imports = [
     ./hyprconf/keys.nix
+    ./hyprconf/xcompose.nix
   ];
 
   options.hyprlandConf = {
