@@ -19,7 +19,6 @@ in {
   config = lib.mkIf config.customSDDM.enable {
     services.displayManager.sddm = {
       enable = true;
-      # experimental support
       wayland.enable = true;
       
       extraPackages = with pkgs; [
