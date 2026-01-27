@@ -54,5 +54,8 @@
     # hyprland cursor 
     # TODO: remove this from here
     rose-pine-hyprcursor
+    xfce.thunar #file explorer
+    # adjust screen color temperature to reduce blue light
+    gammastep 
   ];
 }

@@ -12,6 +12,11 @@
       wayland.windowManager.hyprland = {
         enable = true;
         settings = {
+	    "$mainMod" = "SUPER";
+	    "$terminal" = "alacritty";
+	    "$fileManager" = "dolphin";
+	    "$menu" = "wofi --show drun";
+
            exec-once = [
 	    "hyprctl setcursor rose-pine-hyprcursor 32"
             "gnome-keyring-daemon --start --components=secrets,ssh"

@@ -1,11 +1,5 @@
 {lib, ...}: {
   wayland.windowManager.hyprland.settings = {
-    # variables
-    # remove this?
-    "$mainMod" = "SUPER";
-    "$terminal" = "alacritty";
-    "$fileManager" = "dolphin";
-    "$menu" = "wofi --show drun";
 
 	input = {
 		touchpad = {
@@ -32,6 +26,7 @@
           "$mainMod, R, exec, $menu"
           "$mainMod, P, pseudo,"
           "$mainMod, J, togglesplit,"
+          "$mainMod, F, fullscreen, 0"
           
           # Move focus
           "$mainMod, l, movefocus, l"
@@ -67,10 +62,6 @@
           "$mainMod, S, togglespecialworkspace, magic"
           "$mainMod SHIFT, S, movetoworkspace, special:magic"
           
-          # Scroll through workspaces
-          # "$mainMod, mouse_down, workspace, e+1"
-          # "$mainMod, mouse_up, workspace, e-1"
-
 	  ];
 
 	  bindm = [
@@ -79,13 +70,6 @@
           "$mainMod, mouse:273, resizewindow"
 	  ];
           
-          bindl = [
-          # ", XF86AudioNext, exec, playerctl next"
-          # ", XF86AudioPause, exec, playerctl play-pause"
-          # ", XF86AudioPlay, exec, playerctl play-pause"
-          # ", XF86AudioPrev, exec, playerctl previous"
-	  ];
-
 	  bindel = [
           ", XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+"
           ", XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"
