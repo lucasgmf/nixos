@@ -25,13 +25,6 @@
     # Ensure proper session environment setup
     services.displayManager.sessionPackages = [ pkgs.hyprland ];
 
-    services.displayManager.gdm = {
-  		enable = true;
-  		wayland = true;
-    };
-
-    # brooooooo this lightdm env with hyprland aaaaaaaaaaa is aaaaaaaaaaaaaaaaaaaaaaa
-    # services.xserver.displayManager.lightdm.enable = true;
     hardware.graphics.enable = true;
 
     environment.systemPackages = with pkgs; [

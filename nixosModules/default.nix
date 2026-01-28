@@ -5,8 +5,8 @@
 }: {
   imports = [
     # desktop environments / window managers
-    ./windowManagers/gnome
     ./windowManagers/hyprland.nix
+    ./loginManager
 
     # other modules
     ./system
@@ -15,4 +15,5 @@
     (lib.mkAliasOptionModule ["hm"] ["home-manager" "users" "${user.name}"])
   ];
   hyprland.enable = true;
+  customSDDM.enable = true;
 }

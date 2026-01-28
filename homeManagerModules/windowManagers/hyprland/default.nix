@@ -25,7 +25,7 @@
             "nm-applet --indicator"
             "waybar"
             "dunst"
-            "swww img /home/lucasgmf/Pictures/Dahyun/amimirr.jpg"
+            "swww img /home/lucasgmf/Pictures/background2.jpg"
 	    ];
 
            monitor = "eDPI-1,2880x1800@90,auto,2";
