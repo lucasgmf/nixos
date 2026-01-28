@@ -3,19 +3,24 @@
   lib,
   config,
   ...
-}: let
+}:
+
+let
   custom-sddm-astronaut = pkgs.sddm-astronaut.override {
-    embeddedTheme = "hyprland_kath";
-    #themeConfig = {
-    #  Background = "path/to/background.jpg";
-    #  Font = "M+1 Nerd Font";
-    #};
+    embeddedTheme = config.customSDDM.astronautTheme;
   };
-in {
-  options = {
-    customSDDM.enable = lib.mkEnableOption "enables custom configuration of sddm";
+in
+{
+
+ options.customSDDM = {
+  enable = lib.mkEnableOption "enables custom configuration of sddm";
+  astronautTheme = lib.mkOption {
+    type = lib.types.str;
+    default = "hyprland_kath";
+    description = "Astronaut SDDM embedded theme";
   };
-  
+};
+
   config = lib.mkIf config.customSDDM.enable {
     services.displayManager.sddm = {
       enable = true;
