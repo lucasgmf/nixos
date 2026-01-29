@@ -1,7 +1,7 @@
-{ ... }:
+{ pkgs, ... }:
 {
-  plugins = with pkgs.vimPlugins; [
-    mini-vim
+  programs.neovim.plugins = with pkgs.vimPlugins; [
+    mini-nvim
   ];
 }
 

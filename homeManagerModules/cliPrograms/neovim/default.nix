@@ -14,6 +14,13 @@
   };
 
   config = lib.mkIf config.nvim.enable {
+    home.file = {
+      ".config/nvim" = {
+        source = ./config;
+        recursive = true;
+      };
+    };
+
     home.sessionVariables = {
       EDITOR = "nvim";
       NIXOS_OZONE_WL = "1";
