@@ -5,21 +5,17 @@
   ...
 }:
 {
+  imports = [
+    ./plugins
+  ];
+  
   options = {
     nvim.enable = lib.mkEnableOption "enable neovim";
   };
 
   config = lib.mkIf config.nvim.enable {
-    home.file = {
-      ".config/nvim" = {
-        source = ./config;
-        recursive = true;
-      };
-    };
-
     home.sessionVariables = {
       EDITOR = "nvim";
-
       NIXOS_OZONE_WL = "1";
     };
 
@@ -29,8 +25,8 @@
       defaultEditor = true;
 
       extraPackages = with pkgs; [
+
       #   # global servers
-      #
          nil # nix
       #   nixfmt-rfc-style
       #
