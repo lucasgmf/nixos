@@ -57,6 +57,13 @@
     xfce.thunar #file explorer
     # adjust screen color temperature to reduce blue light
     gammastep 
-    mpvpaper
+
+    # screencast
+    gnome-network-displays
+    avahi
+    pipewire
+    wireplumber
+    xdg-desktop-portal
+    xdg-desktop-portal-wlr
   ];
 }

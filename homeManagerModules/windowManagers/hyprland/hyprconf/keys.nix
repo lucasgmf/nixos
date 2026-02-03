@@ -28,6 +28,8 @@
           "$mainMod, P, pseudo,"
           "$mainMod, J, togglesplit,"
           "$mainMod, F, fullscreen, 0"
+	  "$mainMod, W, exec, pkill -SIGUSR1 waybar"
+
           
           # Move focus
           "$mainMod, l, movefocus, l"

@@ -35,6 +35,7 @@
 
       #   # global servers
          nil # nix
+         gcc
       #   nixfmt-rfc-style
       #
       #   lua-language-server
@@ -49,7 +50,7 @@
 
        plugins = with pkgs.vimPlugins; [
       #   # misc
-      #   mini-nvim
+        mini-nvim
       #   persistence-nvim
       #   vim-tmux-navigator
       #   zellij-nav-nvim
@@ -82,7 +83,7 @@
 	telescope-nvim
       #   dressing-nvim # better telescope ui
       #   telescope-fzf-native-nvim
-      #
+
       #   # Treesitter and language grammar packs
 	 nvim-treesitter
          nvim-treesitter.withAllGrammars

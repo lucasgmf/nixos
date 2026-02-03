@@ -1,2 +1,2 @@
+require("lucasgmf.autocmds")
 require("lucasgmf.remap")
-print("hello from lucasgmf")
