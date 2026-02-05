@@ -49,11 +49,6 @@
       ];
 
        plugins = with pkgs.vimPlugins; [
-
-      #   # props to ThePrimeagen
-      #   harpoon2
-      #   undotree
-      #
       #   # File tree
       #   nvim-web-devicons
       #   nvim-tree-lua
@@ -61,19 +56,19 @@
       #   lsp-zero-nvim
       #   nvim-lspconfig
       #   luasnip
-      #
+      
       #   cmp-nvim-lsp
       #   cmp-buffer
       #   cmp-path
       #   cmp-cmdline
       #   nvim-cmp
       #   copilot-vim
-      #
+      
       #   rustaceanvim # rust specific features
       #   crates-nvim
-      #
+      
       #   vim-nix # better nix language support
-      #
+      
       #   ccc-nvim # Hex visualizer
        ];
     };

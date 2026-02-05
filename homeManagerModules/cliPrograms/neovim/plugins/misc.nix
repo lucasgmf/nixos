@@ -6,9 +6,13 @@
     # persistence-nvim
     # zellij-nav-nvim
 
+    # props to ThePrimeagen
+    harpoon2
+    undotree
+
     # user interface
     # lualine-nvim
-    # vim-startify # starter page
+    # vim-startify
     # gitsigns-nvim
     # todo-comments-nvim
     # rainbow-delimiters-nvim
@@ -24,31 +28,27 @@
     # Telescope
 	plenary-nvim # telescope dependency
 	telescope-nvim
-    #   dressing-nvim # better telescope ui
-    #   telescope-fzf-native-nvim
 
-    #   # Treesitter and language grammar packs
+    # dressing-nvim # better telescope ui
+    # telescope-fzf-native-nvim
+
+    # Treesitter and language grammar packs
 	 nvim-treesitter
-     nvim-treesitter.withAllGrammars
-     nvim-treesitter-textobjects
-     nvim-ts-autotag
-
-        # Treesitter and language grammar packs
-        # (nvim-treesitter.withPlugins (
-        #   p: [
-        #     p.c
-        #     p.cpp
-        #     p.rust
-        #     p.go
-        #     p.lua
-        #     p.nix
-        #     p.markdown
-        #     p.python
-        #     p.javascript
-        #     p.zig
-        #     p.kdl
-        #   ]
-        # ))
+     (nvim-treesitter.withPlugins (
+                                   p: [
+                                   p.c
+                                   p.cpp
+                                   p.rust
+                                   p.go
+                                   p.lua
+                                   p.nix
+                                   p.markdown
+                                   p.python
+                                   p.javascript
+                                   p.zig
+                                   p.kdl
+                                   ]
+                                  ))
   ];
 }
 
