@@ -49,27 +49,7 @@
       ];
 
        plugins = with pkgs.vimPlugins; [
-      #   # misc
-        mini-nvim
-      #   persistence-nvim
-      #   vim-tmux-navigator
-      #   zellij-nav-nvim
-      #
-      #   # user interface
-      #   lualine-nvim
-      #   vim-startify # starter page
-      #   gitsigns-nvim
-      #   todo-comments-nvim
-      #   rainbow-delimiters-nvim
-      #   indent-blankline-nvim
-      #
-      # colorschemes !
- 	catppuccin-nvim
-      #   gruvbox-nvim
-      #   rose-pine
-      #   onedark-nvim
-      #   molokai
-      #
+
       #   # props to ThePrimeagen
       #   harpoon2
       #   undotree
@@ -77,19 +57,7 @@
       #   # File tree
       #   nvim-web-devicons
       #   nvim-tree-lua
-      #
-      #   # Telescope
-	plenary-nvim # telescope dependency
-	telescope-nvim
-      #   dressing-nvim # better telescope ui
-      #   telescope-fzf-native-nvim
 
-      #   # Treesitter and language grammar packs
-	 nvim-treesitter
-         nvim-treesitter.withAllGrammars
-         nvim-treesitter-textobjects
-         nvim-ts-autotag
-      #
       #   lsp-zero-nvim
       #   nvim-lspconfig
       #   luasnip
