@@ -26,11 +26,22 @@
         window = {
           decorations = "none";
           dynamic_title = true;
-          opacity = 1.0;
+          opacity = 0.965;
           padding = {
-            x = 15;
-            y = 15;
+            x = 12;
+            y = 12;
           };
+        };
+
+        colors = {
+            primary = {
+                background = "0x1d1f21";
+                foreground = "0xffffff";
+            };
+        };
+
+        font = {
+            size = 14.0;
         };
       };
     };

@@ -24,6 +24,13 @@
   services.gnome.gnome-keyring.enable = true;
   services.resolved.enable = true;
 
+  # screencast
+  services.avahi = {
+	  enable = true;
+	  nssmdns4 = true;
+	  openFirewall = true;
+  };
+
   # Enable bluetooth
   hardware.bluetooth.enable = true;
 

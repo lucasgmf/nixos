@@ -1,5 +1,9 @@
+show_release_notes false
+show_startup_tips false
+
 plugins {
-        compact-bar location="zellij:compact-bar"
+    compact-bar location="zellij:compact-bar"
+    tooltip "F1"
 }
 
 layout {

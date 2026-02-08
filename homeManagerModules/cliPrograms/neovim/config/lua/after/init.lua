@@ -1,4 +1,11 @@
 require("after.plugin.color")
 require("after.plugin.telescope")
--- TODO: HomeManager does not like treesitter?
--- require("after.plugin.treesitter")
+require("after.plugin.mini")
+require("after.plugin.harpoon")
+require("nvim-treesitter").setup{
+    highlight = {
+        enable = true,
+        additional_vim_regex_highlighting = false,
+    },
+}
+
