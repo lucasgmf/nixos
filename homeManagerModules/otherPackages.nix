@@ -56,5 +56,8 @@
     thunar #file explorer
     # adjust screen color temperature to reduce blue light
     gammastep 
+
+# remote control
+    sunshine 
   ];
 }

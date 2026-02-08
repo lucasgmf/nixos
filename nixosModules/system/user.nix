@@ -23,6 +23,7 @@
         "wireshark"
         "dialout"
         "uucp"
+        "input"
       ];
       openssh.authorizedKeys.keys = [];
       shell = pkgs.zsh;
