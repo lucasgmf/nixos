@@ -10,6 +10,8 @@
     harpoon2
     undotree
 
+    # nvim-tree-lua
+
     # user interface
     # lualine-nvim
     # vim-startify
