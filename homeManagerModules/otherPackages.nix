@@ -36,7 +36,6 @@
     vscode-fhs
     spotify
     google-chrome
-    mendeley # for master's thesis
     drawio
     postman
     wireshark
@@ -54,16 +53,8 @@
     # hyprland cursor 
     # TODO: remove this from here
     rose-pine-hyprcursor
-    xfce.thunar #file explorer
+    thunar #file explorer
     # adjust screen color temperature to reduce blue light
     gammastep 
-
-    # screencast
-    gnome-network-displays
-    avahi
-    pipewire
-    wireplumber
-    xdg-desktop-portal
-    xdg-desktop-portal-wlr
   ];
 }

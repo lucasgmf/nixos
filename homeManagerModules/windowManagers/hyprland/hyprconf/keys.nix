@@ -65,15 +65,9 @@
           "$mainMod, S, togglespecialworkspace, magic"
           "$mainMod SHIFT, S, movetoworkspace, special:magic"
 
-          "1, exec, switch_workspace.sh 1 press"
-          "2, exec, switch_workspace.sh 2 press"
-          
+          "$mainMod, comma, exec, reset_background"
 	  ];
 
-	  bindr = [
-          "1, exec, switch_workspace 1 release"
-          "2, exec, switch_workspace 2 release"
-	  ];
 
 	  bindm = [
           # Move/resize windows
@@ -88,8 +82,11 @@
           ", XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
           ", XF86AudioMicMute, exec, wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"
 
-          ", XF86MonBrightnessUp, exec, brightnessctl s 5%+"
-          ", XF86MonBrightnessDown, exec, brightnessctl s 5%-"
+          ", XF86MonBrightnessUp, exec, brightnessctl s 1%+"
+          ", XF86MonBrightnessDown, exec, brightnessctl s 1%-"
+
+          "$mainMod, XF86MonBrightnessUp, exec, brightnessctl s 10%+"
+          "$mainMod, XF86MonBrightnessDown, exec, brightnessctl s 10%-"
 	  ];
 	};
 }

@@ -14,7 +14,7 @@
 
         home.packages = [
             (pkgs.writeShellScriptBin "switch_workspace" (builtins.readFile ./scripts/switch_workspace.sh))
-                (pkgs.writeShellScriptBin "reset_background" (builtins.readFile ./scripts/reset_background.sh))
+            (pkgs.writeShellScriptBin "reset_background" (builtins.readFile ./scripts/reset_background.sh))
         ];
 
         wayland.windowManager.hyprland = {
