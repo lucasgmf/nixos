@@ -16,9 +16,13 @@
     # Configure network proxy if necessary
     # networking.proxy.default = "http://user:password@proxy:port/";
     # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-    firewall.allowedTCPPorts = [ ];
-    networkmanager.insertNameservers = [ "1.1.1.1" "8.8.8.8"];
     firewall.enable = true;
+    # firewall.allowedTCPPorts = [ ];
+
+    # Sunshine ports 
+    firewall.allowedTCPPorts = [ 47984 47989 47990 48010 ];
+    firewall.allowedUDPPorts = [ 47998 47999 48000 48002 48010 ];
+    networkmanager.insertNameservers = [ "1.1.1.1" "8.8.8.8"];
   };
 
   services.gnome.gnome-keyring.enable = true;

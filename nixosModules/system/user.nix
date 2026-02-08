@@ -24,6 +24,7 @@
         "dialout"
         "uucp"
         "input"
+        "uinput"
       ];
       openssh.authorizedKeys.keys = [];
       shell = pkgs.zsh;

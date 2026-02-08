@@ -10,6 +10,9 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
+  # sunshine
+  boot.kernelModules = [ "uinput" ];
+
   # Switch from LTS to the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
