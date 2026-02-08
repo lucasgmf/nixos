@@ -64,7 +64,15 @@
           # Special workspace
           "$mainMod, S, togglespecialworkspace, magic"
           "$mainMod SHIFT, S, movetoworkspace, special:magic"
+
+          "1, exec, switch_workspace.sh 1 press"
+          "2, exec, switch_workspace.sh 2 press"
           
+	  ];
+
+	  bindr = [
+          "1, exec, switch_workspace 1 release"
+          "2, exec, switch_workspace 2 release"
 	  ];
 
 	  bindm = [
