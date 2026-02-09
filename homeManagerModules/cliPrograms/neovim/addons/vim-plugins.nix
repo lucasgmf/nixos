@@ -31,13 +31,13 @@
     harpoon2
     undotree
 
-    # nvim-tree-lua
 
     # user interface
     gitsigns-nvim
     lualine-nvim
+    # nvim-tree-lua
     vim-startify
-    # todo-comments-nvim
+    todo-comments-nvim
     # rainbow-delimiters-nvim
     # indent-blankline-nvim
 

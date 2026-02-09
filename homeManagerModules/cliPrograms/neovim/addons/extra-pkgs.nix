@@ -1,6 +1,13 @@
 { pkgs, ... }:
 {
   programs.neovim.extraPackages = with pkgs; [
+
+      # vim-startify dependencies 
+      (pkgs.buildEnv {
+       name = "neovim-startify-extras";
+       paths = [ pkgs.cowsay pkgs.fortune ];
+       })
+
    # global servers
    # nil # nix
    # gcc
