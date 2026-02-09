@@ -3,14 +3,16 @@
     imports = [
         ./hyprconf/keys.nix
         ./hyprconf/xcompose.nix
+        ./hyprconf/darktheme.nix
     ];
 
     options.hyprlandConf = {
         enable = lib.mkEnableOption "Hyprland desktop environment";
     };
 
-
     config = lib.mkIf config.hyprlandConf.enable {
+
+        darkTheme.enable = true;
 
         home.packages = [
             (pkgs.writeShellScriptBin "switch_workspace" (builtins.readFile ./scripts/switch_workspace.sh))
