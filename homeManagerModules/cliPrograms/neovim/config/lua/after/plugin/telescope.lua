@@ -26,7 +26,7 @@ vim.keymap.set('n', '<C-p>', builtin.git_files, { desc = 'telescope find "git fi
 vim.keymap.set('n', '<leader>ps', function()
 	builtin.grep_string({ search = vim.fn.input("Grep > ")})
     -- testing
-vim.keymap.set('n', '<leader>fr', builtin.resume, opts("Resume last picker"))
+vim.keymap.set('n', '<leader>pr', builtin.resume, opts("Resume last picker"))
 
 end,
 
