@@ -2,6 +2,27 @@
 {
   programs.neovim.plugins = with pkgs.vimPlugins; [
 
+#   # File tree
+#   nvim-web-devicons
+#   nvim-tree-lua
+
+#   lsp-zero-nvim
+#   nvim-lspconfig
+#   luasnip
+
+#   cmp-nvim-lsp
+#   cmp-buffer
+#   cmp-path
+#   cmp-cmdline
+#   nvim-cmp
+#   copilot-vim
+
+#   rustaceanvim # rust specific features
+#   crates-nvim
+
+#   vim-nix # better nix language support
+
+#   ccc-nvim # Hex visualizer
     mini-nvim
     # persistence-nvim
     # zellij-nav-nvim
@@ -13,9 +34,9 @@
     # nvim-tree-lua
 
     # user interface
+    gitsigns-nvim
     # lualine-nvim
     # vim-startify
-    # gitsigns-nvim
     # todo-comments-nvim
     # rainbow-delimiters-nvim
     # indent-blankline-nvim
@@ -31,8 +52,8 @@
 	plenary-nvim # telescope dependency
 	telescope-nvim
 
-    # dressing-nvim # better telescope ui
-    # telescope-fzf-native-nvim
+    dressing-nvim # better telescope ui
+    telescope-fzf-native-nvim
 
     # Treesitter and language grammar packs
 	 nvim-treesitter
