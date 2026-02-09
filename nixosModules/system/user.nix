@@ -10,6 +10,11 @@
   };
 
   config = lib.mkIf config.user.enable {
+    # empty uinput group
+    users.groups.uinput = {};
+
+    services.udev.extraRules = '' KERNEL=="uinput", GROUP="uinput", MODE="0660" '';
+
     programs.zsh.enable = true;
     users.users.${user.name} = {
       isNormalUser = true;
