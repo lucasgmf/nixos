@@ -36,7 +36,7 @@
     # user interface
     gitsigns-nvim
     lualine-nvim
-    # vim-startify
+    vim-startify
     # todo-comments-nvim
     # rainbow-delimiters-nvim
     # indent-blankline-nvim
