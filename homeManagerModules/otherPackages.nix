@@ -11,6 +11,9 @@
     networkmanager-l2tp
     xl2tpd
 
+    blueman
+    pavucontrol
+
     # other Cli tools
     fastfetch
     ripgrep
@@ -27,6 +30,7 @@
     gh
 
     kitty
+    pix
 
     # GUI apps
     firefox
@@ -49,6 +53,7 @@
     discord
 
     kdePackages.dolphin
+    ffmpeg_7
     
     # hyprland cursor 
     # TODO: remove this from here
@@ -56,8 +61,10 @@
     thunar #file explorer
     # adjust screen color temperature to reduce blue light
     gammastep 
+    mpvpaper
 
 # remote control
     sunshine 
+    moonlight-qt
   ];
 }
