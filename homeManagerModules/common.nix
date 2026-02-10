@@ -3,6 +3,7 @@
   imports = [
     ./cliPrograms
     ./windowManagers
+    ./stylix
     ./otherPackages.nix
   ];
 
@@ -11,6 +12,11 @@
 
   # Enable and configure Hyprland
   hyprlandConf.enable = true;
+
+  autoStyling = {
+    enable = true;
+    useDynamicColors = true;
+  };
 
   home = {
     username = user.name;

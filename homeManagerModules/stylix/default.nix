@@ -24,7 +24,7 @@ in
   };
 
   config = lib.mkIf config.autoStyling.enable {
-    hm.stylix = {
+    stylix = {
       enable = true;
       base16Scheme = config.autoStyling.colorScheme;
 

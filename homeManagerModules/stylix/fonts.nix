@@ -6,8 +6,7 @@
 }:
 {
   config = lib.mkIf config.autoStyling.enable {
-    # Change hm.packages to hm.home.packages
-    hm.home.packages = with pkgs; [
+    home.packages = with pkgs; [
       noto-fonts
       noto-fonts-cjk-sans # Korean + CJK
       noto-fonts-cjk-serif
@@ -17,8 +16,8 @@
       nerd-fonts.jetbrains-mono
       font-awesome
     ];
-    
-    hm.stylix.fonts = {
+
+    stylix.fonts = {
       monospace = {
         package = pkgs.nerd-fonts.fira-mono;
         name = "FiraMono Nerd Font";
@@ -43,7 +42,7 @@
       #   popups = 11;
       # };
     };
-    
-    hm.fonts.fontconfig.enable = true;
+
+    fonts.fontconfig.enable = true;
   };
 }
