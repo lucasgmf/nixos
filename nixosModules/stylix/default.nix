@@ -5,40 +5,44 @@
   ...
 }:
 let
-  colorSchemeLink = ./darkdahyun.yaml;
+  colorSchemeLink = ./default.yaml;
 in
 {
+  imports = [
+    ./fonts.nix
+  ];
+
   options = {
     autoStyling = {
       enable = lib.mkEnableOption "enables stylix auto styling";
-      colorScheme = lib.mkOption { default = colorSchemeLink; };
-      image = lib.mkOption { default = ./default.jpg; };
+      colorScheme = lib.mkOption {
+        default = colorSchemeLink;
+        description = "Base16 color scheme for Stylix";
+      };
+      image = lib.mkOption {
+        default = ./default.jpg;
+        description = "Default wallpaper image";
+      };
+      useDynamicColors = lib.mkEnableOption "use pywal for dynamic runtime theming";
     };
   };
 
   config = lib.mkIf config.autoStyling.enable {
-    stylix = {
-      enable = false;
+    hm.stylix = {
+      enable = true;
       base16Scheme = config.autoStyling.colorScheme;
-      image = config.autoStyling.image;
 
-      fonts = {
-        monospace = {
-          package = pkgs.nerd-fonts.fira-mono;
-          name = "FiraMono Nerd Font";
-        };
-        sansSerif = {
-          package = pkgs.noto-fonts;
-          name = "Noto Sans";
-        };
-        serif = {
-          package = pkgs.noto-fonts;
-          name = "Noto Serif";
-        };
-        emoji = {
-          package = pkgs.noto-fonts-color-emoji;
-          name = "Noto Color Emoji";
-        };
+      # Don't manage wallpaper - let Hyprland handle it
+      image = lib.mkForce null;
+
+      # Disable Stylix theming for apps you want pywal to handle
+      targets = lib.mkIf config.autoStyling.useDynamicColors {
+        # TODO: add more apps here
+        hyprland.enable = false;
+        waybar.enable = false;
+        kitty.enable = false;
+        alacritty.enable = false;
+        rofi.enable = false;
       };
     };
   };

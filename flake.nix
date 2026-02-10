@@ -3,7 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
-    
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -12,12 +12,18 @@
     stylix.url = "github:danth/stylix";
 
     hyprland.url = "github:hyprwm/Hyprland";
+
+    secrets = {
+      url = "git+ssh://git@github.com/lucasgmf/nixos-secrets.git";
+      flake = false;
+    };
   };
 
   outputs =
     {
       self,
       nixpkgs,
+      secrets,
       ...
     }@inputs:
     let
@@ -44,6 +50,8 @@
 
             users.${user.name} = import homeConfigPath;
             sharedModules = [
+              inputs.stylix.homeManagerModules.stylix
+              secrets.outPath
             ];
           };
         }
@@ -58,7 +66,8 @@
 
           modules = [
             ./hosts/nix-laptop
-          ] ++ homeConfig ./homeManagerModules/laptop.nix;
+          ]
+          ++ homeConfig ./homeManagerModules/laptop.nix;
         };
       };
     };
