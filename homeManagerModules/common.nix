@@ -4,7 +4,7 @@
     ./cliPrograms
     ./windowManagers
     ./otherPackages.nix
-  ] ++ (if builtins.pathExists ../secrets then [ ../secrets ] else []);
+  ];
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
   # nixpkgs.overlays = lib.mkForce null;
