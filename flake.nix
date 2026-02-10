@@ -43,6 +43,8 @@
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
+            backupFileExtension = "backup";
+            verbose = true;
 
             extraSpecialArgs = {
               inherit inputs user;
@@ -51,7 +53,6 @@
             users.${user.name} = import homeConfigPath;
             sharedModules = [
               inputs.stylix.homeModules.stylix
-              secrets.outPath
             ];
           };
         }
