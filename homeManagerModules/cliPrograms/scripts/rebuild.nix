@@ -5,6 +5,10 @@
       set -e
       pushd ~/nixos/
       # nvim
+      cd nixosSecrets/
+      git add .
+      git commit -m "$gen current  $(date '+%Y-%m-%d %H:%M:%S')  $(nixos-version)  $(uname -r)"
+      cd ..
       nix flake update secrets
       git add .
       git diff --cached -U0 *.nix
