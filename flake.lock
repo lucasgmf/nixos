@@ -658,11 +658,11 @@
     "secrets": {
       "flake": false,
       "locked": {
-        "lastModified": 1770762058,
-        "narHash": "sha256-+GzHc1f4NaS1FK5SoWr+F7SG+0NrfwkUlJgmL0TRWII=",
+        "lastModified": 1770763323,
+        "narHash": "sha256-/85yZPdz6nj5wLrKwEAPmZO0kKaae55dripIXx23ceg=",
         "ref": "refs/heads/main",
-        "rev": "c19ace6dcaf7abc37fd8af94dd5648ffb4e8ce33",
-        "revCount": 9,
+        "rev": "0a4c9b47dd301ea43a61529099f55d8bbf274bd1",
+        "revCount": 12,
         "type": "git",
         "url": "ssh://git@github.com/lucasgmf/nixos-secrets.git"
       },
