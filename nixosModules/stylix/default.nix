@@ -39,7 +39,7 @@ in
       targets = lib.mkIf config.autoStyling.useDynamicColors {
         # TODO: add more apps here
         hyprland.enable = false;
-        waybar.enable = false;
+        # waybar.enable = false;
         kitty.enable = false;
         alacritty.enable = false;
         rofi.enable = false;
