@@ -16,4 +16,9 @@ require("nvim-treesitter").setup{
 }
 
 -- TODO: Language models!
+
+-- Set LSP log level (default is 'warn')
+-- Options: 'trace', 'debug', 'info', 'warn', 'error', 'off'
+vim.lsp.set_log_level('error')  -- Only log errors, not warnings/info/debug
+
 require("after.lang.lsp")

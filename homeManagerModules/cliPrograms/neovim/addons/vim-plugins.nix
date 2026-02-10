@@ -7,7 +7,7 @@
 #   nvim-tree-lua
 
   lsp-zero-nvim
-#   nvim-lspconfig
+  nvim-lspconfig
 #   luasnip
 
 #   cmp-nvim-lsp
