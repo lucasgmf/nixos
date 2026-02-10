@@ -50,7 +50,7 @@
 
             users.${user.name} = import homeConfigPath;
             sharedModules = [
-              inputs.stylix.homeManagerModules.stylix
+              inputs.stylix.homeModules.stylix
               secrets.outPath
             ];
           };

@@ -19,10 +19,6 @@ in
         default = colorSchemeLink;
         description = "Base16 color scheme for Stylix";
       };
-      image = lib.mkOption {
-        default = ./default.jpg;
-        description = "Default wallpaper image";
-      };
       useDynamicColors = lib.mkEnableOption "use pywal for dynamic runtime theming";
     };
   };
@@ -39,6 +35,7 @@ in
       targets = lib.mkIf config.autoStyling.useDynamicColors {
         # TODO: add more apps here
         hyprland.enable = false;
+        # BUG: Breaks waybar
         # waybar.enable = false;
         kitty.enable = false;
         alacritty.enable = false;

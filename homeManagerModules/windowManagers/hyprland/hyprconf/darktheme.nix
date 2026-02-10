@@ -34,7 +34,7 @@ in
     qt = {
       enable = true;
       platformTheme.name = lib.mkForce "gtk";
-      style.name = lib.mkForce "adwaita-dark";
+      # style.name = lib.mkForce "adwaita-dark";
     };
 
     dconf.settings = {
