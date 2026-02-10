@@ -6,7 +6,7 @@
 #   nvim-web-devicons
 #   nvim-tree-lua
 
-#   lsp-zero-nvim
+  lsp-zero-nvim
 #   nvim-lspconfig
 #   luasnip
 

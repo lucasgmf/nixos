@@ -9,8 +9,8 @@
        })
 
    # global servers
-   # nil # nix
-   # gcc
+   nil # nix
+   gcc
    # nixfmt-rfc-style
    #
    # lua-language-server
