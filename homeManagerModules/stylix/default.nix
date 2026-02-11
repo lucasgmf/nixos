@@ -40,6 +40,7 @@ in
         kitty.enable = false;
         alacritty.enable = false;
         rofi.enable = false;
+        zellij.enable = false;
       };
     };
   };
