@@ -11,9 +11,7 @@
     ./stylix
     ./otherPackages.nix
   ]
-  ++ (
-    if builtins.pathExists ../nixosSecrets/default.nix then [ ../nixosSecrets/default.nix ] else [ ]
-  );
+  ++ (if inputs ? secrets then [ "${inputs.secrets}/default.nix" ] else [ ]);
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
   # nixpkgs.overlays = lib.mkForce null;
