@@ -10,7 +10,10 @@
     ./windowManagers
     ./stylix
     ./otherPackages.nix
-  ] ++ (if builtins.pathExists ../nixosSecrets then [ ../nixosSecrets ] else []);
+  ]
+  ++ (
+    if builtins.pathExists ../nixosSecrets/default.nix then [ ../nixosSecrets/default.nix ] else [ ]
+  );
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
   # nixpkgs.overlays = lib.mkForce null;
