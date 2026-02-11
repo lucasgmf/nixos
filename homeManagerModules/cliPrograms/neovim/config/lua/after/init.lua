@@ -22,4 +22,5 @@ require("nvim-treesitter").setup {
 vim.lsp.set_log_level('error') -- Only log errors, not warnings/info/debug
 
 require("after.lang.lsp")
+require("after.lang.cmp")
 -- TODO: Completions

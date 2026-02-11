@@ -26,8 +26,8 @@
         window = {
           decorations = "none";
           dynamic_title = true;
-          # opacity = 0.95;
-          opacity = 0.80;
+          opacity = 0.90;
+          # opacity = 0.80;
           padding = {
             x = 12;
             y = 12;
@@ -35,14 +35,14 @@
         };
 
         colors = {
-            primary = {
-                # background = "0x1d1f21";
-                # foreground = "0xffffff";
-            };
+          primary = {
+            # background = "0x1d1f21";
+            # foreground = "0xffffff";
+          };
         };
 
         font = {
-            size = 14.0;
+          size = 14.0;
         };
       };
     };
