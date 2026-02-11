@@ -10,7 +10,6 @@
     ./windowManagers
     ./stylix
     ./otherPackages.nix
-    ./importSecrets.nix
   ];
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
