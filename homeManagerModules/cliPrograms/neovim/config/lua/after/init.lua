@@ -6,8 +6,11 @@ require("after.plugin.mini") -- TODO: see this later
 require("after.plugin.startify")
 require("after.plugin.telescope")
 require("after.plugin.todo-comments")
+require("after.plugin.undotree")
+
 -- TODO: UNDOTREE
 -- TODO: zellij or tmux navigation
+
 require("nvim-treesitter").setup {
     highlight = {
         enable = true,
@@ -15,12 +18,6 @@ require("nvim-treesitter").setup {
     },
 }
 
--- TODO: Language models!
-
--- Set LSP log level (default is 'warn')
--- Options: 'trace', 'debug', 'info', 'warn', 'error', 'off'
-vim.lsp.set_log_level('error') -- Only log errors, not warnings/info/debug
-
 require("after.lang.lsp")
 require("after.lang.cmp")
--- TODO: Completions
+-- TODO: rustaceanvim
