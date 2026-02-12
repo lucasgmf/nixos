@@ -26,8 +26,7 @@
         window = {
           decorations = "none";
           dynamic_title = true;
-          opacity = 0.90;
-          # opacity = 0.80;
+          opacity = 0.70;
           padding = {
             x = 12;
             y = 12;

@@ -54,17 +54,19 @@
 
     kdePackages.dolphin
     ffmpeg_7
-    
-    # hyprland cursor 
+
+    # hyprland cursor
     # TODO: remove this from here
     rose-pine-hyprcursor
-    thunar #file explorer
+    thunar # file explorer
     # adjust screen color temperature to reduce blue light
-    gammastep 
+    gammastep
     mpvpaper
 
-# remote control
-    sunshine 
+    # remote control
+    sunshine
     moonlight-qt
+
+    foliate
   ];
 }

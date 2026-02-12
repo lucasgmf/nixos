@@ -1,5 +1,4 @@
 local cmp = require('cmp')
-local cmp_format = require('lsp-zero').cmp_format({ details = true })
 
 cmp.setup({
     sources = {
@@ -8,7 +7,6 @@ cmp.setup({
         { name = 'path' },
         { name = 'crates' },
     },
-    formatting = cmp_format,
 })
 
 cmp.setup.cmdline(':', {
@@ -20,4 +18,3 @@ cmp.setup.cmdline(':', {
     }),
     matching = { disallow_symbol_nonprefix_matching = false }
 })
-

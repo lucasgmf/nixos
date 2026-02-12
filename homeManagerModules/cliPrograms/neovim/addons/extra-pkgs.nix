@@ -2,7 +2,6 @@
 {
   programs.neovim.extraPackages = with pkgs; [
 
-    # vim-startify dependencies
     (pkgs.buildEnv {
       name = "neovim-startify-extras";
       paths = [
@@ -11,15 +10,19 @@
       ];
     })
 
-    # global servers
     nil
     clang-tools
     gopls
     lua-language-server
-    python312Packages.python-lsp-server
+    (pkgs.python3.withPackages (
+      ps: with ps; [
+        python-lsp-server
+        python-lsp-black
+        pylsp-mypy
+      ]
+    ))
     marksman
 
-    # other tools
     gcc
   ];
 }

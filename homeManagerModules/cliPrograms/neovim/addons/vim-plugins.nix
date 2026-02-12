@@ -54,7 +54,6 @@
     telescope-fzf-native-nvim
 
     # Treesitter and language grammar packs
-    nvim-treesitter
     (nvim-treesitter.withPlugins (p: [
       p.c
       p.cpp

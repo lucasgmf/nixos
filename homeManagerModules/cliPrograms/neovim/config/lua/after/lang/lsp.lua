@@ -1,26 +1,33 @@
 vim.lsp.set_log_level('error')
 
-local lsp_zero = require('lsp-zero')
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false, -- errors while typing
+    severity_sort = true,
+})
 
-lsp_zero.on_attach(function(client, bufnr)
-    lsp_zero.default_keymaps({ buffer = bufnr })
-
-    local function opts(desc)
-        return { desc = "LSP: " .. desc, buffer = bufnr, nowait = true, remap = false }
+-- Keymaps set up on every LSP attach
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(event)
+        local bufnr = event.buf
+        local function opts(desc)
+            return { desc = "LSP: " .. desc, buffer = bufnr, nowait = true, remap = false }
+        end
+        local builtin = require("telescope.builtin")
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+        vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, opts("Format buffer"))
+        vim.keymap.set("n", "<leader>cs", builtin.lsp_document_symbols, opts("Find symbols"))
+        vim.keymap.set("n", "gd", function() builtin.lsp_definitions({ reuse_win = true }) end, opts("Goto definition"))
+        vim.keymap.set("n", "gr", function() builtin.lsp_references({ reuse_win = true }) end, opts("Goto references"))
+        vim.keymap.set("n", "gi", function() builtin.lsp_implementations({ reuse_win = true }) end,
+            opts("Goto Implementation"))
+        vim.keymap.set("n", "gt", function() builtin.lsp_type_definitions({ reuse_win = true }) end,
+            opts("Goto Type Definition"))
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Hover docs"))
     end
-
-    local builtin = require "telescope.builtin"
-    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts("Code action"))
-    -- vim.keymap.set("n", "<leader>R", function() vim.lsp.buf.rename() end, opts("Rename"))
-    vim.keymap.set("n", "<leader>cf", function() vim.lsp.buf.format() end, opts("Format buffer"))
-    vim.keymap.set('n', '<leader>cs', builtin.lsp_document_symbols, opts("Find symbols"))
-    vim.keymap.set("n", "gd", function() builtin.lsp_definitions({ reuse_win = true }) end, opts("Goto definition"))
-    vim.keymap.set("n", "gr", function() builtin.lsp_references({ reuse_win = true }) end, opts("Goto references"))
-    vim.keymap.set("n", "gi", function() builtin.lsp_implementations({ reuse_win = true }) end,
-        opts("Goto Implementation"))
-    vim.keymap.set("n", "gt", function() builtin.lsp_type_definitions({ reuse_win = true }) end,
-        opts("Goto Type Definition"))
-end)
+})
 
 -- Define LSP server configurations
 local servers = {
@@ -38,6 +45,17 @@ local servers = {
         cmd = { 'pylsp' },
         filetypes = { 'python' },
         root_dir = vim.fs.root(0, { 'pyproject.toml', 'setup.py', '.git' }),
+        settings = {
+            pylsp = {
+                plugins = {
+                    black = { enabled = true },
+                    mypy = { enabled = true, live_mode = true },
+                    pyflakes = { enabled = false },
+                    pycodestyle = { enabled = false },
+                    mccabe = { enabled = false },
+                }
+            }
+        }
     },
     lua_ls = { -- lua
         cmd = { 'lua-language-server' },
