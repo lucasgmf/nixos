@@ -41,6 +41,7 @@ in
         alacritty.enable = false;
         rofi.enable = false;
         zellij.enable = false;
+        # nautilus.enable = false;
       };
     };
   };

@@ -24,7 +24,7 @@
             settings = {
                 "$mainMod" = "SUPER";
                 "$terminal" = "alacritty";
-                "$fileManager" = "dolphin";
+                "$fileManager" = "nautilus";
                 "$menu" = "wofi --show drun";
 
                 exec-once = [

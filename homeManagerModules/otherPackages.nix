@@ -58,7 +58,8 @@
     # hyprland cursor
     # TODO: remove this from here
     rose-pine-hyprcursor
-    thunar # file explorer
+    nautilus
+
     # adjust screen color temperature to reduce blue light
     gammastep
     mpvpaper

@@ -19,20 +19,35 @@
     firewall.enable = true;
     # firewall.allowedTCPPorts = [ ];
 
-    # Sunshine ports 
-    firewall.allowedTCPPorts = [ 47984 47989 47990 48010 ];
-    firewall.allowedUDPPorts = [ 47998 47999 48000 48002 48010 ];
-    networkmanager.insertNameservers = [ "1.1.1.1" "8.8.8.8"];
+    # Sunshine ports
+    firewall.allowedTCPPorts = [
+      47984
+      47989
+      47990
+      48010
+    ];
+    firewall.allowedUDPPorts = [
+      47998
+      47999
+      48000
+      48002
+      48010
+    ];
+    networkmanager.insertNameservers = [
+      "1.1.1.1"
+      "8.8.8.8"
+    ];
   };
 
   services.gnome.gnome-keyring.enable = true;
   services.resolved.enable = true;
+  services.gvfs.enable = true;
 
   # screencast
   services.avahi = {
-	  enable = true;
-	  nssmdns4 = true;
-	  openFirewall = true;
+    enable = true;
+    nssmdns4 = true;
+    openFirewall = true;
   };
 
   # Enable bluetooth
@@ -44,10 +59,15 @@
     libinput.touchpad.naturalScrolling = true;
   };
 
+  programs.dconf.enable = true;
+
   programs.nix-ld = {
     enable = true;
     package = pkgs.nix-ld;
-    libraries = with pkgs; [ libusb1 cmake ];
+    libraries = with pkgs; [
+      libusb1
+      cmake
+    ];
   };
 
   virtualisation.docker = {
