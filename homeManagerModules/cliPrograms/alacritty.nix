@@ -14,7 +14,7 @@
 
       settings = {
         cursor = {
-          blink_interval = 550;
+          blink_interval = 500;
           unfocused_hollow = false;
 
           style = {
@@ -26,7 +26,7 @@
         window = {
           decorations = "none";
           dynamic_title = true;
-          opacity = 0.70;
+          opacity = 0.85;
           padding = {
             x = 12;
             y = 12;

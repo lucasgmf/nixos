@@ -44,16 +44,8 @@
     postman
     wireshark
 
-    picoprobe-udev-rules # probe-rs udev rules
-    platformio-core.udev # platformio
-    openocd # platformio
-    platformio
-
     python312
     discord
-
-    kdePackages.dolphin
-    ffmpeg_7
 
     # hyprland cursor
     # TODO: remove this from here
