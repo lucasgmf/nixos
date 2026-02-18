@@ -47,7 +47,6 @@
     python312
     discord
 
-    # hyprland cursor
     # TODO: remove this from here
     rose-pine-hyprcursor
     nautilus
