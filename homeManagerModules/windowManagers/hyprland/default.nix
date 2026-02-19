@@ -33,16 +33,19 @@
         "$fileManager" = "nautilus";
         "$menu" = "wofi --show drun";
 
-        env = [
-          "HYPRLAND_DEFAULT_WALLPAPER 0"
-        ];
+        env = {
+          "HYPRLAND_DEFAULT_WALLPAPER" = "0";
+        };
+
+        misc = {
+          disable_hyprland_logo = true;
+        };
 
         exec-once = [
           "swww init"
           "swww img /home/lucasgmf/Pictures/background2.jpg"
           "hyprctl setcursor rose-pine-hyprcursor 32"
           "gnome-keyring-daemon --start --components=secrets,ssh"
-          "swww-daemon"
           "nm-applet --indicator"
           "waybar"
           "dunst"
