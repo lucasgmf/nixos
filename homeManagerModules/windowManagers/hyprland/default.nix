@@ -34,7 +34,7 @@
         "$menu" = "wofi --show drun";
 
         env = {
-          "HYPRLAND_DEFAULT_WALLPAPER" = "0";
+          HYPRLAND_DEFAULT_WALLPAPER = 0;
         };
 
         misc = {
