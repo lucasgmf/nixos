@@ -4,6 +4,9 @@
   config,
   ...
 }:
+let
+  background_path = /home/lucasgmf/Pictures/background2.jpg;
+in
 {
 
   imports = [
@@ -33,17 +36,13 @@
         "$fileManager" = "nautilus";
         "$menu" = "wofi --show drun";
 
-        env = {
-          HYPRLAND_DEFAULT_WALLPAPER = 0;
-        };
-
         misc = {
           disable_hyprland_logo = true;
         };
 
         exec-once = [
-          "swww init"
-          "swww img /home/lucasgmf/Pictures/background2.jpg"
+          "swww-daemon"
+          "swww img ${toString background_path} -- resize crop -- transition-type none --transition-duration 0"
           "hyprctl setcursor rose-pine-hyprcursor 32"
           "gnome-keyring-daemon --start --components=secrets,ssh"
           "nm-applet --indicator"

@@ -23,6 +23,7 @@
     #   ccc-nvim # Hex visualizer
     mini-nvim
     # persistence-nvim
+    #TODO: integrate this  
     # zellij-nav-nvim
 
     # props to ThePrimeagen
