@@ -2,10 +2,6 @@ show_release_notes false
 show_startup_tips false
 pane_frames false
 
-plugins {
-    compact-bar location="zellij:compact-bar"
-    tooltip "F1"
-}
 
 layout {
     default_tab_template {
