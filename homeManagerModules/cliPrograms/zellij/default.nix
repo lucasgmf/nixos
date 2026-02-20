@@ -22,10 +22,12 @@
       # in
       {
         ".config/zellij/config.kdl".text = ''
-          ${builtins.readFile ./config.kdl}
-          ${builtins.readFile ./extraPlugins/zjframes.kdl}
-        '';
-
+              ${builtins.readFile ./config.kdl}
+          plugins {
+              zjframes location="file:~/.config/zellij/plugins/zjframes.wasm" {
+                  ${builtins.readFile ./extraPlugins/zjframes.kdl}
+              }
+          }'';
         ".config/zellij/layouts" = {
           source = ./layouts;
           recursive = true;
