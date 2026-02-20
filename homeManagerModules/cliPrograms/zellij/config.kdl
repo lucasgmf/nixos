@@ -1,21 +1,20 @@
 show_release_notes false
 show_startup_tips false
-pane_frames false
+// pane_frames false
 
-load_plugins {
-    "file:~/.config/zellij/plugins/zjframes.wasm" {
-        hide_frame_for_single_pane       "false"
-        hide_frame_except_for_search     "true"
-        hide_frame_except_for_fullscreen "true"
-    }
-}
+// load_plugins {
+//     "file:~/.config/zellij/plugins/zjframes.wasm" {
+//         hide_frame_for_single_pane       "true"
+//         hide_frame_except_for_search     "true"
+//         hide_frame_except_for_fullscreen "true"
+//     }
+// }
 
 plugins {
     zellij-forgot location="https://github.com/karimould/zellij-forgot/releases/download/0.4.0/zellij_forgot.wasm"
     compact-bar location="zellij:compact-bar"
     tooltip location="zellij:tooltip"
-    zjstatus location="file:~/config/zellij/plugins/zjstatus.wasm" 
-    {
+    zjstatus location="file:~/.config/zellij/plugins/zjstatus.wasm" {
         // from https://github.com/merikan/.dotfiles/blob/main/config/zellij/themes/zjstatus/catppuccin.kdl
         // -- Catppuccin Mocha --
         color_rosewater "#f5e0dc"
