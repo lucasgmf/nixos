@@ -23,6 +23,7 @@
       {
         ".config/zellij/config.kdl".text = ''
           ${builtins.readFile ./config.kdl}
+          ${builtins.readFile ./extraPlugins/zjframes.kdl}
         '';
 
         ".config/zellij/layouts" = {
