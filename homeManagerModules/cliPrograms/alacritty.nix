@@ -28,7 +28,8 @@
           dynamic_title = true;
           opacity = 0.85;
           padding = {
-            x = 12;
+            # x = 12;
+            x = 6;
             y = 12;
           };
         };
