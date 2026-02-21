@@ -34,6 +34,7 @@ o.scrolloff = 8
 -- o.colorcolumn = "80"
 o.signcolumn = "yes"
 o.background = "dark"
+o.guicursor = "a:block"
 
 -- Remove viminfo file
 -- o.viminfo = ""

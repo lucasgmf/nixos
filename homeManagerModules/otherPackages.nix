@@ -11,6 +11,9 @@
     networkmanager-l2tp
     xl2tpd
 
+    blueman
+    pavucontrol
+
     # other Cli tools
     fastfetch
     ripgrep
@@ -27,6 +30,7 @@
     gh
 
     kitty
+    pix
 
     # GUI apps
     firefox
@@ -40,21 +44,21 @@
     postman
     wireshark
 
-    picoprobe-udev-rules # probe-rs udev rules
-    platformio-core.udev # platformio
-    openocd # platformio
-    platformio
-
     python312
     discord
 
-    kdePackages.dolphin
-    
-    # hyprland cursor 
     # TODO: remove this from here
     rose-pine-hyprcursor
-    thunar #file explorer
+    nautilus
+
     # adjust screen color temperature to reduce blue light
-    gammastep 
+    gammastep
+    mpvpaper
+
+    # remote control
+    sunshine
+    moonlight-qt
+
+    foliate
   ];
 }

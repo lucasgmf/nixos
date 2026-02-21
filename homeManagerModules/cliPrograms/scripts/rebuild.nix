@@ -4,7 +4,8 @@
     (pkgs.writeShellScriptBin "rebuild" ''
       set -e
       pushd ~/nixos/
-      nvim
+      # nvim
+      nix flake update secrets
       git add .
       git diff --cached -U0 *.nix
       echo "NixOS Rebuilding..."

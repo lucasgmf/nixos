@@ -651,7 +651,24 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs_2",
+        "secrets": "secrets",
         "stylix": "stylix"
+      }
+    },
+    "secrets": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1770774774,
+        "narHash": "sha256-tR5J8plE3nuxV/K2JN4Exle9S3N+sqOVwVxk4v2fKHo=",
+        "ref": "refs/heads/main",
+        "rev": "1ed5f44467fc778c77a4a013185df7f159ef70c7",
+        "revCount": 29,
+        "type": "git",
+        "url": "ssh://git@github.com/lucasgmf/nixos-secrets.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/lucasgmf/nixos-secrets.git"
       }
     },
     "stylix": {

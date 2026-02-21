@@ -1,16 +1,8 @@
-show_release_notes false
-show_startup_tips false
-
-plugins {
-    compact-bar location="zellij:compact-bar"
-    tooltip "F1"
-}
-
 layout {
     default_tab_template {
         children
         pane size=1 borderless=true {
-            plugin location="compact-bar"
+            plugin location="zjstatus"
         }
     }
 }

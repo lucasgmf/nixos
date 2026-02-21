@@ -29,7 +29,6 @@
 
     environment.systemPackages = with pkgs; [
 
-
     # enables workspaces displayed correctly? test without it!
     (pkgs.waybar.overrideAttrs (oldAttrs: {
 	mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];})

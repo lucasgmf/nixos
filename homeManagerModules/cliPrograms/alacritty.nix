@@ -14,7 +14,7 @@
 
       settings = {
         cursor = {
-          blink_interval = 550;
+          blink_interval = 500;
           unfocused_hollow = false;
 
           style = {
@@ -26,22 +26,23 @@
         window = {
           decorations = "none";
           dynamic_title = true;
-          opacity = 0.965;
+          opacity = 0.85;
           padding = {
-            x = 12;
+            # x = 12;
+            x = 6;
             y = 12;
           };
         };
 
         colors = {
-            primary = {
-                background = "0x1d1f21";
-                foreground = "0xffffff";
-            };
+          primary = {
+            # background = "0x1d1f21";
+            # foreground = "0xffffff";
+          };
         };
 
         font = {
-            size = 14.0;
+          size = 14.0;
         };
       };
     };

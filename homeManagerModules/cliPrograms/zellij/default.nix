@@ -18,16 +18,24 @@
     # stylix.targets.zellij.enable = true;
     home.file =
       # let
-        # colors = config.lib.stylix.colors.withHashtag;
+      # colors = config.lib.stylix.colors.withHashtag;
       # in
       {
         ".config/zellij/config.kdl".text = ''
           ${builtins.readFile ./config.kdl}
-         '';
- 
-         ".config/zellij/layouts" = {
+        '';
+
+        ".config/zellij/layouts" = {
           source = ./layouts;
           recursive = true;
+        };
+
+        ".config/zellij/plugins/zjframes.wasm" = {
+          source = ./extraPlugins/zjframes.wasm;
+        };
+
+        ".config/zellij/plugins/zjstatus.wasm" = {
+          source = ./extraPlugins/zjstatus.wasm;
         };
       };
   };

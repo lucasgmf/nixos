@@ -1,16 +1,28 @@
-{ user, lib, ... }:
+{
+  user,
+  lib,
+  inputs,
+  ...
+}:
 {
   imports = [
     ./cliPrograms
     ./windowManagers
+    ./stylix
     ./otherPackages.nix
-  ];
+  ]
+  ++ (if inputs ? secrets then [ "${inputs.secrets}/default.nix" ] else [ ]);
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
-  # nixpkgs.overlays = lib.mkForce null;
+  nixpkgs.overlays = lib.mkForce null;
 
   # Enable and configure Hyprland
   hyprlandConf.enable = true;
+
+  autoStyling = {
+    enable = true;
+    useDynamicColors = true;
+  };
 
   home = {
     username = user.name;
