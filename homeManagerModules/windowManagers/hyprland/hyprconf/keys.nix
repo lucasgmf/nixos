@@ -29,6 +29,7 @@
       "$mainMod, P, pseudo,"
       "$mainMod, J, togglesplit,"
       "$mainMod, F, fullscreen, 0"
+      "$mainMod, W, exec, pkill -SIGUSR1 waybar"
       "$mainMod ALT, F4, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')"
 
       # Move focus
