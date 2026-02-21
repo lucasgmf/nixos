@@ -22,7 +22,6 @@
       "$mainMod, return, exec, $terminal"
       "$mainMod, B, exec, firefox"
       "$mainMod, Q, killactive,"
-      " $mainMod ALT, F4, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid') "
       "$mainMod, M, exit,"
       "$mainMod, E, exec, $fileManager"
       "$mainMod, V, togglefloating,"
@@ -30,7 +29,9 @@
       "$mainMod, P, pseudo,"
       "$mainMod, J, togglesplit,"
       "$mainMod, F, fullscreen, 0"
-      "$mainMod, W, exec, pkill -SIGUSR1 waybar"
+      # Kill pid of active window with or without fnLock
+      "$mabind = $mainMod ALT, F4, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')
+bind = $mainMod ALT, XF86AudioMicMute, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')inMod, W, exec, pkill -SIGUSR1 waybar"
 
       # Move focus
       "$mainMod, l, movefocus, l"
