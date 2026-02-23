@@ -1,5 +1,25 @@
 vim.lsp.set_log_level('error')
 
+-- ============================================================
+-- Line lengths
+-- ============================================================
+local LINE_LENGTHS = {
+    python = 88,
+    lua    = 120,
+    go     = 100,
+    c      = 100,
+    cpp    = 100,
+}
+
+vim.opt.colorcolumn = tostring(LINE_LENGTHS.python)
+
+-- Format on save
+vim.api.nvim_create_autocmd('BufWritePre', {
+    callback = function()
+        vim.lsp.buf.format({ async = false })
+    end,
+})
+
 vim.diagnostic.config({
     virtual_text = true,
     signs = true,
@@ -48,7 +68,7 @@ local servers = {
         settings = {
             pylsp = {
                 plugins = {
-                    black = { enabled = true },
+                    black = { enabled = true, line_length = LINE_LENGTHS.python },
                     mypy = { enabled = true, live_mode = true },
                     pyflakes = { enabled = false },
                     pycodestyle = { enabled = false },
@@ -61,6 +81,15 @@ local servers = {
         cmd = { 'lua-language-server' },
         filetypes = { 'lua' },
         root_dir = vim.fs.root(0, { '.luarc.json', '.luarc.jsonc', '.stylua.toml', '.git' }),
+        settings = {
+            Lua = {
+                format = {
+                    defaultConfig = {
+                        max_line_length = tostring(LINE_LENGTHS.lua),
+                    }
+                }
+            }
+        }
     },
     gopls = { -- go
         cmd = { 'gopls' },
