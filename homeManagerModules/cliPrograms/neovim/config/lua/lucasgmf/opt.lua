@@ -55,4 +55,3 @@ o.splitright = true
 o.splitbelow = true
 o.errorbells = false
 o.updatetime = 50
-
