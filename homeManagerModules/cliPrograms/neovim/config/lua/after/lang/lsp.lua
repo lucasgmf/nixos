@@ -11,7 +11,7 @@ local LINE_LENGTHS = {
     cpp    = 100,
 }
 
-vim.opt.colorcolumn = tostring(LINE_LENGTHS.python)
+-- vim.opt.colorcolumn = tostring(LINE_LENGTHS.python)
 
 -- Format on save
 vim.api.nvim_create_autocmd('BufWritePre', {

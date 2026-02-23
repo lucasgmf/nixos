@@ -13,12 +13,14 @@
     nil
     clang-tools
     gopls
+    # go / initialize as a nix shell if needed...
     lua-language-server
     (pkgs.python3.withPackages (
       ps: with ps; [
         python-lsp-server
         python-lsp-black
         pylsp-mypy
+        black
       ]
     ))
     marksman
