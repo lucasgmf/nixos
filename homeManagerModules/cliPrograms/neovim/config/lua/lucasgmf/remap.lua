@@ -22,4 +22,4 @@ vim.keymap.set("n", "Q", "<nop>")
 vim.keymap.set("n", "<leader>r", [[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]])
 
 -- just getting used to control c
-vim.keymap.set({ "i", "v"}, "<Esc>", "<Nop>", { noremap = true, silent = true })
+-- vim.keymap.set({ "i", "v"}, "<Esc>", "<Nop>", { noremap = true, silent = true })

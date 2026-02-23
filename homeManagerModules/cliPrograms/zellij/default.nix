@@ -30,9 +30,9 @@
           recursive = true;
         };
 
-        ".config/zellij/plugins/zjframes.wasm" = {
-          source = ./extraPlugins/zjframes.wasm;
-        };
+        # ".config/zellij/plugins/zjframes.wasm" = {
+        #   source = ./extraPlugins/zjframes.wasm;
+        # };
 
         ".config/zellij/plugins/zjstatus.wasm" = {
           source = ./extraPlugins/zjstatus.wasm;

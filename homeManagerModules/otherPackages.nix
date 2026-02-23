@@ -60,5 +60,6 @@
     moonlight-qt
 
     foliate
+    melonDS
   ];
 }
