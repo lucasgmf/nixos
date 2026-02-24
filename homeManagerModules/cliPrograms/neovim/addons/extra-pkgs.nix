@@ -30,6 +30,7 @@
     shfmt
     shellcheck
 
+    alejandra
     gcc
   ];
 }
