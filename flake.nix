@@ -14,7 +14,7 @@
     hyprland.url = "github:hyprwm/Hyprland";
 
     secrets = {
-      url = "git+ssh://git@github.com/lucasgmf/nixos-secrets.git";
+      url = "git+file:///home/lucasgmf/nixos/nixosSecrets";
       flake = false;
     };
   };

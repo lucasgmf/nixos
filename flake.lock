@@ -664,11 +664,11 @@
         "rev": "03b6c052c0fb37a930153aca6602fb3e928c4ea8",
         "revCount": 32,
         "type": "git",
-        "url": "ssh://git@github.com/lucasgmf/nixos-secrets.git"
+        "url": "file:///home/lucasgmf/nixos/nixosSecrets"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@github.com/lucasgmf/nixos-secrets.git"
+        "url": "file:///home/lucasgmf/nixos/nixosSecrets"
       }
     },
     "stylix": {
