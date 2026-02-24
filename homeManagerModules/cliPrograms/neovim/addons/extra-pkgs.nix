@@ -25,6 +25,11 @@
     ))
     marksman
 
+    # Shell scripting
+    bash-language-server
+    shfmt
+    shellcheck
+
     gcc
   ];
 }

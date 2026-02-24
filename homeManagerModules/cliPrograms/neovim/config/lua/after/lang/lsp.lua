@@ -9,16 +9,10 @@ local LINE_LENGTHS = {
     go     = 100,
     c      = 100,
     cpp    = 100,
+    sh     = 100,
 }
 
 -- vim.opt.colorcolumn = tostring(LINE_LENGTHS.python)
-
--- Format on save
-vim.api.nvim_create_autocmd('BufWritePre', {
-    callback = function()
-        vim.lsp.buf.format({ async = false })
-    end,
-})
 
 vim.diagnostic.config({
     virtual_text = true,
@@ -100,6 +94,11 @@ local servers = {
         cmd = { 'nil' },
         filetypes = { 'nix' },
         root_dir = vim.fs.root(0, { 'flake.nix', '.git' }),
+    },
+    bashls = { -- bash / shell scripts
+        cmd = { 'bash-language-server', 'start' },
+        filetypes = { 'sh', 'bash' },
+        root_dir = vim.fs.root(0, { '.git' }),
     },
 }
 

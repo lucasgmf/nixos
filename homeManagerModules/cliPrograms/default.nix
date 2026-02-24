@@ -29,12 +29,9 @@
     # custom scripts
     ./scripts/rebuild.nix
     ./scripts/update.nix
-    ./scripts/build-iso.nix
-    ./scripts/encr.nix
-    ./scripts/rename_media.nix
-    ./scripts/clean_photo.nix
 
-  ] ++ (if builtins.pathExists ../../nixosSecrets then [ ../../nixosSecrets ] else []);
+  ]
+  ++ (if builtins.pathExists ../../nixosSecrets then [ ../../nixosSecrets ] else [ ]);
 
   options = {
     cliPrograms.enable = lib.mkEnableOption "enable various cli programs and tools";
