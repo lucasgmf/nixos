@@ -93,15 +93,16 @@ local servers = {
     nil_ls = { -- nix
         cmd = { 'nil' },
         filetypes = { 'nix' },
+        root_dir = vim.fs.root(0, { 'flake.nix', '.git' }),
         settings = {
             ['nil'] = {
                 formatting = {
-                    command = { 'alejandra' },
+                    command = { "alejandra", "--quiet" },
                 },
             },
         },
-        root_dir = vim.fs.root(0, { 'flake.nix', '.git' }),
     },
+
     bashls = { -- bash / shell scripts
         cmd = { 'bash-language-server', 'start' },
         filetypes = { 'sh', 'bash' },

@@ -1,11 +1,14 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = [
     (pkgs.writeShellScriptBin "rebuild" ''
       set -e
       pushd ~/nixos/
-      # nvim
       nix flake update secrets
+      pushd ~/nixos/nixosSecrets/
+      git add .
+      git diff --cached -U0
+      git commit -m "secrets update $(date '+%Y-%m-%d %H:%M:%S')" || echo "No secrets changes to commit"
+      popd
       git add .
       git diff --cached -U0 *.nix
       echo "NixOS Rebuilding..."
