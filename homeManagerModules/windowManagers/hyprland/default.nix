@@ -3,12 +3,9 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   background_path = /home/lucasgmf/Pictures/background2.jpg;
-in
-{
-
+in {
   imports = [
     ./hyprconf/keys.nix
     ./hyprconf/xcompose.nix
@@ -20,7 +17,6 @@ in
   };
 
   config = lib.mkIf config.hyprlandConf.enable {
-
     darkTheme.enable = true;
 
     home.packages = [
@@ -41,6 +37,7 @@ in
         };
 
         exec-once = [
+          # TODO: add timer app
           "swww-daemon"
           "swww img ${toString background_path} -- resize crop -- transition-type none --transition-duration 0"
           "hyprctl setcursor rose-pine-hyprcursor 32"

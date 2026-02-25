@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     #network management
     networkmanagerapplet
@@ -59,7 +58,16 @@
     sunshine
     moonlight-qt
 
+    # ebook reader
     foliate
+
+    # nds emulator
     melonDS
+
+    # password manager
+    keepassxc
+
+    # automated time tracker
+    activitywatch
   ];
 }
