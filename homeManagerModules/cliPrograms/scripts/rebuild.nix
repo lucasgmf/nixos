@@ -8,7 +8,6 @@
       git diff --cached -U0
       git commit -m "secrets update $(date '+%Y-%m-%d %H:%M:%S')" || echo "No secrets changes to commit"
       popd
-      nix flake update secrets
       git add .
       git diff --cached -U0 *.nix
       echo "NixOS Rebuilding..."
