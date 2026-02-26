@@ -660,13 +660,14 @@
       "locked": {
         "lastModified": 1772073506,
         "narHash": "sha256-tH5GsyUmqiPX6wRWeLopT/3VqzMAoZ/A9WnKMT4qBgM=",
-        "ref": "refs/heads/main",
+        "ref": "main",
         "rev": "20fd43b66ab0e719920e24934b23cbf0973895d8",
         "revCount": 46,
         "type": "git",
         "url": "file:///home/lucasgmf/nixos/nixosSecrets"
       },
       "original": {
+        "ref": "main",
         "type": "git",
         "url": "file:///home/lucasgmf/nixos/nixosSecrets"
       }
