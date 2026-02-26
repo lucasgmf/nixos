@@ -66,8 +66,5 @@
 
     # password manager
     keepassxc
-
-    # automated time tracker
-    activitywatch
   ];
 }

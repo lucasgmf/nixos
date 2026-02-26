@@ -3,15 +3,19 @@
   lib,
   inputs,
   ...
-}:
-{
-  imports = [
-    ./cliPrograms
-    ./windowManagers
-    ./stylix
-    ./otherPackages.nix
-  ]
-  ++ (if inputs ? secrets then [ "${inputs.secrets}/default.nix" ] else [ ]);
+}: {
+  imports =
+    [
+      ./cliPrograms
+      ./windowManagers
+      ./stylix
+      ./otherPackages.nix
+    ]
+    ++ (
+      if inputs ? secrets
+      then ["${inputs.secrets}/default.nix"]
+      else []
+    );
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
   nixpkgs.overlays = lib.mkForce null;
@@ -27,7 +31,7 @@
   home = {
     username = user.name;
     homeDirectory = "/home/${user.name}";
-    sessionVariables = { };
+    sessionVariables = {};
   };
 
   xdg = {
@@ -42,6 +46,9 @@
 
   nvim.enable = true;
   zsh.enable = true;
+
+  # track app time
+  services.activitywatch.enable = true;
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

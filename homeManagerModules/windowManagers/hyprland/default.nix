@@ -37,7 +37,6 @@ in {
         };
 
         exec-once = [
-          # TODO: add timer app
           "swww-daemon"
           "swww img ${toString background_path} -- resize crop -- transition-type none --transition-duration 0"
           "hyprctl setcursor rose-pine-hyprcursor 32"
@@ -45,6 +44,7 @@ in {
           "nm-applet --indicator"
           "waybar"
           "dunst"
+          # "sleep 10 && aw-qt" # waybar is starting, tray is not ready yet
         ];
 
         monitor = "eDPI-1,2880x1800@90,auto,2";
