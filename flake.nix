@@ -17,7 +17,6 @@
   outputs = {
     self,
     nixpkgs,
-    secrets,
     ...
   } @ inputs: let
     lib = nixpkgs.lib;

@@ -651,25 +651,7 @@
         "home-manager": "home-manager",
         "hyprland": "hyprland",
         "nixpkgs": "nixpkgs_2",
-        "secrets": "secrets",
         "stylix": "stylix"
-      }
-    },
-    "secrets": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1772241790,
-        "narHash": "sha256-Qt847DJnC3LY5w4ZwIDJq+Z29QMvTQOGv/8cTgYsFlI=",
-        "ref": "main",
-        "rev": "787705ba466894dc5e9ce26986cde0c876f1e9f7",
-        "revCount": 49,
-        "type": "git",
-        "url": "file:///home/lucasgmf/nixos/nixosSecrets"
-      },
-      "original": {
-        "ref": "main",
-        "type": "git",
-        "url": "file:///home/lucasgmf/nixos/nixosSecrets"
       }
     },
     "stylix": {
