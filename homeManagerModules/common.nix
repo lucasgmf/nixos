@@ -12,9 +12,15 @@
       ./otherPackages.nix
     ]
     ++ (
-      if inputs ? secrets
-      then ["${inputs.secrets}/default.nix"]
-      else []
+      if
+        builtins.pathExists (
+          /home/lucasgmf/nixos/secrets/default.nix
+        )
+      then
+        builtins.trace "secrets found!" [
+          /home/lucasgmf/nixos/secrets/default.nix
+        ]
+      else builtins.trace "secrets NOT found!" []
     );
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
