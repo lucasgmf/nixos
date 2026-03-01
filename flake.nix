@@ -12,11 +12,6 @@
     stylix.url = "github:danth/stylix";
 
     hyprland.url = "github:hyprwm/Hyprland";
-
-    secrets = {
-      url = "git+file:///home/lucasgmf/nixos/nixosSecrets?ref=main";
-      flake = false;
-    };
   };
 
   outputs = {
