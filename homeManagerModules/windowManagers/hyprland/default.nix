@@ -2,6 +2,7 @@
   pkgs,
   lib,
   config,
+  inputs,
   ...
 }: let
   background_path = /home/lucasgmf/Pictures/background2.jpg;
@@ -9,6 +10,7 @@ in {
   imports = [
     ./hyprconf/keys.nix
     ./hyprconf/xcompose.nix
+    # broken?
     ./hyprconf/darktheme.nix
   ];
 
@@ -17,7 +19,7 @@ in {
   };
 
   config = lib.mkIf config.hyprlandConf.enable {
-    darkTheme.enable = true;
+    # darkTheme.enable = true;
 
     home.packages = [
       (pkgs.writeShellScriptBin "switch_workspace" (builtins.readFile ./scripts/switch_workspace.sh))
@@ -26,6 +28,9 @@ in {
 
     wayland.windowManager.hyprland = {
       enable = true;
+      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+
       settings = {
         "$mainMod" = "SUPER";
         "$terminal" = "alacritty";

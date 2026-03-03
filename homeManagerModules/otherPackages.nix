@@ -66,5 +66,7 @@
 
     # password manager
     keepassxc
+
+    flameshot
   ];
 }

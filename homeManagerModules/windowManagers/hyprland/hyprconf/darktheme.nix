@@ -2,13 +2,11 @@
   lib,
   config,
   pkgs,
+  inputs,
   ...
-}:
-
-let
+}: let
   cfg = config.darkTheme;
-in
-{
+in {
   options.darkTheme = {
     enable = lib.mkEnableOption "enable dark GTK / QT theme";
   };
@@ -45,7 +43,7 @@ in
 
     home.packages = with pkgs; [
       xdg-desktop-portal-gtk
-      xdg-desktop-portal-hyprland
+      inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland
     ];
 
     xdg.configFile."xdg-desktop-portal/hyprland-portals.conf".text = ''

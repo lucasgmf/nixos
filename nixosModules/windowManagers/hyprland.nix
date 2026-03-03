@@ -12,8 +12,8 @@
   config = lib.mkIf config.hyprland.enable {
     programs.hyprland = {
       enable = true;
-      #package = inputs.hyprland.packages."${pkgs.system}".hyprland;
       package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
+      portalPackage = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".xdg-desktop-portal-hyprland;
       xwayland.enable = true; # enable x applications within wayland compositor
     };
 
@@ -21,18 +21,21 @@
     security.polkit.enable = true;
 
     services.gnome.gnome-keyring.enable = true;
-  
+
     # Ensure proper session environment setup
-    services.displayManager.sessionPackages = [ pkgs.hyprland ];
+    services.displayManager.sessionPackages = [
+      inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland
+    ];
 
     hardware.graphics.enable = true;
 
     environment.systemPackages = with pkgs; [
-
-    # enables workspaces displayed correctly? test without it!
-    (pkgs.waybar.overrideAttrs (oldAttrs: {
-	mesonFlags = oldAttrs.mesonFlags ++ [ "-Dexperimental=true" ];})
-    )
+      # enables workspaces displayed correctly? test without it!
+      (
+        pkgs.waybar.overrideAttrs (oldAttrs: {
+          mesonFlags = oldAttrs.mesonFlags ++ ["-Dexperimental=true"];
+        })
+      )
 
       # terminal
       kitty
@@ -48,7 +51,7 @@
 
       # notifications
       dunst
-      # notifications dependency 
+      # notifications dependency
       libnotify
 
       # wallpapers
@@ -71,4 +74,3 @@
     ];
   };
 }
-
