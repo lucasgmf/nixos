@@ -67,7 +67,9 @@
     # password manager
     keepassxc
 
-    grimblast
-    satty
+    # screenshot tools
+    grimblast # capture
+    satty # select
+    swappy # annotate
   ];
 }
