@@ -37,7 +37,9 @@
   home = {
     username = user.name;
     homeDirectory = "/home/${user.name}";
-    sessionVariables = {};
+    sessionVariables = {
+      QT_QPA_PLATFORM = "wayland";
+    };
   };
 
   xdg = {
