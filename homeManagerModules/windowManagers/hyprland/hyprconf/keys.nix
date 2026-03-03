@@ -29,7 +29,7 @@
       "$mainMod, F, fullscreen, 0"
       "$mainMod, W, exec, pkill -SIGUSR1 waybar"
       "$mainMod ALT, F4, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')"
-      "$mainMod SHIFT, A, exec, grimblast save area - | swappy -f -"
+      "$mainMod, A, exec, grimblast save area - | swappy -f -"
 
       # Move focus
       "$mainMod, l, movefocus, l"
