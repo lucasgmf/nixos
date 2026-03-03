@@ -67,6 +67,7 @@
     # password manager
     keepassxc
 
-    flameshot
+    grimblast
+    satty
   ];
 }
