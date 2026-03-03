@@ -69,7 +69,8 @@
 
     # screenshot tools
     grimblast # capture
-    satty # select
+    slurp # select
     swappy # annotate
+    wl-clipboard # clipboard manag
   ];
 }
