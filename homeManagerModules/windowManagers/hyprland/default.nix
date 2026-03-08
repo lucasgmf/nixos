@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  background_path = /home/lucasgmf/Pictures/background2.jpg;
+  background_path = ./hyprconf/cute_Dahyun.jpg
 in {
   imports = [
     ./hyprconf/keys.nix
@@ -19,11 +19,6 @@ in {
 
   config = lib.mkIf config.hyprlandConf.enable {
     darkTheme.enable = true;
-
-    home.packages = [
-      (pkgs.writeShellScriptBin "switch_workspace" (builtins.readFile ./scripts/switch_workspace.sh))
-      (pkgs.writeShellScriptBin "reset_background" (builtins.readFile ./scripts/reset_background.sh))
-    ];
 
     wayland.windowManager.hyprland = {
       enable = true;
