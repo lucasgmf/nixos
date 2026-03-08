@@ -64,8 +64,6 @@
       # Special workspace
       "$mainMod, S, togglespecialworkspace, magic"
       "$mainMod SHIFT, S, movetoworkspace, special:magic"
-
-      "$mainMod, comma, exec, reset_background"
     ];
 
     bindm = [
