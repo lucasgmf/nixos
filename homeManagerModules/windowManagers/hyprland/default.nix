@@ -5,7 +5,7 @@
   inputs,
   ...
 }: let
-  background_path = ./hyprconf/cute_Dahyun.jpg
+  background_path = ./hyprconf/cute_Dahyun.jpg;
 in {
   imports = [
     ./hyprconf/keys.nix
