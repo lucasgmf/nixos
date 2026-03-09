@@ -15,6 +15,10 @@
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    matugen = {
+      url = "github:InioX/matugen";
+    };
   };
 
   outputs = {

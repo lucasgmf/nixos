@@ -7,8 +7,9 @@
   imports =
     [
       ./cliPrograms
-      ./windowManagers
+      ./rice
       ./stylix
+      ./windowManagers
       ./otherPackages.nix
     ]
     ++ (

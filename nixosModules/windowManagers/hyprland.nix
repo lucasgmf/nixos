@@ -65,12 +65,10 @@
       rofi
 
       #gtk rofi
+      #TODO: Remove it
       wofi
 
-      #hyprland suggests...
-      bemenu
       fuzzel
-      tofi
     ];
   };
 }

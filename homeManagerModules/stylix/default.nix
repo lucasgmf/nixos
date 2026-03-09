@@ -3,11 +3,9 @@
   lib,
   config,
   ...
-}:
-let
+}: let
   colorSchemeLink = ./default.yaml;
-in
-{
+in {
   imports = [
     ./fonts.nix
   ];
