@@ -29,7 +29,7 @@ in {
         "$mainMod" = "SUPER";
         "$terminal" = "alacritty";
         "$fileManager" = "nautilus";
-        "$menu" = "wofi --show drun";
+        "$menu" = "fuzzel";
 
         misc = {
           disable_hyprland_logo = true;

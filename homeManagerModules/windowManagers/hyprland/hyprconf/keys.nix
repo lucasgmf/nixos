@@ -30,6 +30,7 @@
       "$mainMod, W, exec, pkill -SIGUSR1 waybar"
       "$mainMod ALT, F4, exec, kill -9 $(hyprctl activewindow -j | jq -r '.pid')"
       "$mainMod, A, exec, grimblast save area - | swappy -f -"
+      "CTRL ALT, Delete, exec, wlogout -p layer-shell"
 
       # Move focus
       "$mainMod, l, movefocus, l"
