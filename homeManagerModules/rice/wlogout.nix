@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [
     wlogout
-    material-symbols # icon font
+    material-symbols
   ];
 
   xdg.configFile."wlogout/style.css".text = ''
@@ -17,19 +17,19 @@
 
     button {
       font-family: 'Material Symbols Outlined';
-      font-size: 10rem;
+      font-size: 4rem;
       background-color: rgba(11, 11, 11, 0.4);
       color: #FFFFFF;
-      margin: 2rem;
-      border-radius: 2rem;
-      padding: 3rem;
+      margin: 0.5rem;
+      border-radius: 1rem;
+      padding: 1rem;
     }
 
     button:focus,
     button:active,
     button:hover {
       background-color: rgba(51, 51, 51, 0.5);
-      border-radius: 4rem;
+      border-radius: 1.5rem;
     }
   '';
 }
