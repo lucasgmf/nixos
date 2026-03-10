@@ -10,7 +10,7 @@
   # Main fuzzel - includes the theme file matugen generates
   xdg.configFile."fuzzel/fuzzel.ini".text = ''
     include="~/.config/fuzzel/fuzzel_theme.ini"
-    font=JetBrainsMono Nerd Font:weight=medium
+    font=Google Sans Flex:weight=medium
     terminal=kitty -1
     prompt=">>  "
     layer=overlay

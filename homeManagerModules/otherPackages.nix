@@ -72,5 +72,7 @@
     slurp # select
     swappy # annotate
     wl-clipboard # clipboard manag
+
+    googlesans-code # font
   ];
 }
