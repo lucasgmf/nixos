@@ -30,9 +30,10 @@
     hardware.graphics.enable = true;
 
     environment.sessionVariables = {
+      QSG_RHI_BACKEND = "vulkan"; # runs better overall
       QML2_IMPORT_PATH = [
         "${pkgs.qt6.qt5compat}/lib/qt-6/qml"
-        "${pkgs.kdePackages.kirigami}/lib/qt-6/qml"
+        "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
         "${pkgs.kdePackages.syntax-highlighting}/lib/qt-6/qml"
         "${pkgs.kdePackages.qtpositioning}/lib/qt-6/qml"
       ];
@@ -59,9 +60,9 @@
       # eww
 
       # notifications
-      dunst
+      # dunst
       # notifications dependency
-      libnotify
+      # libnotify
 
       # wallpapers
       # hyprpaper
@@ -78,6 +79,10 @@
       wofi
 
       fuzzel
+
+      wtype
+
+      cava
     ];
   };
 }

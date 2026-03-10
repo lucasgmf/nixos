@@ -41,6 +41,7 @@ in {
           "hyprctl setcursor rose-pine-hyprcursor 32"
           "gnome-keyring-daemon --start --components=secrets,ssh"
           "nm-applet --indicator"
+          "wl-paste --watch cliphist store"
           # "waybar"
           # "dunst"
           # "sleep 10 && aw-qt" # waybar is starting, tray is not ready yet
