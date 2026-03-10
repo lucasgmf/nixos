@@ -9,7 +9,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: remove heart and replace with matugen
     stylix.url = "github:danth/stylix";
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
