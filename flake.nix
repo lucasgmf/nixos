@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    rounded-polygon-qmljs = {
+      url = "github:end-4/rounded-polygon-qmljs";
+      flake = false;
+    };
+
     hyprland = {
       url = "github:hyprwm/Hyprland";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -12,8 +12,8 @@
   config = lib.mkIf config.hyprland.enable {
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
-      portalPackage = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".xdg-desktop-portal-hyprland;
+      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+      portalPackage = inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland;
       xwayland.enable = true; # enable x applications within wayland compositor
     };
 
@@ -24,10 +24,19 @@
 
     # Ensure proper session environment setup
     services.displayManager.sessionPackages = [
-      inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland
+      inputs.hyprland.packages."${pkgs.system}".hyprland
     ];
 
     hardware.graphics.enable = true;
+
+    environment.sessionVariables = {
+      QML2_IMPORT_PATH = [
+        "${pkgs.qt6.qt5compat}/lib/qt-6/qml"
+        "${pkgs.kdePackages.kirigami}/lib/qt-6/qml"
+        "${pkgs.kdePackages.syntax-highlighting}/lib/qt-6/qml"
+        "${pkgs.kdePackages.qtpositioning}/lib/qt-6/qml"
+      ];
+    };
 
     environment.systemPackages = with pkgs; [
       # enables workspaces displayed correctly? test without it!

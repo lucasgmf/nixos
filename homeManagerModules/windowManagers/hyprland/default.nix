@@ -22,8 +22,8 @@ in {
 
     wayland.windowManager.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.hyprland;
-      portalPackage = inputs.hyprland.packages.${pkgs.stdenv.hostPlatform.system}.xdg-desktop-portal-hyprland;
+      package = inputs.hyprland.packages.${pkgs.system}.hyprland;
+      portalPackage = inputs.hyprland.packages.${pkgs.system}.xdg-desktop-portal-hyprland;
 
       settings = {
         "$mainMod" = "SUPER";
@@ -41,8 +41,8 @@ in {
           "hyprctl setcursor rose-pine-hyprcursor 32"
           "gnome-keyring-daemon --start --components=secrets,ssh"
           "nm-applet --indicator"
-          "waybar"
-          "dunst"
+          # "waybar"
+          # "dunst"
           # "sleep 10 && aw-qt" # waybar is starting, tray is not ready yet
         ];
 
