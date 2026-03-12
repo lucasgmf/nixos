@@ -3,10 +3,6 @@
   inputs,
   ...
 }: {
-  home.packages = [
-    inputs.matugen.packages.${pkgs.system}.default
-  ];
-
   # Main fuzzel - includes the theme file matugen generates
   xdg.configFile."fuzzel/fuzzel.ini".text = ''
     include="~/.config/fuzzel/fuzzel_theme.ini"

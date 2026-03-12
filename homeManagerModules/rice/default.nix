@@ -7,6 +7,7 @@
   pythonEnv = pkgs.python3.withPackages (p: [
     p.pillow
     p.materialyoucolor
+    p.python-magic
   ]);
 in {
   imports = [
@@ -20,17 +21,40 @@ in {
     bc
     glib
     gsettings-desktop-schemas
+    (pkgs.writeShellScriptBin "matugen" ''
+      subcmd="$1"
+      shift
+      exec ${pkgs.matugen}/bin/matugen "$subcmd" --quiet "$@"
+    '')
+    libnotify
+    file # libmagic for python-magic
+    (pkgs.python3Packages.kde-material-you-colors.overridePythonAttrs (old: {
+      pythonRuntimeDepsCheckHook = pkgs.writeShellScript "pythonRuntimeDepsCheckHook" "";
+      propagatedBuildInputs = (old.propagatedBuildInputs or []) ++ [pkgs.python3Packages.python-magic];
+    }))
+    (pkgs.writeShellScriptBin "plasma-apply-colorscheme" ''
+      exit 0
+    '')
   ];
 
   home.sessionVariables = {
     XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:$XDG_DATA_DIRS";
   };
 
+  qt = {
+    enable = true;
+    platformTheme.name = lib.mkForce "kvantum";
+    style.name = lib.mkForce "kvantum";
+  };
+
   xdg.configFile."matugen".source = ./matugen;
+  xdg.configFile."Kvantum/Colloid".source = ./Kvantum/Colloid;
+  xdg.configFile."Kvantum/MaterialAdw".source = ./Kvantum/MaterialAdw;
 
   wayland.windowManager.hyprland.settings = {
     env = [
       "ILLOGICAL_IMPULSE_VIRTUAL_ENV,~/.local/state/quickshell/.venv"
+      "QT_STYLE_OVERRIDE,kvantum"
     ];
   };
 

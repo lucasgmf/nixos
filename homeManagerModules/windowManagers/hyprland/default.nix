@@ -12,7 +12,6 @@ in {
     ./hyprconf/keys.nix
     ./hyprconf/xcompose.nix
     ./hyprconf/rules.nix
-    ./hyprconf/darktheme.nix
   ];
 
   options.hyprlandConf = {
@@ -20,7 +19,6 @@ in {
   };
 
   config = lib.mkIf config.hyprlandConf.enable {
-    darkTheme.enable = true;
 
     wayland.windowManager.hyprland = {
       enable = true;
