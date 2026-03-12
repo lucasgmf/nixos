@@ -79,5 +79,7 @@
     imagemagick # wallpaper processing
     libsecret # contains secret-tool for storing API keys
     ddcutil # monitor brightness settings
+
+    intel-gpu-tools
   ];
 }

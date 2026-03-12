@@ -4,10 +4,10 @@
     "$qsConfig" = "ii";
 
     # Shell / quickshell toggles
-    bindid = [
-      "Super, Super_L, Toggle search, global, quickshell:searchToggleRelease"
-      "Super, Super_R, Toggle search, global, quickshell:searchToggleRelease"
-    ];
+    # bindid = [
+    #   "Super, Super_L, Toggle search, global, quickshell:searchToggleRelease"
+    #   "Super, Super_R, Toggle search, global, quickshell:searchToggleRelease"
+    # ];
 
     bind = [
       # Quickshell IPC fallbacks / toggles
@@ -18,7 +18,7 @@
       "Super, Tab, global, quickshell:overviewWorkspacesToggle"
       "Super, A, global, quickshell:sidebarLeftToggle"
       "Super, N, global, quickshell:sidebarRightToggle"
-      "Super, Slash, global, quickshell:cheatsheetToggle"
+      "Super, <, global, quickshell:cheatsheetToggle"
       "Super, K, global, quickshell:oskToggle"
       "Super, M, global, quickshell:mediaControlsToggle"
       "Super, G, global, quickshell:overlayToggle"
@@ -33,8 +33,8 @@
       # Clipboard / emoji
       "Super, V, global, quickshell:overviewClipboardToggle"
       "Super, V, exec, qs -c $qsConfig ipc call TEST_ALIVE || pkill fuzzel || cliphist list | fuzzel --match-mode fzf --dmenu | cliphist decode | wl-copy"
-      "Super, Period, global, quickshell:overviewEmojiToggle"
-      "Super, Period, exec, qs -c $qsConfig ipc call TEST_ALIVE || pkill fuzzel || ~/.config/quickshell/ii/scripts/fuzzel-emoji.sh copy"
+      "Super+Shift, Period, global, quickshell:overviewEmojiToggle"
+      "Super+Shift, Period, exec, qs -c $qsConfig ipc call TEST_ALIVE || pkill fuzzel || ~/.config/quickshell/ii/scripts/fuzzel-emoji.sh copy"
 
       # Screenshot
       "Super+Shift, S, global, quickshell:regionScreenshot"
@@ -147,14 +147,10 @@
       "Super+Alt, M, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
     ];
 
-    bindit = [
-      ", Super_L, global, quickshell:workspaceNumber"
-      ", Super_R, global, quickshell:workspaceNumber"
-    ];
-
-    binditn = [
-      "Super, catchall, global, quickshell:searchToggleReleaseInterrupt"
-    ];
+    # bindit = [
+    #   ", Super_L, global, quickshell:workspaceNumber"
+    #   ", Super_R, global, quickshell:workspaceNumber"
+    # ];
 
     bindm = [
       "Super, mouse:272, movewindow"

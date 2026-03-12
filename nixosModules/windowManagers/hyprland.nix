@@ -31,6 +31,8 @@
 
     environment.sessionVariables = {
       QSG_RHI_BACKEND = "vulkan"; # runs better overall
+      QML_USE_GLSL_OPTIMIZER = "1 qs -c ~/.config/quickshell/ii";
+
       QML2_IMPORT_PATH = [
         "${pkgs.qt6.qt5compat}/lib/qt-6/qml"
         "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
@@ -65,10 +67,6 @@
       # libnotify
 
       # wallpapers
-      # hyprpaper
-      # swaybg
-      # wpaperd
-      # mpvpaper
       swww
 
       #app launcher

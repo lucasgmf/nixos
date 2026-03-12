@@ -2,8 +2,7 @@
   pkgs,
   user,
   ...
-}:
-{
+}: {
   nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
@@ -11,7 +10,7 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   # sunshine
-  boot.kernelModules = [ "uinput" ];
+  boot.kernelModules = ["uinput"];
 
   # Switch from LTS to the latest kernel
   boot.kernelPackages = pkgs.linuxPackages_latest;
@@ -35,18 +34,13 @@
     LC_NUMERIC = "pt_PT.UTF-8";
     LC_PAPER = "pt_PT.UTF-8";
     LC_TELEPHONE = "pt_PT.UTF-8";
-    LC_TIME = "pt_PT.UTF-8";
+    LC_TIME = "en_US.UTF-8";
   };
 
   # Keymap configuration for console
   console.keyMap = "pt-latin1";
 
-  environment.pathsToLink = [ "/share/applications" "/share/xdg-desktop-portal" ];
-
-  #environment.systemPackages = with pkgs; [
-  #  xorg.xinit
-    # xorg.xrandr
-  # ];
+  environment.pathsToLink = ["/share/applications" "/share/xdg-desktop-portal"];
 
   services.xserver = {
     enable = true;
@@ -57,11 +51,9 @@
   };
 
   # make the user not have to type the sudo password for poweroff/reboot
-  security.sudo.extraConfig =
-    let
-      systemctl = "/run/current-system/sw/bin/systemctl";
-    in
-    ''
-      ${user.name} ALL=NOPASSWD: ${systemctl} poweroff, ${systemctl} reboot
-    '';
+  security.sudo.extraConfig = let
+    systemctl = "/run/current-system/sw/bin/systemctl";
+  in ''
+    ${user.name} ALL=NOPASSWD: ${systemctl} poweroff, ${systemctl} reboot
+  '';
 }

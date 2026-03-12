@@ -38,8 +38,8 @@ in {
           "qs -c ${qsConfig}"
 
           # wallpaper
-          "swww-daemon"
-          "swww img ${toString background_path} -- resize crop -- transition-type none --transition-duration 0"
+          # "swww-daemon"
+          # "swww img ${toString background_path} -- resize crop -- transition-type none --transition-duration 0"
 
           # cursor
           "hyprctl setcursor rose-pine-hyprcursor 32"
@@ -71,13 +71,13 @@ in {
           kb_options = "compose:rctrl";
           follow_mouse = 1;
           sensitivity = 0;
-          repeat_delay = 250;
-          repeat_rate = 35;
+          repeat_delay = 400; # default
+          repeat_rate = 25; # default
           off_window_axis_events = 2;
           numlock_by_default = true;
 
           touchpad = {
-            natural_scroll = false;
+            natural_scroll = true;
             disable_while_typing = true;
             clickfinger_behavior = true;
             scroll_factor = 0.45;
@@ -149,7 +149,7 @@ in {
         };
 
         animations = {
-          enabled = true;
+          enabled = false;
 
           bezier = [
             "expressiveFastSpatial, 0.42, 1.67, 0.21, 0.90"
@@ -174,7 +174,7 @@ in {
             "layersOut, 1, 2.4, menu_accel, popin 94%"
             "fadeLayersIn, 1, 0.5, menu_decel"
             "fadeLayersOut, 1, 2.7, stall"
-            "workspaces, 1, 7, menu_decel, slide"
+            "workspaces, 1, 4, menu_decel, slide"
             "specialWorkspaceIn, 1, 2.8, emphasizedDecel, slidevert"
             "specialWorkspaceOut, 1, 1.2, emphasizedAccel, slidevert"
             "zoomFactor, 1, 3, standardDecel"
