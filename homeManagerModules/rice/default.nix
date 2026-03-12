@@ -26,6 +26,8 @@ in {
     XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:$XDG_DATA_DIRS";
   };
 
+  xdg.configFile."matugen".source = ./matugen;
+
   wayland.windowManager.hyprland.settings = {
     env = [
       "ILLOGICAL_IMPULSE_VIRTUAL_ENV,~/.local/state/quickshell/.venv"
