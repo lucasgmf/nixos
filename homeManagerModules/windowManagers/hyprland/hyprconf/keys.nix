@@ -37,8 +37,9 @@
       "Super+Shift, Period, exec, qs -c $qsConfig ipc call TEST_ALIVE || pkill fuzzel || ~/.config/quickshell/ii/scripts/fuzzel-emoji.sh copy"
 
       # Screenshot
-      "Super+Shift, S, global, quickshell:regionScreenshot"
-      "Super+Shift, S, exec, qs -c $qsConfig ipc call TEST_ALIVE || pidof slurp || hyprshot --freeze --clipboard-only --mode region --silent"
+      # "Super+Shift, S, global, quickshell:regionScreenshot"
+      # "Super+Shift, S, exec, qs -c $qsConfig ipc call TEST_ALIVE || pidof slurp || hyprshot --freeze --clipboard-only --mode region --silent"
+      "Super+Shift, S, exec, grimblast save area - | swappy -f -"
       "Super+Shift, A, global, quickshell:regionSearch"
       "Super+Shift, X, global, quickshell:regionOcr"
       "Super+Shift, C, exec, hyprpicker -a"
