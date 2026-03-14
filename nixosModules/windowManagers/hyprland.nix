@@ -81,6 +81,7 @@
       wtype
 
       cava
+      adw-gtk3
     ];
   };
 }

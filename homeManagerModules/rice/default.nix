@@ -35,10 +35,11 @@ in {
     (pkgs.writeShellScriptBin "plasma-apply-colorscheme" ''
       exit 0
     '')
+    adw-gtk3
   ];
 
   home.sessionVariables = {
-    XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:$XDG_DATA_DIRS";
+    XDG_DATA_DIRS = "${pkgs.gsettings-desktop-schemas}/share/gsettings-schemas/${pkgs.gsettings-desktop-schemas.name}:${pkgs.adw-gtk3}/share:$XDG_DATA_DIRS";
   };
 
   qt = {
@@ -47,14 +48,17 @@ in {
     style.name = lib.mkForce "kvantum";
   };
 
+  xdg.configFile."Kvantum/kvantum.kvconfig".text = lib.mkForce ''
+    [General]
+    theme=MaterialAdw
+  '';
+
   xdg.configFile."matugen".source = ./matugen;
   xdg.configFile."Kvantum/Colloid".source = ./Kvantum/Colloid;
-  xdg.configFile."Kvantum/MaterialAdw".source = ./Kvantum/MaterialAdw;
 
   wayland.windowManager.hyprland.settings = {
     env = [
       "ILLOGICAL_IMPULSE_VIRTUAL_ENV,~/.local/state/quickshell/.venv"
-      "QT_STYLE_OVERRIDE,kvantum"
     ];
   };
 
@@ -67,9 +71,13 @@ in {
     EOF
       ln -sf ${pythonEnv}/bin/python3 "$VENV_DIR/bin/python3"
       ln -sf ${pythonEnv}/bin/python3 "$VENV_DIR/bin/python"
-
       mkdir -p "$HOME/.local/state/quickshell/user/generated/terminal"
       chmod 644 "$HOME/.local/state/quickshell/user/generated/terminal/sequences.txt" 2>/dev/null || true
       mkdir -p "$HOME/.config/hypr/custom/scripts"
+
+      # Copy Kvantum MaterialAdw to writable location so materialQT.sh can recolor it
+      rm -rf "$HOME/.config/Kvantum/MaterialAdw"
+      cp -r ${./Kvantum/MaterialAdw} "$HOME/.config/Kvantum/MaterialAdw"
+      chmod -R u+w "$HOME/.config/Kvantum/MaterialAdw"
   '';
 }

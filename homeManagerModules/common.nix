@@ -26,7 +26,7 @@
 
   autoStyling = {
     enable = true;
-    useDynamicColors = true;
+    useDynamicColors = false;
   };
 
   home = {

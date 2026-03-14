@@ -3,8 +3,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   config = lib.mkIf config.autoStyling.enable {
     home.packages = with pkgs; [
       noto-fonts
