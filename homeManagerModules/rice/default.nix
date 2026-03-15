@@ -15,6 +15,7 @@ in {
     ./wlogout.nix
     ./kitty.nix
     ./quickshell
+    ./scripts
   ];
 
   home.packages = with pkgs; [
