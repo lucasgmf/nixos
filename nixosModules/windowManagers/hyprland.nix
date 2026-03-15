@@ -17,6 +17,16 @@
       xwayland.enable = true; # enable x applications within wayland compositor
     };
 
+    fonts.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      nerd-fonts.fira-mono
+      nerd-fonts.jetbrains-mono
+      font-awesome
+    ];
+
     # Critical: Enable proper session management
     security.polkit.enable = true;
 

@@ -34,6 +34,7 @@ in {
         zellij.enable = false;
         gtk.enable = false;
         firefox.enable = false;
+        opencode.enable = false;
       };
     };
   };
