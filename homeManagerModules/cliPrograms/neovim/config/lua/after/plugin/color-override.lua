@@ -149,25 +149,23 @@ end
 local function reset_colors()
     using_wallpaper_colors = false
     apply_theme()
-    vim.notify("Catppuccin default colors restored!", vim.log.levels.INFO)
 end
 
 local function toggle_background()
     transparent = not transparent
     apply_theme()
-    vim.notify("Background: " .. (transparent and "transparent" or "solid"), vim.log.levels.INFO)
 end
 
 local function apply_wallpaper_colors()
     if not file_exists(colors_path) then
-        vim.notify("Material You colors not found at " .. colors_path, vim.log.levels.WARN)
         return
     end
     using_wallpaper_colors = true
     apply_theme()
-    vim.notify("Material You colors applied!", vim.log.levels.INFO)
 end
 
 vim.api.nvim_create_user_command("Colorapply", apply_wallpaper_colors, {})
 vim.api.nvim_create_user_command("Colorreset", reset_colors, {})
 vim.api.nvim_create_user_command("Colortogglebg", toggle_background, {})
+
+apply_wallpaper_colors()

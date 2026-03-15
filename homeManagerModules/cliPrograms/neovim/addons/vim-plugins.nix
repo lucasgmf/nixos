@@ -1,10 +1,10 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
-
     #   # File tree
     #   nvim-web-devicons
     #   nvim-tree-lua
+
+    wal-vim
 
     #   copilot-vim
     lsp-zero-nvim
