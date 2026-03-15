@@ -37,6 +37,7 @@ in {
       exit 0
     '')
     adw-gtk3
+    pywalfox-native
   ];
 
   home.sessionVariables = {
@@ -80,5 +81,12 @@ in {
       rm -rf "$HOME/.config/Kvantum/MaterialAdw"
       cp -r ${./Kvantum/MaterialAdw} "$HOME/.config/Kvantum/MaterialAdw"
       chmod -R u+w "$HOME/.config/Kvantum/MaterialAdw"
+  '';
+
+  home.activation.zellijWritableConfig = lib.hm.dag.entryAfter ["linkGeneration"] ''
+    rm -f "$HOME/.config/zellij/config.kdl"
+    cp ${../cliPrograms/zellij/config.kdl} "$HOME/.config/zellij/config.kdl"
+    chmod u+w "$HOME/.config/zellij/config.kdl"
+    ${pkgs.python3}/bin/python3 ${../rice/scripts/zellij-apply-colors.py} || true
   '';
 }
