@@ -25,7 +25,7 @@
   hyprlandConf.enable = true;
 
   autoStyling = {
-    enable = true;
+    enable = false;
     useDynamicColors = false;
   };
 
