@@ -25,6 +25,8 @@
       webfetch = "ask";
     };
 
+    theme = "material-you";
+
     provider = {
       ollama = {
         npm = "@ai-sdk/openai-compatible";
