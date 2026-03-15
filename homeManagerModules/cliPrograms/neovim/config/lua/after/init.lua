@@ -7,6 +7,7 @@ require("after.plugin.startify")
 require("after.plugin.telescope")
 require("after.plugin.todo-comments")
 require("after.plugin.undotree")
+require("after.plugin.color-override")
 
 -- TODO: UNDOTREE
 -- TODO: zellij or tmux navigation
