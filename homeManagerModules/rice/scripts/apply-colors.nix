@@ -24,8 +24,8 @@
       ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme "" 2>/dev/null || true
       ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark" 2>/dev/null || true
 
-      # 6. Quickshell reload
-      quickshell ipc call / reload 2>/dev/null || true
+      # 6. Quickshell — touch the colors file to trigger live reload
+      touch "''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/colors.json" 2>/dev/null || true
 
       # 7. Hyprland reload
       hyprctl reload 2>/dev/null || true

@@ -146,6 +146,8 @@
       # Mute
       "Super+Shift, M, exec, wpctl set-mute @DEFAULT_SINK@ toggle"
       "Super+Alt, M, exec, wpctl set-mute @DEFAULT_SOURCE@ toggle"
+
+      "SUPER SHIFT, c, exec, apply-colors"
     ];
 
     # bindit = [
