@@ -1,7 +1,8 @@
 pragma Singleton
 pragma ComponentBehavior: Bound
 
-import "../modules/common"
+import qs.modules.common
+import qs.services
 import QtQuick
 import Quickshell
 import Quickshell.Io
@@ -35,9 +36,20 @@ Singleton {
     property bool applying: false
     property string wallpaperPath: ""
     property var schemeColors: ({})
-
     property int _loadIdx: 0
 
+    // ── Detect current scheme from config ────────────────────────────────
+    function detectCurrentScheme() {
+        // Scheme type
+        const currentType = Config.options.appearance.palette.type ?? "auto"
+        const idx = schemes.indexOf(currentType)
+        if (idx !== -1) selectedScheme = idx
+
+        // Mode from darkmode flag
+        selectedMode = Appearance.m3colors.darkmode ? 0 : 1 // 0=dark, 1=light
+    }
+
+    // ── Wallpaper path ────────────────────────────────────────────────────
     Process {
         id: wallpaperProc
         command: ["bash", "-c", "jq -r '.background.wallpaperPath' ~/.config/illogical-impulse/config.json"]
@@ -48,8 +60,12 @@ Singleton {
         }
     }
 
-    Component.onCompleted: wallpaperProc.exec(wallpaperProc.command)
+    Component.onCompleted: {
+        detectCurrentScheme()
+        wallpaperProc.exec(wallpaperProc.command)
+    }
 
+    // ── Load all schemes ──────────────────────────────────────────────────
     function loadAllSchemes() {
         loading = true
         applied = false
@@ -98,6 +114,7 @@ Singleton {
         }
     }
 
+    // ── Apply ─────────────────────────────────────────────────────────────
     function applyScheme() {
         if (applying || loading) return
         applying = true
@@ -114,6 +131,8 @@ Singleton {
             root.applying = false
             root.applied = true
             root.statusMessage = `✔ Applied ${root.schemes[root.selectedScheme]}`
+            // Update config so it persists
+            Config.options.appearance.palette.type = root.schemes[root.selectedScheme]
         }
     }
 }
