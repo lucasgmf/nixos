@@ -140,14 +140,8 @@ Singleton {
 
     // ── Wallust ───────────────────────────────────────────────────────────
     function _runWallust() {
-        statusMessage = "Running ✦ Wallust…"
-        const backend = wallustBackends[wallustBackend]
-        const palette = wallustPalettes[wallustPalette]
-        const cmd =
-            `wallust run "${wallpaperPath}" --backend ${backend} --palette ${palette}` +
-            ` --saturation ${wallustSaturation.toFixed(0)} --threshold ${wallustThreshold.toFixed(0)}` +
-            ` > /dev/null 2>&1 && cat "$HOME/.cache/wal/colors.json"`
-        wallustProc.exec(["bash", "-c", cmd])
+        statusMessage = "Reading Wallust colors…"
+        wallustProc.exec(["bash", "-c", `cat "$HOME/.cache/wal/colors.json"`])
     }
 
     Process {
