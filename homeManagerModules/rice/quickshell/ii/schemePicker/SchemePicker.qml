@@ -353,8 +353,9 @@ FloatingWindow {
                 Layout.fillWidth: true; visible: SchemePickerState.loading; spacing: 10
                 StyledProgressBar {
                     Layout.fillWidth: true
-                    value: SchemePickerState.schemes.length > 0
-                        ? SchemePickerState.loadProgress / SchemePickerState.schemes.length : 0
+                    value: generatorMode === 0 && schemes.length > 0
+                        ? SchemePickerState.loadProgress / SchemePickerState.schemes.length
+                        : 1.0
                 }
                 Text { text: SchemePickerState.statusMessage; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.family: Appearance.font.family.main }
             }
@@ -398,6 +399,8 @@ FloatingWindow {
                                 model: SchemePickerState.colorKeys
                                 delegate: Rectangle {
                                     required property string modelData
+                                    required property int index
+                                    property var swatches: SchemePickerState.schemeColors[modelData] ?? {}
                                     width: 14; height: 28; radius: Appearance.rounding.verysmall
                                     color: swatchRow.swatches[modelData] ?? "transparent"
                                     opacity: swatchRow.swatches[modelData] ? 1.0 : 0.1
@@ -450,6 +453,7 @@ FloatingWindow {
                             model: SchemePickerState.wallustColors.length
                             delegate: Rectangle {
                                 required property int index
+                                property string swatchColor: SchemePickerState.wallustColors[index] ?? "#333"
                                 width: 52; height: 52
                                 radius: Appearance.rounding.normal
                                 color: SchemePickerState.wallustColors[index] ?? "#333"
@@ -480,7 +484,6 @@ FloatingWindow {
                     text: SchemePickerState.statusMessage
                     color: SchemePickerState.applied ? Appearance.m3colors.m3success : Appearance.m3colors.m3outline
                     font.pixelSize: Appearance.font.pixelSize.smaller; font.family: Appearance.font.family.main
-                    visible: !SchemePickerState.loading
                     Behavior on color { ColorAnimation { duration: Appearance.animationCurves.expressiveEffectsDuration } }
                 }
                 Item { Layout.fillWidth: true }

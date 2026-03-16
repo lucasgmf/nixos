@@ -97,10 +97,8 @@ Singleton {
     // ── loadAllSchemes ────────────────────────────────────────────────────
     function loadAllSchemes() {
         loading = true; applied = false
-        statusMessage = "Refreshing…"
-        if (generatorMode === 0) {
-            loadProgress = 0; _loadIdx = 0; schemeColors = {}
-        }
+        loadProgress = 0; _loadIdx = 0; schemeColors = {}
+        statusMessage = generatorMode === 1 ? "Running ✦ Wallust…" : "Refreshing…"
         wallpaperProc.exec(wallpaperProc.command)
     }
 
@@ -173,6 +171,7 @@ Singleton {
                     const entry = c?.[`color${i}`]
                     cols.push(typeof entry === "string" ? entry : (entry?.hex ?? "#333333"))
                 }
+                root.wallustColors = []
                 root.wallustColors = cols.slice()
                 root.statusMessage = "Preview ready — hit Apply to use"
             } catch(e) {
@@ -214,9 +213,14 @@ Singleton {
 
     // Auto-run wallust preview when switching to wallust mode
     onGeneratorModeChanged: {
-        if (generatorMode === 1 && wallpaperPath && !loading) {
+        if (generatorMode === 1) {
+            if (applying) return
             loading = true
             _runWallust()
+        } else {
+            // Cancel any in-progress wallust load when switching back
+            loading = false
+            statusMessage = schemeColors && Object.keys(schemeColors).length > 0 ? "Ready" : ""
         }
     }
 }
