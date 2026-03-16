@@ -81,5 +81,6 @@
     ddcutil # monitor brightness settings
 
     intel-gpu-tools
+    wallust
   ];
 }
