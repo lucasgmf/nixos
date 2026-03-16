@@ -56,7 +56,11 @@ Singleton {
         stdout: StdioCollector { id: wallpaperOut }
         onExited: {
             root.wallpaperPath = wallpaperOut.text.trim()
-            if (root.wallpaperPath) root.loadAllSchemes()
+            if (root.wallpaperPath && root.loading) {
+                root._loadNext()
+            } else if (root.wallpaperPath) {
+                root.loadAllSchemes()
+            }
         }
     }
 
@@ -72,8 +76,9 @@ Singleton {
         loadProgress = 0
         _loadIdx = 0
         schemeColors = {}
-        statusMessage = "Starting…"
-        _loadNext()
+        statusMessage = "Refreshing wallpaper path…"
+        // Re-read wallpaper path first, then load schemes
+        wallpaperProc.exec(wallpaperProc.command)
     }
 
     function _loadNext() {
@@ -84,9 +89,8 @@ Singleton {
         }
         const scheme = schemes[_loadIdx]
         statusMessage = `Loading ${scheme.replace("scheme-", "")} (${_loadIdx + 1}/${schemes.length})…`
-        matugenProc.exec([
-            "bash", "-c",
-            `matugen image -t ${scheme} -m ${modes[selectedMode]} --contrast ${contrast.toFixed(1)} "${wallpaperPath}" --json hex 2>/dev/null`
+        matugenProc.exec(["bash", "-c",
+            `matugen image "${wallpaperPath}" --mode ${modes[selectedMode]} --type ${scheme} --contrast ${contrast.toFixed(1)} --json hex 2>/dev/null`
         ])
     }
 
@@ -121,7 +125,7 @@ Singleton {
         statusMessage = "Applying…"
         applyProc.exec([
             "bash", "-c",
-            `matugen image -t ${schemes[selectedScheme]} -m ${modes[selectedMode]} --contrast ${contrast.toFixed(1)} "${wallpaperPath}" && apply-colors`
+            `matugen image "${wallpaperPath}" --mode ${modes[selectedMode]} --type ${schemes[selectedScheme]} --contrast ${contrast.toFixed(1)} && apply-colors`
         ])
     }
 

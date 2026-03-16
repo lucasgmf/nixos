@@ -155,18 +155,61 @@ FloatingWindow {
                     }
                 }
 
-                // ── Wallpaper preview ─────────────────────────────────────
-                Image {
-                    id: wallpaperPreview
-                    readonly property real previewHeight: 160
+                // ── Wallpaper preview (resizable) ────────────────────────
+                Item {
+                    id: wallpaperContainer
+                    property real previewHeight: 160
                     Layout.preferredWidth: previewHeight * (16 / 9)
                     Layout.preferredHeight: previewHeight
-                    source: SchemePickerState.wallpaperPath
-                        ? Qt.resolvedUrl("file://" + SchemePickerState.wallpaperPath)
-                        : ""
-                    fillMode: Image.PreserveAspectFit
-                    asynchronous: true
-                    smooth: true
+
+                    Image {
+                        id: wallpaperPreview
+                        anchors.fill: parent
+                        source: SchemePickerState.wallpaperPath
+                            ? Qt.resolvedUrl("file://" + SchemePickerState.wallpaperPath)
+                            : ""
+                        fillMode: Image.PreserveAspectFit
+                        asynchronous: true
+                        smooth: true
+                    }
+
+                    // Drag handle — bottom-right corner
+                    Item {
+                        id: dragHandle
+                        anchors.right: parent.right
+                        anchors.bottom: parent.bottom
+                        width: 18; height: 18
+
+                        // Two small diagonal lines as resize indicator
+                        Rectangle {
+                            width: 10; height: 2; radius: 1
+                            anchors.right: parent.right; anchors.bottom: parent.bottom
+                            anchors.rightMargin: 2; anchors.bottomMargin: 6
+                            rotation: -45
+                            color: handleDrag.active ? Appearance.m3colors.m3primary : Appearance.m3colors.m3outline
+                            opacity: 0.7
+                        }
+                        Rectangle {
+                            width: 6; height: 2; radius: 1
+                            anchors.right: parent.right; anchors.bottom: parent.bottom
+                            anchors.rightMargin: 2; anchors.bottomMargin: 2
+                            rotation: -45
+                            color: handleDrag.active ? Appearance.m3colors.m3primary : Appearance.m3colors.m3outline
+                            opacity: 0.7
+                        }
+
+                        DragHandler {
+                            id: handleDrag
+                            target: null
+                            onTranslationChanged: {
+                                const minH = 60
+                                const maxH = 400
+                                const newH = Math.max(minH, Math.min(maxH,
+                                    wallpaperContainer.previewHeight + translation.y))
+                                wallpaperContainer.previewHeight = newH
+                            }
+                        }
+                    }
                 }
 
                 Rectangle {
@@ -247,7 +290,11 @@ FloatingWindow {
                             spacing: 2
                             // Capture outer delegate's scheme name before inner Repeater shadows modelData
                             property string schemeName: modelData
-                            property var swatches: SchemePickerState.schemeColors[schemeName] ?? {}
+                            // Explicitly depend on schemeColors object so binding re-evaluates on any update
+                            property var swatches: {
+                                const _ = SchemePickerState.schemeColors  // track the whole object
+                                return SchemePickerState.schemeColors[schemeName] ?? {}
+                            }
                             Repeater {
                                 model: SchemePickerState.colorKeys
                                 delegate: Rectangle {
