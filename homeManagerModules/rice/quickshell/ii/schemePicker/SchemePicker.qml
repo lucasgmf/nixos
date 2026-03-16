@@ -8,31 +8,21 @@ import QtQuick.Controls
 import QtQuick.Layouts
 import Quickshell
 import Quickshell.Io
-import Quickshell.Wayland
 
-PanelWindow {
+FloatingWindow {
     id: win
 
     signal requestClose()
-    visible: true
 
-    exclusionMode: ExclusionMode.Ignore
-    WlrLayershell.layer: WlrLayer.Overlay
-    WlrLayershell.keyboardFocus: WlrKeyboardFocus.OnDemand
-    WlrLayershell.namespace: "quickshell:schemePicker"
+    implicitWidth: 900
+    implicitHeight: 660
     color: "transparent"
-
-    implicitWidth: panel.implicitWidth
-    implicitHeight: panel.implicitHeight
-    mask: Region { item: panel }
 
     StyledRectangularShadow { target: panel }
 
     Rectangle {
         id: panel
-        anchors.centerIn: parent
-        implicitWidth: 820
-        implicitHeight: 660
+        anchors.fill: parent
         radius: Appearance.rounding.screenRounding
         color: Appearance.colors.colLayer0
         border.color: Appearance.colors.colLayer0Border
@@ -163,6 +153,20 @@ PanelWindow {
                         value: SchemePickerState.contrast
                         onMoved: SchemePickerState.contrast = value
                     }
+                }
+
+                // ── Wallpaper preview ─────────────────────────────────────
+                Image {
+                    id: wallpaperPreview
+                    readonly property real previewHeight: 160
+                    Layout.preferredWidth: previewHeight * (16 / 9)
+                    Layout.preferredHeight: previewHeight
+                    source: SchemePickerState.wallpaperPath
+                        ? Qt.resolvedUrl("file://" + SchemePickerState.wallpaperPath)
+                        : ""
+                    fillMode: Image.PreserveAspectFit
+                    asynchronous: true
+                    smooth: true
                 }
 
                 Rectangle {

@@ -14,9 +14,13 @@ ShellRoot {
     id: root
 
     property bool open: true
-    onOpenChanged: if (open) SchemePickerState.detectCurrentScheme()
+    onOpenChanged: {
+        if (open) SchemePickerState.detectCurrentScheme()
+        picker.visible = open
+    }
 
     SchemePicker {
+        id: picker
         visible: root.open
         onRequestClose: Qt.quit()
     }
