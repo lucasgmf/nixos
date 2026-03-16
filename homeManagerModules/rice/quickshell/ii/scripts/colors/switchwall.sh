@@ -302,7 +302,10 @@ switch() {
     fi
 
     matugen "${matugen_args[@]}"
-    wallust run "$imgpath" --backend kmeans --palette dark --saturation 2 --threshold 5 >/dev/null 2>&1 || true
+
+    echo "wallust imgpath: $imgpath" >> /tmp/switchwall-debug.log
+    wallust run "$imgpath" --backend kmeans --palette dark --saturation 2 --threshold 5 >> /tmp/switchwall-debug.log 2>&1 || true
+
     source "$(eval echo $ILLOGICAL_IMPULSE_VIRTUAL_ENV)/bin/activate"
     python3 "$SCRIPT_DIR/generate_colors_material.py" "${generate_colors_material_args[@]}" \
         >"$STATE_DIR"/user/generated/material_colors.scss
