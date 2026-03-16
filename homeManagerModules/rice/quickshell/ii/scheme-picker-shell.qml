@@ -18,7 +18,7 @@ ShellRoot {
 
     SchemePicker {
         visible: root.open
-        onRequestClose: root.open = false
+        onRequestClose: Qt.quit()
     }
 
     IpcHandler {

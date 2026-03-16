@@ -15,7 +15,7 @@ Singleton {
         "scheme-fruit-salad", "scheme-monochrome", "scheme-neutral",
         "scheme-rainbow", "scheme-tonal-spot", "scheme-vibrant"
     ]
-    readonly property var modes: ["dark", "light", "amoled"]
+    readonly property var modes: ["dark", "light"]
     readonly property var colorKeys: [
         "primary", "on_primary", "primary_container", "on_primary_container",
         "secondary", "on_secondary", "secondary_container", "on_secondary_container",
@@ -46,7 +46,7 @@ Singleton {
         if (idx !== -1) selectedScheme = idx
 
         // Mode from darkmode flag
-        selectedMode = Appearance.m3colors.darkmode ? 0 : 1 // 0=dark, 1=light
+        selectedMode = Appearance.m3colors.darkmode ? 0 : 1
     }
 
     // ── Wallpaper path ────────────────────────────────────────────────────
