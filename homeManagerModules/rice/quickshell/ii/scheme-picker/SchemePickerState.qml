@@ -1,0 +1,119 @@
+pragma Singleton
+pragma ComponentBehavior: Bound
+
+import "../modules/common"
+import QtQuick
+import Quickshell
+import Quickshell.Io
+
+Singleton {
+    id: root
+
+    readonly property var schemes: [
+        "scheme-content", "scheme-expressive", "scheme-fidelity",
+        "scheme-fruit-salad", "scheme-monochrome", "scheme-neutral",
+        "scheme-rainbow", "scheme-tonal-spot", "scheme-vibrant"
+    ]
+    readonly property var modes: ["dark", "light", "amoled"]
+    readonly property var colorKeys: [
+        "primary", "on_primary", "primary_container", "on_primary_container",
+        "secondary", "on_secondary", "secondary_container", "on_secondary_container",
+        "tertiary", "on_tertiary", "tertiary_container", "on_tertiary_container",
+        "background", "on_background",
+        "surface", "on_surface", "surface_variant", "on_surface_variant",
+        "error", "on_error", "error_container", "on_error_container",
+        "outline", "outline_variant", "shadow", "inverse_surface", "inverse_on_surface"
+    ]
+
+    property int selectedScheme: 0
+    property int selectedMode: 0
+    property real contrast: 0.0
+    property bool loading: false
+    property int loadProgress: 0
+    property string statusMessage: ""
+    property bool applied: false
+    property bool applying: false
+    property string wallpaperPath: ""
+    property var schemeColors: ({})
+
+    property int _loadIdx: 0
+
+    Process {
+        id: wallpaperProc
+        command: ["bash", "-c", "jq -r '.background.wallpaperPath' ~/.config/illogical-impulse/config.json"]
+        stdout: StdioCollector { id: wallpaperOut }
+        onExited: {
+            root.wallpaperPath = wallpaperOut.text.trim()
+            if (root.wallpaperPath) root.loadAllSchemes()
+        }
+    }
+
+    Component.onCompleted: wallpaperProc.exec(wallpaperProc.command)
+
+    function loadAllSchemes() {
+        loading = true
+        applied = false
+        loadProgress = 0
+        _loadIdx = 0
+        schemeColors = {}
+        statusMessage = "Starting…"
+        _loadNext()
+    }
+
+    function _loadNext() {
+        if (_loadIdx >= schemes.length) {
+            loading = false
+            statusMessage = "Ready"
+            return
+        }
+        const scheme = schemes[_loadIdx]
+        statusMessage = `Loading ${scheme.replace("scheme-", "")} (${_loadIdx + 1}/${schemes.length})…`
+        matugenProc.exec([
+            "bash", "-c",
+            `matugen image -t ${scheme} -m ${modes[selectedMode]} --contrast ${contrast.toFixed(1)} "${wallpaperPath}" --json hex 2>/dev/null`
+        ])
+    }
+
+    Process {
+        id: matugenProc
+        stdout: StdioCollector { id: matugenOut }
+        onExited: {
+            const scheme = root.schemes[root._loadIdx]
+            const mode = root.modes[root.selectedMode]
+            try {
+                const parsed = JSON.parse(matugenOut.text)
+                const colors = parsed?.colors ?? {}
+                const swatches = {}
+                for (const key of root.colorKeys) {
+                    const hex = colors[key]?.[mode]
+                    if (hex) swatches[key] = hex
+                }
+                const updated = Object.assign({}, root.schemeColors)
+                updated[scheme] = swatches
+                root.schemeColors = updated
+            } catch (e) {}
+            root.loadProgress = root._loadIdx + 1
+            root._loadIdx++
+            root._loadNext()
+        }
+    }
+
+    function applyScheme() {
+        if (applying || loading) return
+        applying = true
+        statusMessage = "Applying…"
+        applyProc.exec([
+            "bash", "-c",
+            `matugen image -t ${schemes[selectedScheme]} -m ${modes[selectedMode]} --contrast ${contrast.toFixed(1)} "${wallpaperPath}" && apply-colors`
+        ])
+    }
+
+    Process {
+        id: applyProc
+        onExited: {
+            root.applying = false
+            root.applied = true
+            root.statusMessage = `✔ Applied ${root.schemes[root.selectedScheme]}`
+        }
+    }
+}
