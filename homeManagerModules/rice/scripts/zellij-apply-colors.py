@@ -105,9 +105,36 @@ def main():
         r'        (color_\w+) "#[0-9a-fA-F]{6}"', replace_color, content
     )
 
+    # Write zellij theme with terminal background
+    theme_bg = c["background"]
+    theme_fg = c["on_background"]
+    theme_block = f"""
+themes {{
+    material {{
+        bg "{theme_bg}"
+        fg "{theme_fg}"
+        black "{c['surface_container_lowest']}"
+        red "{c['error']}"
+        green "{c['tertiary_fixed']}"
+        yellow "{c['on_tertiary_container']}"
+        blue "{c['primary_fixed_dim']}"
+        magenta "{c['on_primary_container']}"
+        cyan "{c['secondary_fixed_dim']}"
+        white "{c['on_background']}"
+        orange "{c['on_secondary_container']}"
+    }}
+}}
+theme "material"
+"""
+    # Append or replace theme block in config
+    new_content = re.sub(
+        r'\nthemes \{.*?\}\ntheme "[^"]*"', theme_block, new_content, flags=re.DOTALL
+    )
+    if "themes {" not in new_content:
+        new_content += theme_block
+
     with open(CONFIG_PATH, "w") as f:
         f.write(new_content)
-
     print("Zellij colors updated successfully!")
 
 
