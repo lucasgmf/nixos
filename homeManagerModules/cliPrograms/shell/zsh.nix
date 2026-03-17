@@ -41,7 +41,7 @@
         enable = true;
       };
 
-      initcontent = ''
+      initContent = ''
         # replay terminal colors on new shell
         sequences="''${xdg_state_home:-$home/.local/state}/quickshell/user/generated/terminal/sequences.txt"
         if [ -f "$sequences" ]; then
