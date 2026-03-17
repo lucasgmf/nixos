@@ -29,6 +29,16 @@
 
       # 7. Hyprland reload
       hyprctl reload 2>/dev/null || true
+
+      # 8. Hyprland border colors
+      COLORS="''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/colors.json"
+      if [ -f "$COLORS" ]; then
+        primary=$(${pkgs.jq}/bin/jq -r '.primary' "$COLORS")
+        tertiary=$(${pkgs.jq}/bin/jq -r '.tertiary' "$COLORS")
+        surface=$(${pkgs.jq}/bin/jq -r '.surface_container_highest' "$COLORS")
+        hyprctl keyword general:col.active_border "rgba(''${primary#\#}ff) rgba(''${tertiary#\#}ff) 45deg" 2>/dev/null || true
+        hyprctl keyword general:col.inactive_border "rgba(''${surface#\#}ff)" 2>/dev/null || true
+      fi
     '')
   ];
 }
