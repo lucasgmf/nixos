@@ -17,8 +17,8 @@
     nvim-cmp
     #   vim-nix # better nix language support
 
-    #   rustaceanvim # rust specific features
-    #   crates-nvim
+    rustaceanvim # rust specific features
+    crates-nvim
 
     #   ccc-nvim # Hex visualizer
     mini-nvim

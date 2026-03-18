@@ -40,6 +40,19 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.keymap.set("n", "gt", function() builtin.lsp_type_definitions({ reuse_win = true }) end,
             opts("Goto Type Definition"))
         vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Hover docs"))
+
+        -- Rust-specific keymaps (rustaceanvim overrides)
+        if vim.bo[bufnr].filetype == "rust" then
+            vim.keymap.set("n", "<leader>ca", function()
+                vim.cmd.RustLsp("codeAction")
+            end, { desc = "LSP: Code action (Rust)", buffer = bufnr })
+            vim.keymap.set("n", "<leader>cr", function()
+                vim.cmd.RustLsp("runnables")
+            end, { desc = "LSP: Rust Runnables", buffer = bufnr })
+            vim.keymap.set("n", "<leader>cd", function()
+                vim.cmd.RustLsp("debuggables")
+            end, { desc = "LSP: Rust Debuggables", buffer = bufnr })
+        end
     end
 })
 

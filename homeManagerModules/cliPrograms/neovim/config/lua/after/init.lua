@@ -21,4 +21,4 @@ require("nvim-treesitter").setup {
 
 require("after.lang.lsp")
 require("after.lang.cmp")
--- TODO: rustaceanvim
+require("after.lang.rust")

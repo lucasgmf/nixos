@@ -31,5 +31,7 @@
 
     alejandra
     gcc
+
+    rust-analyzer
   ];
 }
