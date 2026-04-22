@@ -156,6 +156,7 @@ if args.debug == False:
     print(f"$transparent: {transparent};")
     for color, code in material_colors.items():
         print(f"${color}: {code};")
+    print()
     for color, code in term_colors.items():
         print(f"${color}: {code};")
 else:
