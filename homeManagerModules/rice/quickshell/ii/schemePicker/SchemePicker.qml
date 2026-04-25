@@ -328,7 +328,7 @@ FloatingWindow {
                             Item { Layout.fillWidth: true }
                             Text { text: SchemePickerState.wallustSaturation.toFixed(0); color: Appearance.m3colors.m3primary; font.pixelSize: Appearance.font.pixelSize.smaller; font.family: Appearance.font.family.numbers }
                         }
-                        StyledSlider { width: parent.width; from: 0; to: 10; stepSize: 1; value: SchemePickerState.wallustSaturation; onMoved: SchemePickerState.wallustSaturation = value }
+                        StyledSlider { width: parent.width; from: 0; to: 100; stepSize: 5; value: SchemePickerState.wallustSaturation; onMoved: SchemePickerState.wallustSaturation = value }
                     }
 
                     Column { spacing: 4; Layout.fillWidth: true

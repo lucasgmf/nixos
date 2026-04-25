@@ -46,7 +46,7 @@ Singleton {
     readonly property var wallustPalettes: ["dark", "light", "dark16", "light16", "random"]
     property int wallustBackend: 0
     property int wallustPalette: 0
-    property real wallustSaturation: 2
+    property real wallustSaturation: 20
     property real wallustThreshold: 5
     property var wallustColors: []
 
