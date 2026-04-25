@@ -43,7 +43,7 @@
         TERM7="''${TERM_COLORS[term7]:-}"
         if [ -n "''$TERM0" ] && [ -n "''$TERM7" ]; then
           mkdir -p "$(dirname "''$SEQ_OUT")"
-          SEQ_CONTENT=$(cat "''$SEQ_TEMPLATE")
+          SEQ_CONTENT=$(\cat "''$SEQ_TEMPLATE")
           for i in $(seq 15 -1 0); do
             val="''${TERM_COLORS[term''${i}]:-}"
             if [ -n "''$val" ]; then
@@ -55,6 +55,37 @@
             printf '%s' "''$SEQ_CONTENT" > "''$pty" 2>/dev/null || true
           done
         fi
+      fi
+
+      # 6c. Alacritty colors
+      COLORS="''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/colors.json"
+      if [ -f "''$COLORS" ]; then
+      mkdir -p "$HOME/.config/alacritty"
+      ${pkgs.jq}/bin/jq -r '
+          "[colors.primary]",
+          "background = \"" + .background + "\"",
+          "foreground = \"" + .on_background + "\"",
+          "",
+          "[colors.normal]",
+          "black = \""   + .surface_container_lowest + "\"",
+          "red = \""     + .error + "\"",
+          "green = \""   + .tertiary_fixed_dim + "\"",
+          "yellow = \""  + .on_tertiary_container + "\"",
+          "blue = \""    + .primary_fixed_dim + "\"",
+          "magenta = \"" + .secondary_fixed_dim + "\"",
+          "cyan = \""    + .tertiary_fixed + "\"",
+          "white = \""   + .on_surface_variant + "\"",
+          "",
+          "[colors.bright]",
+          "black = \""   + .surface_container_highest + "\"",
+          "red = \""     + .on_error_container + "\"",
+          "green = \""   + .tertiary_fixed + "\"",
+          "yellow = \""  + .on_tertiary_container + "\"",
+          "blue = \""    + .primary_fixed + "\"",
+          "magenta = \"" + .on_primary_container + "\"",
+          "cyan = \""    + .secondary_fixed + "\"",
+          "white = \""   + .on_background + "\""
+      ' "''$COLORS" > "$HOME/.config/alacritty/colors.toml"
       fi
 
       # 7. Hyprland reload
