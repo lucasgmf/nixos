@@ -2,8 +2,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options = {
     alacritty.enable = lib.mkEnableOption "enable alacritty terminal";
   };
@@ -13,6 +12,7 @@
       enable = true;
 
       settings = {
+        general.import = ["~/.config/alacritty/colors.toml"];
         cursor = {
           blink_interval = 500;
           unfocused_hollow = false;
