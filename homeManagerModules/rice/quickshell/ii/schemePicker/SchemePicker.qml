@@ -353,7 +353,7 @@ FloatingWindow {
                 Layout.fillWidth: true; visible: SchemePickerState.loading; spacing: 10
                 StyledProgressBar {
                     Layout.fillWidth: true
-                    value: generatorMode === 0 && schemes.length > 0
+                    value: SchemePickerState.generatorMode === 0 && SchemePickerState.schemes.length > 0
                         ? SchemePickerState.loadProgress / SchemePickerState.schemes.length
                         : 1.0
                 }
@@ -417,64 +417,69 @@ FloatingWindow {
             }
 
             // ── Wallust preview ───────────────────────────────────────────
-            Rectangle {
+            ListView {
+                id: wallustList
                 Layout.fillWidth: true
                 Layout.fillHeight: SchemePickerState.generatorMode === 1
-                Layout.minimumHeight: SchemePickerState.generatorMode === 1 ? 140 : 0
                 Layout.preferredHeight: SchemePickerState.generatorMode === 1 ? -1 : 0
                 Layout.topMargin: 4
+                clip: true; spacing: 2
                 visible: SchemePickerState.generatorMode === 1
-                color: Appearance.colors.colLayer1
-                radius: Appearance.rounding.normal
-                border.color: Appearance.colors.colOutlineVariant
-                border.width: 1
-                clip: true
+                model: SchemePickerState.wallustRows
+                ScrollBar.vertical: StyledScrollBar {}
 
-                Column {
-                    anchors.fill: parent
-                    anchors.margins: 12
-                    spacing: 8
+                delegate: Rectangle {
+                    required property var modelData
+                    required property int index
+                    width: wallustList.width; height: 64; radius: Appearance.rounding.normal
+                    color: Appearance.colors.colLayer1
+                    border.color: Appearance.colors.colOutlineVariant
+                    border.width: 1
 
-                    Text {
-                        text: SchemePickerState.loading
-                            ? SchemePickerState.statusMessage
-                            : (SchemePickerState.wallustColors.length > 0
-                                ? "Preview — hit Apply to use these colors"
-                                : "Adjust parameters and hit Reload")
-                        color: Appearance.m3colors.m3outline
-                        font.pixelSize: Appearance.font.pixelSize.smaller
-                        font.family: Appearance.font.family.main
-                    }
-
-                    Flow {
-                        width: parent.width
-                        spacing: 6
-                        Repeater {
-                            model: SchemePickerState.wallustColors.length
-                            delegate: Rectangle {
-                                required property int index
-                                property string swatchColor: SchemePickerState.wallustColors[index] ?? "#333"
-                                width: 52; height: 52
-                                radius: Appearance.rounding.normal
-                                color: SchemePickerState.wallustColors[index] ?? "#333"
-                                border.color: Qt.rgba(1,1,1,0.1); border.width: 1
-                                Text {
-                                    anchors.bottom: parent.bottom; anchors.horizontalCenter: parent.horizontalCenter
-                                    anchors.bottomMargin: 4
-                                    text: index === 0 ? "bg" : index === 1 ? "fg" : (index - 2).toString()
-                                    color: Qt.rgba(1,1,1,0.8); font.pixelSize: 8
-                                    font.family: Appearance.font.family.monospace
-                                    style: Text.Outline; styleColor: Qt.rgba(0,0,0,0.8)
+                    RowLayout {
+                        anchors.fill: parent; anchors.leftMargin: 14; anchors.rightMargin: 14; spacing: 12
+                        Text {
+                            Layout.preferredWidth: 64
+                            text: modelData.label
+                            color: Appearance.m3colors.m3onSurfaceVariant
+                            font.pixelSize: Appearance.font.pixelSize.smaller
+                            font.family: Appearance.font.family.main
+                            font.weight: Font.Medium
+                        }
+                        Row {
+                            Layout.fillWidth: true; height: 32; spacing: 3
+                            Repeater {
+                                model: modelData.colors
+                                delegate: Rectangle {
+                                    required property var modelData
+                                    width: 32; height: 28; radius: Appearance.rounding.verysmall
+                                    color: modelData.hex
+                                    border.color: Qt.rgba(1,1,1,0.08); border.width: 1
+                                    Text {
+                                        anchors.bottom: parent.bottom
+                                        anchors.horizontalCenter: parent.horizontalCenter
+                                        anchors.bottomMargin: 3
+                                        text: modelData.name
+                                        color: Qt.rgba(1,1,1,0.75); font.pixelSize: 8
+                                        font.family: Appearance.font.family.monospace
+                                        style: Text.Outline; styleColor: Qt.rgba(0,0,0,0.85)
+                                    }
+                                    Behavior on color { ColorAnimation { duration: Appearance.animationCurves.expressiveEffectsDuration } }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            Rectangle {
-                Layout.fillWidth: true; height: 1; color: Appearance.colors.colOutlineVariant
-                Layout.topMargin: 10; Layout.bottomMargin: 10
+                // Empty state
+                Text {
+                    anchors.centerIn: parent
+                    visible: wallustList.count === 0 && !SchemePickerState.loading
+                    text: "Adjust parameters and hit Reload"
+                    color: Appearance.m3colors.m3outline
+                    font.pixelSize: Appearance.font.pixelSize.smaller
+                    font.family: Appearance.font.family.main
+                }
             }
 
             // ── Footer ───────────────────────────────────────────────────

@@ -50,6 +50,37 @@ Singleton {
     property real wallustThreshold: 5
     property var wallustColors: []
 
+    // wallustRows is set explicitly via onWallustColorsChanged so QML's
+    // property change signal fires reliably — binding expressions on var
+    // arrays are not always tracked correctly by the QML engine.
+    property var wallustRows: []
+
+    onWallustColorsChanged: {
+        const c = wallustColors
+        if (!c || c.length === 0) {
+            wallustRows = []
+            return
+        }
+        wallustRows = [
+            { label: "special", colors: [
+                { name: "bg", hex: c[0] ?? "#000" },
+                { name: "fg", hex: c[1] ?? "#fff" }
+            ]},
+            { label: "normal", colors: [
+                { name: "0", hex: c[2]  ?? "#000" }, { name: "1", hex: c[3]  ?? "#000" },
+                { name: "2", hex: c[4]  ?? "#000" }, { name: "3", hex: c[5]  ?? "#000" },
+                { name: "4", hex: c[6]  ?? "#000" }, { name: "5", hex: c[7]  ?? "#000" },
+                { name: "6", hex: c[8]  ?? "#000" }, { name: "7", hex: c[9]  ?? "#000" }
+            ]},
+            { label: "bright", colors: [
+                { name: "8",  hex: c[10] ?? "#000" }, { name: "9",  hex: c[11] ?? "#000" },
+                { name: "10", hex: c[12] ?? "#000" }, { name: "11", hex: c[13] ?? "#000" },
+                { name: "12", hex: c[14] ?? "#000" }, { name: "13", hex: c[15] ?? "#000" },
+                { name: "14", hex: c[16] ?? "#000" }, { name: "15", hex: c[17] ?? "#000" }
+            ]}
+        ]
+    }
+
     // ── Startup ───────────────────────────────────────────────────────────
     Component.onCompleted: {
         detectCurrentScheme()
@@ -63,7 +94,7 @@ Singleton {
         selectedMode = Appearance.m3colors.darkmode ? 0 : 1
     }
 
-    // One-shot process just for initial path + auto-load
+    // One-shot process for initial path + auto-load matugen
     Process {
         id: wallpaperPathProc
         command: ["bash", "-c", "jq -r '.background.wallpaperPath' ~/.config/illogical-impulse/config.json"]
@@ -80,25 +111,38 @@ Singleton {
         }
     }
 
-    // Reload wallpaper path then continue based on mode
+    // Reusable path refresh — then routes to matugen or wallust based on mode
     Process {
         id: wallpaperProc
         command: ["bash", "-c", "jq -r '.background.wallpaperPath' ~/.config/illogical-impulse/config.json"]
         stdout: StdioCollector { id: wallpaperOut }
         onExited: {
             root.wallpaperPath = wallpaperOut.text.trim()
-            if (root.wallpaperPath && root.loading) {
-                if (root.generatorMode === 0) root._loadNext()
-                else root._runWallust()
+            if (!root.wallpaperPath) {
+                root.loading = false
+                root.statusMessage = "Could not detect wallpaper path"
+                return
+            }
+            if (root.generatorMode === 0) {
+                root._loadNext()
+            } else {
+                root._runWallust()
             }
         }
     }
 
-    // ── loadAllSchemes ────────────────────────────────────────────────────
+    // ── loadAllSchemes (Reload button) ────────────────────────────────────
     function loadAllSchemes() {
-        loading = true; applied = false
-        loadProgress = 0; _loadIdx = 0; schemeColors = {}
+        if (loading) return
+        loading = true
+        applied = false
+        loadProgress = 0
         statusMessage = generatorMode === 1 ? "Running ✦ Wallust…" : "Refreshing…"
+        if (generatorMode === 0) {
+            _loadIdx = 0
+            schemeColors = {}
+        }
+        // Always refresh wallpaper path first
         wallpaperProc.exec(wallpaperProc.command)
     }
 
@@ -139,8 +183,9 @@ Singleton {
     }
 
     // ── Wallust ───────────────────────────────────────────────────────────
-    // FIX: Actually run wallust with current params, THEN read the output.
-    // Previously this just read the old pywal cache without running wallust first.
+    // Run wallust and read output in one process — avoids two-step chain issues.
+    // wallust writes to ~/.cache/wal/colors.json via its template config.
+    // We run it and then cat the output file, piping both as JSON to stdout.
     function _runWallust() {
         if (!wallpaperPath) {
             statusMessage = "No wallpaper path found"
@@ -150,59 +195,50 @@ Singleton {
         const backend = wallustBackends[wallustBackend]
         const palette = wallustPalettes[wallustPalette]
         statusMessage = `Running ✦ Wallust (${backend}, ${palette})…`
-        wallustRunProc.exec(["bash", "-c",
+        wallustProc.exec(["bash", "-lc",
             `wallust run "${wallpaperPath}"` +
             ` --backend ${backend}` +
             ` --palette ${palette}` +
             ` --saturation ${wallustSaturation.toFixed(0)}` +
             ` --threshold ${wallustThreshold.toFixed(0)}` +
-            ` 2>&1`
+            ` >/dev/null 2>&1 && python3 -c "import sys; sys.stdout.write(open(__import__('os').path.expanduser('~/.cache/wal/colors.json')).read())"`
         ])
     }
 
-    // Step 1: Run wallust
     Process {
-        id: wallustRunProc
-        stdout: StdioCollector { id: wallustRunOut }
-        onExited: {
+        id: wallustProc
+        stdout: StdioCollector { id: wallustOut }
+        stderr: StdioCollector { id: wallustErr }
+        onExited: function(exitCode, exitStatus) {
+            root.loading = false
             if (exitCode !== 0) {
-                root.loading = false
-                root.statusMessage = "✦ Wallust failed — is it installed?"
+                root.statusMessage = "✦ Wallust error: " + wallustErr.text.trim().slice(0, 120)
                 return
             }
-            // Step 2: Now read the freshly-written cache
-            root.statusMessage = "Reading ✦ Wallust colors…"
-            wallustReadProc.exec(["bash", "-c", `cat "$HOME/.cache/wal/colors.json"`])
-        }
-    }
-
-    // Step 2: Read wallust output
-    Process {
-        id: wallustReadProc
-        stdout: StdioCollector { id: wallustReadOut }
-        onExited: {
-            root.loading = false
-            const raw = wallustReadOut.text
-            const jsonStart = raw.indexOf("{")
-            const jsonEnd = raw.lastIndexOf("}") + 1
-            const out = jsonStart >= 0 && jsonEnd > jsonStart ? raw.slice(jsonStart, jsonEnd) : ""
-            if (!out) { root.statusMessage = "✦ Wallust: no output found"; return }
+            const raw = wallustOut.text.trim()
+            if (!raw) {
+                root.statusMessage = "✦ Wallust: empty output"
+                return
+            }
             try {
-                const parsed = JSON.parse(out)
+                const parsed = JSON.parse(raw)
                 const cols = []
+                // special: background and foreground
                 const special = parsed?.special ?? {}
-                if (special.background) cols.push(special.background)
-                if (special.foreground) cols.push(special.foreground)
+                cols.push(special.background ?? "#000000")
+                cols.push(special.foreground ?? "#ffffff")
+                // colors: color0..color15
                 const c = parsed?.colors ?? {}
                 for (let i = 0; i <= 15; i++) {
-                    const entry = c?.[`color${i}`]
-                    cols.push(typeof entry === "string" ? entry : (entry?.hex ?? "#333333"))
+                    cols.push(c[`color${i}`] ?? "#333333")
                 }
+                // Reassign via temp to guarantee QML property change signal fires
+                const next = cols.slice()
                 root.wallustColors = []
-                root.wallustColors = cols.slice()
+                root.wallustColors = next
                 root.statusMessage = "Preview ready — hit Apply to use"
             } catch(e) {
-                root.statusMessage = "✦ Wallust: JSON parse error"
+                root.statusMessage = "✦ Wallust: JSON parse error — " + e.message
             }
         }
     }
@@ -238,12 +274,16 @@ Singleton {
         }
     }
 
-    // Auto-run wallust preview when switching to wallust mode
+    // Auto-trigger wallust preview when switching to wallust tab
     onGeneratorModeChanged: {
         if (generatorMode === 1) {
             if (applying) return
-            loading = true
-            wallpaperProc.exec(wallpaperProc.command)  // FIX: always refresh path first
+            // Only auto-run if we don't already have a fresh preview
+            if (wallustColors.length === 0) {
+                loading = true
+                statusMessage = "Running ✦ Wallust…"
+                wallpaperProc.exec(wallpaperProc.command)
+            }
         } else {
             loading = false
             statusMessage = schemeColors && Object.keys(schemeColors).length > 0 ? "Ready" : ""
