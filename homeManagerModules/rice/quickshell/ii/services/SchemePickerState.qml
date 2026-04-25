@@ -139,21 +139,54 @@ Singleton {
     }
 
     // ── Wallust ───────────────────────────────────────────────────────────
+    // FIX: Actually run wallust with current params, THEN read the output.
+    // Previously this just read the old pywal cache without running wallust first.
     function _runWallust() {
-        statusMessage = "Reading Wallust colors…"
-        wallustProc.exec(["bash", "-c", `cat "$HOME/.cache/wal/colors.json"`])
+        if (!wallpaperPath) {
+            statusMessage = "No wallpaper path found"
+            loading = false
+            return
+        }
+        const backend = wallustBackends[wallustBackend]
+        const palette = wallustPalettes[wallustPalette]
+        statusMessage = `Running ✦ Wallust (${backend}, ${palette})…`
+        wallustRunProc.exec(["bash", "-c",
+            `wallust run "${wallpaperPath}"` +
+            ` --backend ${backend}` +
+            ` --palette ${palette}` +
+            ` --saturation ${wallustSaturation.toFixed(0)}` +
+            ` --threshold ${wallustThreshold.toFixed(0)}` +
+            ` 2>&1`
+        ])
     }
 
+    // Step 1: Run wallust
     Process {
-        id: wallustProc
-        stdout: StdioCollector { id: wallustOut }
+        id: wallustRunProc
+        stdout: StdioCollector { id: wallustRunOut }
+        onExited: {
+            if (exitCode !== 0) {
+                root.loading = false
+                root.statusMessage = "✦ Wallust failed — is it installed?"
+                return
+            }
+            // Step 2: Now read the freshly-written cache
+            root.statusMessage = "Reading ✦ Wallust colors…"
+            wallustReadProc.exec(["bash", "-c", `cat "$HOME/.cache/wal/colors.json"`])
+        }
+    }
+
+    // Step 2: Read wallust output
+    Process {
+        id: wallustReadProc
+        stdout: StdioCollector { id: wallustReadOut }
         onExited: {
             root.loading = false
-            const raw = wallustOut.text
+            const raw = wallustReadOut.text
             const jsonStart = raw.indexOf("{")
             const jsonEnd = raw.lastIndexOf("}") + 1
             const out = jsonStart >= 0 && jsonEnd > jsonStart ? raw.slice(jsonStart, jsonEnd) : ""
-            if (!out) { root.statusMessage = "Wallust failed — check terminal"; return }
+            if (!out) { root.statusMessage = "✦ Wallust: no output found"; return }
             try {
                 const parsed = JSON.parse(out)
                 const cols = []
@@ -169,7 +202,7 @@ Singleton {
                 root.wallustColors = cols.slice()
                 root.statusMessage = "Preview ready — hit Apply to use"
             } catch(e) {
-                root.statusMessage = "Wallust error — check terminal"
+                root.statusMessage = "✦ Wallust: JSON parse error"
             }
         }
     }
@@ -210,9 +243,8 @@ Singleton {
         if (generatorMode === 1) {
             if (applying) return
             loading = true
-            _runWallust()
+            wallpaperProc.exec(wallpaperProc.command)  // FIX: always refresh path first
         } else {
-            // Cancel any in-progress wallust load when switching back
             loading = false
             statusMessage = schemeColors && Object.keys(schemeColors).length > 0 ? "Ready" : ""
         }
