@@ -36,7 +36,7 @@
   };
 in {
   home.packages = [
-    inputs.quickshell.packages.${pkgs.system}.default
+    inputs.quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
     kmeansScript
   ];
   xdg.configFile."quickshell/ii".source = ii;

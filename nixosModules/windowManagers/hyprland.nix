@@ -12,8 +12,8 @@
   config = lib.mkIf config.hyprland.enable {
     programs.hyprland = {
       enable = true;
-      package = inputs.hyprland.packages."${pkgs.system}".hyprland;
-      portalPackage = inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland;
+      package = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland;
+      portalPackage = inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".xdg-desktop-portal-hyprland;
       xwayland.enable = true; # enable x applications within wayland compositor
     };
 
@@ -34,7 +34,7 @@
 
     # Ensure proper session environment setup
     services.displayManager.sessionPackages = [
-      inputs.hyprland.packages."${pkgs.system}".hyprland
+      inputs.hyprland.packages."${pkgs.stdenv.hostPlatform.system}".hyprland
     ];
 
     hardware.graphics.enable = true;
