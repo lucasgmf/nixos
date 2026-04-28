@@ -340,6 +340,29 @@ FloatingWindow {
                         }
                         StyledSlider { width: parent.width; from: 1; to: 30; stepSize: 1; value: SchemePickerState.wallustThreshold; onMoved: SchemePickerState.wallustThreshold = value }
                     }
+
+                    Column { spacing: 4; Layout.fillWidth: true
+                        RowLayout { width: parent.width
+                            Text { text: "TERMINAL CONTRAST"; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.letterSpacing: 1.5; font.family: Appearance.font.family.main; font.weight: Font.Medium }
+                            Text { text: "WCAG ratio"; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.family: Appearance.font.family.main; opacity: 0.5 }
+                            Item { Layout.fillWidth: true }
+                            Text {
+                                text: SchemePickerState.wallustEnforceContrast <= 0
+                                    ? "off"
+                                    : SchemePickerState.wallustEnforceContrast.toFixed(1)
+                                color: SchemePickerState.wallustEnforceContrast <= 0
+                                    ? Appearance.m3colors.m3outline
+                                    : Appearance.m3colors.m3primary
+                                font.pixelSize: Appearance.font.pixelSize.smaller
+                                font.family: Appearance.font.family.numbers
+                            }
+                        }
+                        StyledSlider {
+                            width: parent.width; from: 0.0; to: 7.0; stepSize: 0.5
+                            value: SchemePickerState.wallustEnforceContrast
+                            onMoved: SchemePickerState.wallustEnforceContrast = value
+                        }
+                    }
                 }
             }
 

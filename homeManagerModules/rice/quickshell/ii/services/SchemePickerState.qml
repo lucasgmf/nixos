@@ -50,6 +50,10 @@ Singleton {
     property real wallustThreshold: 5
     property var wallustColors: []
 
+    // Terminal contrast enforcement (0.0 = disabled, > 0 = min WCAG contrast ratio passed to enforce_contrast.py)
+    // Practical range: 0.0 (off) → 1.5 → 3.0 (AA large text) → 4.5 (AA) → 7.0 (AAA)
+    property real wallustEnforceContrast: 0.0
+
     // wallustRows is set explicitly via onWallustColorsChanged so QML's
     // property change signal fires reliably — binding expressions on var
     // arrays are not always tracked correctly by the QML engine.
@@ -183,9 +187,22 @@ Singleton {
     }
 
     // ── Wallust ───────────────────────────────────────────────────────────
+    // Build the optional enforce_contrast pipe fragment.
+    // When wallustEnforceContrast > 0 we run enforce_contrast.py on the
+    // colors.json in-place after wallust writes it, then re-read the file.
+    // When it is 0 we skip the step entirely (no performance cost, no side
+    // effects on the file that the apply step later reads).
+    function _enforceContrastSnippet() {
+        if (wallustEnforceContrast <= 0)
+            return ""
+        // enforce_contrast.py edits the file in-place; no stdout needed
+        return ` && python3 ~/.config/quickshell/ii/scripts/colors/enforce_contrast.py` +
+            ` ~/.cache/wal/colors.json --min-contrast ${wallustEnforceContrast.toFixed(1)} >/dev/null 2>&1`
+    }
+
     // Run wallust and read output in one process — avoids two-step chain issues.
     // wallust writes to ~/.cache/wal/colors.json via its template config.
-    // We run it and then cat the output file, piping both as JSON to stdout.
+    // We run it, optionally post-process with enforce_contrast, then cat the file.
     function _runWallust() {
         if (!wallpaperPath) {
             statusMessage = "No wallpaper path found"
@@ -194,14 +211,19 @@ Singleton {
         }
         const backend = wallustBackends[wallustBackend]
         const palette = wallustPalettes[wallustPalette]
-        statusMessage = `Running ✦ Wallust (${backend}, ${palette})…`
+        const contrastLabel = wallustEnforceContrast > 0
+            ? `, contrast ≥${wallustEnforceContrast.toFixed(1)}`
+            : ""
+        statusMessage = `Running ✦ Wallust (${backend}, ${palette}${contrastLabel})…`
         wallustProc.exec(["bash", "-lc",
             `wallust run "${wallpaperPath}"` +
             ` --backend ${backend}` +
             ` --palette ${palette}` +
             ` --saturation ${wallustSaturation.toFixed(0)}` +
             ` --threshold ${wallustThreshold.toFixed(0)}` +
-            ` >/dev/null 2>&1 && python3 -c "import sys; sys.stdout.write(open(__import__('os').path.expanduser('~/.cache/wal/colors.json')).read())"`
+            ` >/dev/null 2>&1` +
+            _enforceContrastSnippet() +
+            ` && python3 -c "import sys; sys.stdout.write(open(__import__('os').path.expanduser('~/.cache/wal/colors.json')).read())"`
         ])
     }
 
@@ -253,6 +275,7 @@ Singleton {
             applyProc.exec(["bash", "-c",
                 `wallust run "${wallpaperPath}" --backend ${backend} --palette ${palette}` +
                 ` --saturation ${wallustSaturation.toFixed(0)} --threshold ${wallustThreshold.toFixed(0)}` +
+                _enforceContrastSnippet() +
                 ` && apply-colors`
             ])
         } else {
