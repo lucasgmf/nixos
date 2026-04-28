@@ -53,6 +53,10 @@ Singleton {
     // Terminal contrast enforcement (0.0 = disabled, > 0 = min WCAG contrast ratio passed to enforce_contrast.py)
     // Practical range: 0.0 (off) → 1.5 → 3.0 (AA large text) → 4.5 (AA) → 7.0 (AAA)
     property real wallustEnforceContrast: 0.0
+    // Extra lightness push past the minimum contrast point (0.0–0.5). Makes colors punchier.
+    property real wallustContrastSpread: 0.0
+    // Re-inflate saturation lost when lightness is moved (0.0–1.0). Keeps colors vivid.
+    property real wallustSatCompensation: 0.0
 
     // wallustRows is set explicitly via onWallustColorsChanged so QML's
     // property change signal fires reliably — binding expressions on var
@@ -196,8 +200,14 @@ Singleton {
         if (wallustEnforceContrast <= 0)
             return ""
         // enforce_contrast.py edits the file in-place; no stdout needed
-        return ` && python3 ~/.config/quickshell/ii/scripts/colors/enforce_contrast.py` +
-            ` ~/.cache/wal/colors.json --min-contrast ${wallustEnforceContrast.toFixed(1)} >/dev/null 2>&1`
+        let cmd = ` && python3 ~/.config/quickshell/ii/scripts/colors/enforce_contrast.py` +
+                  ` ~/.cache/wal/colors.json --min-contrast ${wallustEnforceContrast.toFixed(1)}`
+        if (wallustContrastSpread > 0)
+            cmd += ` --spread ${wallustContrastSpread.toFixed(2)}`
+        if (wallustSatCompensation > 0)
+            cmd += ` --sat-compensation ${wallustSatCompensation.toFixed(2)}`
+        cmd += ` >/dev/null 2>&1`
+        return cmd
     }
 
     // Run wallust and read output in one process — avoids two-step chain issues.

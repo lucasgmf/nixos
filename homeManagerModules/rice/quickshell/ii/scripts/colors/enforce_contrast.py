@@ -6,10 +6,24 @@ terminal color pairs have sufficient perceptual contrast.
 Usage:
     python3 enforce_contrast.py ~/.cache/wal/colors.json
     python3 enforce_contrast.py ~/.cache/wal/colors.json --min-contrast 4.5
+    python3 enforce_contrast.py ~/.cache/wal/colors.json --min-contrast 3.0 --spread 0.15 --sat-compensation 0.6
     python3 enforce_contrast.py ~/.cache/wal/colors.json --dry-run
 
+Options:
+    --min-contrast FLOAT    Minimum WCAG contrast ratio (default: 3.0).
+                            4.5 = AA normal text, 3.0 = AA large text / UI.
+    --spread FLOAT          Extra lightness distance pushed past the minimum
+                            contrast threshold (default: 0.0, range 0.0–0.5).
+                            Higher values make colors feel punchier / more
+                            distinct from the background.
+    --sat-compensation FLOAT  Re-inflate saturation lost when lightness is
+                            moved toward white or black (default: 0.0,
+                            range 0.0–1.0). 1.0 = fully restore original
+                            saturation after the lightness adjustment.
+    --dry-run               Print result to stdout instead of writing the file.
+
 The script edits the file in-place (or prints the result with --dry-run).
-Only PIL is required (already in your venv).
+Only the Python standard library is required.
 """
 
 import json
@@ -81,57 +95,92 @@ def hsl_to_rgb(h: float, s: float, l: float) -> tuple[int, int, int]:
     )
 
 
-def adjust_lightness(hex_color: str, target_l: float) -> str:
-    r, g, b = hex_to_rgb(hex_color)
-    h, s, _ = rgb_to_hsl(r, g, b)
-    return rgb_to_hex(*hsl_to_rgb(h, s, max(0.0, min(1.0, target_l))))
-
-
-def enforce_pair(fg_hex: str, bg_hex: str, min_ratio: float) -> str:
+def adjust_lightness_saturation(hex_color: str, target_l: float,
+                                 orig_s: float, sat_compensation: float) -> str:
     """
-    Adjust fg_hex lightness until it contrasts enough against bg_hex.
-    Tries both darkening and lightening, picks whichever needs less change.
+    Move a color to target_l in HSL space, then partially restore its original
+    saturation according to sat_compensation (0.0 = keep whatever saturation
+    results from the lightness move; 1.0 = fully restore original saturation).
+    """
+    r, g, b = hex_to_rgb(hex_color)
+    h, new_s, _ = rgb_to_hsl(r, g, b)
+    target_l = max(0.0, min(1.0, target_l))
+    # Saturation available at target_l (max chroma without clipping)
+    max_s_at_l = 1.0 if (target_l > 0.0 and target_l < 1.0) else 0.0
+    blended_s = new_s + (orig_s - new_s) * sat_compensation
+    final_s = max(0.0, min(max_s_at_l, blended_s))
+    return rgb_to_hex(*hsl_to_rgb(h, final_s, target_l))
+
+
+def enforce_pair(fg_hex: str, bg_hex: str, min_ratio: float,
+                 spread: float, sat_compensation: float) -> str:
+    """
+    Adjust fg_hex lightness (and optionally saturation) until it contrasts
+    enough against bg_hex, then push an extra `spread` worth of lightness
+    further away from the background for breathing room.
+
     Returns the adjusted fg hex.
     """
     fg = hex_to_rgb(fg_hex)
     bg = hex_to_rgb(bg_hex)
 
-    if contrast_ratio(fg, bg) >= min_ratio:
-        return fg_hex  # already fine
+    if contrast_ratio(fg, bg) >= min_ratio and spread == 0.0:
+        return fg_hex  # already fine and no spread requested
 
-    _, _, fg_l = rgb_to_hsl(*fg)
+    h_fg, orig_s, fg_l = rgb_to_hsl(*fg)
     _, _, bg_l = rgb_to_hsl(*bg)
 
+    # If already meets ratio but spread > 0, still apply spread
+    already_ok = contrast_ratio(fg, bg) >= min_ratio
+
     # Try lightening fg
-    best_light = fg_hex
-    for step in range(1, 51):
-        candidate = adjust_lightness(fg_hex, fg_l + step * 0.02)
-        if contrast_ratio(hex_to_rgb(candidate), bg) >= min_ratio:
-            best_light = candidate
+    best_light_l = None
+    for step in range(1, 101):
+        candidate_l = fg_l + step * 0.01
+        if candidate_l > 1.0:
+            break
+        candidate_hex = adjust_lightness_saturation(fg_hex, candidate_l, orig_s, sat_compensation)
+        if contrast_ratio(hex_to_rgb(candidate_hex), bg) >= min_ratio:
+            best_light_l = candidate_l
             break
 
     # Try darkening fg
-    best_dark = fg_hex
-    for step in range(1, 51):
-        candidate = adjust_lightness(fg_hex, fg_l - step * 0.02)
-        if contrast_ratio(hex_to_rgb(candidate), bg) >= min_ratio:
-            best_dark = candidate
+    best_dark_l = None
+    for step in range(1, 101):
+        candidate_l = fg_l - step * 0.01
+        if candidate_l < 0.0:
+            break
+        candidate_hex = adjust_lightness_saturation(fg_hex, candidate_l, orig_s, sat_compensation)
+        if contrast_ratio(hex_to_rgb(candidate_hex), bg) >= min_ratio:
+            best_dark_l = candidate_l
             break
 
-    # Pick whichever moved less from original lightness
-    _, _, ll = rgb_to_hsl(*hex_to_rgb(best_light))
-    _, _, dl = rgb_to_hsl(*hex_to_rgb(best_dark))
+    if already_ok:
+        # No need to move to meet ratio — but apply spread away from bg
+        chosen_l = fg_l
+        if spread > 0.0:
+            chosen_l = fg_l + spread if fg_l >= bg_l else fg_l - spread
+        return adjust_lightness_saturation(fg_hex, chosen_l, orig_s, sat_compensation)
 
-    if best_light == fg_hex and best_dark == fg_hex:
+    # Pick whichever direction moved less
+    if best_light_l is None and best_dark_l is None:
         return fg_hex  # couldn't fix it
 
-    if best_light == fg_hex:
-        return best_dark
-    if best_dark == fg_hex:
-        return best_light
+    if best_light_l is None:
+        chosen_l = best_dark_l
+    elif best_dark_l is None:
+        chosen_l = best_light_l
+    else:
+        chosen_l = best_light_l if abs(best_light_l - fg_l) <= abs(best_dark_l - fg_l) else best_dark_l
 
-    # Both worked — pick whichever is closer in lightness to original
-    return best_light if abs(ll - fg_l) <= abs(dl - fg_l) else best_dark
+    # Apply spread: push further away from background lightness
+    if spread > 0.0:
+        if chosen_l >= bg_l:
+            chosen_l = min(1.0, chosen_l + spread)
+        else:
+            chosen_l = max(0.0, chosen_l - spread)
+
+    return adjust_lightness_saturation(fg_hex, chosen_l, orig_s, sat_compensation)
 
 
 # ── Main ──────────────────────────────────────────────────────────────────────
@@ -142,31 +191,34 @@ def main():
     parser.add_argument("--min-contrast", type=float, default=3.0,
                         help="Minimum WCAG contrast ratio (default: 3.0). "
                              "Use 4.5 for AA, 3.0 for large text / UI elements.")
+    parser.add_argument("--spread", type=float, default=0.0,
+                        help="Extra lightness distance pushed past the minimum "
+                             "contrast point (default: 0.0, range 0.0–0.5). "
+                             "Makes colors punchier / more distinct from background.")
+    parser.add_argument("--sat-compensation", type=float, default=0.0,
+                        help="Re-inflate saturation lost when lightness is moved "
+                             "(default: 0.0, range 0.0–1.0). "
+                             "1.0 = fully restore original saturation after adjustment.")
     parser.add_argument("--dry-run", action="store_true",
                         help="Print result to stdout instead of writing the file")
     args = parser.parse_args()
+
+    # Clamp to valid ranges
+    spread = max(0.0, min(0.5, args.spread))
+    sat_comp = max(0.0, min(1.0, args.sat_compensation))
 
     path = Path(args.path)
     data = json.loads(path.read_text())
 
     c = data.get("colors", {})
-    # Work on a flat name→hex dict
     colors = {f"color{i}": c.get(f"color{i}", "#000000") for i in range(16)}
-    original = dict(colors)
 
-    bg  = colors["color0"]   # terminal background
-    fg  = colors["color15"]  # terminal foreground / bright white
+    bg = colors["color0"]   # terminal background
 
-    # ── Pairs that MUST contrast against the background ──────────────────
-    # color0 = bg (dark),  color8 = bright black (should be visible on bg)
-    # color1–6 = normal colors, color9–14 = bright variants
-    # color7 = light fg, color15 = bright fg
-    #
-    # Key problematic pairs (fg color vs background color0):
+    # Colors that must contrast against the background
     must_contrast_bg = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
 
-    # ── Pairs that must contrast against each other (normal vs bright) ───
-    # Each normal color vs its bright sibling should be distinguishable
+    # Normal vs bright sibling pairs
     sibling_pairs = [(i, i + 8) for i in range(1, 8)]
 
     changed = []
@@ -174,7 +226,7 @@ def main():
     # Pass 1: enforce all foreground colors against background
     for i in must_contrast_bg:
         key = f"color{i}"
-        fixed = enforce_pair(colors[key], bg, args.min_contrast)
+        fixed = enforce_pair(colors[key], bg, args.min_contrast, spread, sat_comp)
         if fixed != colors[key]:
             changed.append(f"  color{i}: {colors[key]} → {fixed}  "
                            f"(contrast vs bg was {contrast_ratio(hex_to_rgb(colors[key]), hex_to_rgb(bg)):.2f}, "
@@ -184,7 +236,7 @@ def main():
     # Pass 2: enforce each normal/bright sibling pair against each other
     for n, b in sibling_pairs:
         kn, kb = f"color{n}", f"color{b}"
-        fixed = enforce_pair(colors[kb], colors[kn], args.min_contrast)
+        fixed = enforce_pair(colors[kb], colors[kn], args.min_contrast, spread, sat_comp)
         if fixed != colors[kb]:
             changed.append(f"  color{b}: {colors[kb]} → {fixed}  "
                            f"(contrast vs color{n} was {contrast_ratio(hex_to_rgb(colors[kb]), hex_to_rgb(colors[kn])):.2f}, "
@@ -194,7 +246,6 @@ def main():
     # Write back
     for i in range(16):
         data["colors"][f"color{i}"] = colors[f"color{i}"]
-    # Also update special section
     data["special"]["background"] = colors["color0"]
     data["special"]["foreground"] = colors["color15"]
     data["special"]["cursor"]     = colors["color15"]

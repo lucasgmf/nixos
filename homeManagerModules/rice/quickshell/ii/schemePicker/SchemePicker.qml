@@ -363,6 +363,52 @@ FloatingWindow {
                             onMoved: SchemePickerState.wallustEnforceContrast = value
                         }
                     }
+
+                    Column { spacing: 4; Layout.fillWidth: true
+                        RowLayout { width: parent.width
+                            Text { text: "SPREAD"; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.letterSpacing: 1.5; font.family: Appearance.font.family.main; font.weight: Font.Medium }
+                            Text { text: "extra punch"; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.family: Appearance.font.family.main; opacity: 0.5 }
+                            Item { Layout.fillWidth: true }
+                            Text {
+                                text: SchemePickerState.wallustContrastSpread <= 0
+                                    ? "off"
+                                    : SchemePickerState.wallustContrastSpread.toFixed(2)
+                                color: SchemePickerState.wallustContrastSpread <= 0
+                                    ? Appearance.m3colors.m3outline
+                                    : Appearance.m3colors.m3primary
+                                font.pixelSize: Appearance.font.pixelSize.smaller
+                                font.family: Appearance.font.family.numbers
+                            }
+                        }
+                        StyledSlider {
+                            width: parent.width; from: 0.0; to: 0.5; stepSize: 0.05
+                            value: SchemePickerState.wallustContrastSpread
+                            onMoved: SchemePickerState.wallustContrastSpread = value
+                        }
+                    }
+
+                    Column { spacing: 4; Layout.fillWidth: true
+                        RowLayout { width: parent.width
+                            Text { text: "SAT COMP"; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.letterSpacing: 1.5; font.family: Appearance.font.family.main; font.weight: Font.Medium }
+                            Text { text: "keep vivid"; color: Appearance.m3colors.m3outline; font.pixelSize: Appearance.font.pixelSize.smallest; font.family: Appearance.font.family.main; opacity: 0.5 }
+                            Item { Layout.fillWidth: true }
+                            Text {
+                                text: SchemePickerState.wallustSatCompensation <= 0
+                                    ? "off"
+                                    : SchemePickerState.wallustSatCompensation.toFixed(2)
+                                color: SchemePickerState.wallustSatCompensation <= 0
+                                    ? Appearance.m3colors.m3outline
+                                    : Appearance.m3colors.m3primary
+                                font.pixelSize: Appearance.font.pixelSize.smaller
+                                font.family: Appearance.font.family.numbers
+                            }
+                        }
+                        StyledSlider {
+                            width: parent.width; from: 0.0; to: 1.0; stepSize: 0.05
+                            value: SchemePickerState.wallustSatCompensation
+                            onMoved: SchemePickerState.wallustSatCompensation = value
+                        }
+                    }
                 }
             }
 
