@@ -189,30 +189,129 @@ Singleton {
             root._loadNext()
         }
     }
+    // Raw wallust colors before contrast processing — stored so sliders can
+    // update the preview instantly without re-running wallust.
+    property var wallustRawColors: []
 
-    // ── Wallust ───────────────────────────────────────────────────────────
-    // Build the optional enforce_contrast pipe fragment.
-    // When wallustEnforceContrast > 0 we run enforce_contrast.py on the
-    // colors.json in-place after wallust writes it, then re-read the file.
-    // When it is 0 we skip the step entirely (no performance cost, no side
-    // effects on the file that the apply step later reads).
-    function _enforceContrastSnippet() {
-        if (wallustEnforceContrast <= 0)
-            return ""
-        // enforce_contrast.py edits the file in-place; no stdout needed
-        let cmd = ` && python3 ~/.config/quickshell/ii/scripts/colors/enforce_contrast.py` +
-                  ` ~/.cache/wal/colors.json --min-contrast ${wallustEnforceContrast.toFixed(1)}`
-        if (wallustContrastSpread > 0)
-            cmd += ` --spread ${wallustContrastSpread.toFixed(2)}`
-        if (wallustSatCompensation > 0)
-            cmd += ` --sat-compensation ${wallustSatCompensation.toFixed(2)}`
-        cmd += ` >/dev/null 2>&1`
-        return cmd
+    // ── JS contrast enforcement (preview only) ────────────────────────────
+    function _linearize(c) {
+        c = c / 255.0
+        return c <= 0.04045 ? c / 12.92 : Math.pow((c + 0.055) / 1.055, 2.4)
+    }
+    function _luminance(r, g, b) {
+        return 0.2126 * _linearize(r) + 0.7152 * _linearize(g) + 0.0722 * _linearize(b)
+    }
+    function _contrastRatio(hex1, hex2) {
+        const c1 = _hexToRgb(hex1), c2 = _hexToRgb(hex2)
+        const l1 = _luminance(c1[0], c1[1], c1[2])
+        const l2 = _luminance(c2[0], c2[1], c2[2])
+        const lighter = Math.max(l1, l2), darker = Math.min(l1, l2)
+        return (lighter + 0.05) / (darker + 0.05)
+    }
+    function _hexToRgb(hex) {
+        hex = hex.replace("#", "")
+        return [parseInt(hex.slice(0,2),16), parseInt(hex.slice(2,4),16), parseInt(hex.slice(4,6),16)]
+    }
+    function _rgbToHex(r, g, b) {
+        return "#" + ("0"+Math.round(r).toString(16)).slice(-2) +
+                     ("0"+Math.round(g).toString(16)).slice(-2) +
+                     ("0"+Math.round(b).toString(16)).slice(-2)
+    }
+    function _rgbToHsl(r, g, b) {
+        r /= 255; g /= 255; b /= 255
+        const max = Math.max(r,g,b), min = Math.min(r,g,b)
+        const delta = max - min
+        let h = 0, s = 0, l = (max + min) / 2
+        if (delta > 0) {
+            s = delta / (1 - Math.abs(2*l - 1))
+            if      (max === r) h = 60 * (((g-b)/delta) % 6)
+            else if (max === g) h = 60 * (((b-r)/delta) + 2)
+            else                h = 60 * (((r-g)/delta) + 4)
+            if (h < 0) h += 360
+        }
+        return [h, s, l]
+    }
+    function _hslToRgb(h, s, l) {
+        const c = (1 - Math.abs(2*l - 1)) * s
+        const x = c * (1 - Math.abs((h/60) % 2 - 1))
+        const m = l - c/2
+        let r=0, g=0, b=0
+        if      (h < 60)  { r=c; g=x; b=0 }
+        else if (h < 120) { r=x; g=c; b=0 }
+        else if (h < 180) { r=0; g=c; b=x }
+        else if (h < 240) { r=0; g=x; b=c }
+        else if (h < 300) { r=x; g=0; b=c }
+        else              { r=c; g=0; b=x }
+        return [(r+m)*255, (g+m)*255, (b+m)*255]
+    }
+    function _enforceOne(fgHex, bgHex, minRatio, spread, satComp) {
+        if (minRatio <= 0 && spread === 0) return fgHex
+        const fg = _hexToRgb(fgHex), bg = _hexToRgb(bgHex)
+        const alreadyOk = _contrastRatio(fgHex, bgHex) >= minRatio
+        const hsl = _rgbToHsl(fg[0], fg[1], fg[2])
+        const bgHsl = _rgbToHsl(bg[0], bg[1], bg[2])
+        const origS = hsl[1], fgL = hsl[2], bgL = bgHsl[2]
+
+        const _adjust = (targetL) => {
+            targetL = Math.max(0, Math.min(1, targetL))
+            const blendedS = hsl[1] + (origS - hsl[1]) * satComp
+            const finalS = Math.max(0, Math.min(1, blendedS))
+            return _rgbToHex(..._hslToRgb(hsl[0], finalS, targetL))
+        }
+
+        if (alreadyOk) {
+            if (spread === 0) return fgHex
+            const chosenL = fgL >= bgL ? Math.min(1, fgL + spread) : Math.max(0, fgL - spread)
+            return _adjust(chosenL)
+        }
+
+        let bestLightL = null, bestDarkL = null
+        for (let s = 1; s <= 100; s++) {
+            const cL = fgL + s * 0.01
+            if (cL > 1) break
+            if (_contrastRatio(_adjust(cL), bgHex) >= minRatio) { bestLightL = cL; break }
+        }
+        for (let s = 1; s <= 100; s++) {
+            const cL = fgL - s * 0.01
+            if (cL < 0) break
+            if (_contrastRatio(_adjust(cL), bgHex) >= minRatio) { bestDarkL = cL; break }
+        }
+        if (bestLightL === null && bestDarkL === null) return fgHex
+        let chosenL = bestLightL === null ? bestDarkL
+                    : bestDarkL === null  ? bestLightL
+                    : Math.abs(bestLightL-fgL) <= Math.abs(bestDarkL-fgL) ? bestLightL : bestDarkL
+        if (spread > 0)
+            chosenL = chosenL >= bgL ? Math.min(1, chosenL+spread) : Math.max(0, chosenL-spread)
+        return _adjust(chosenL)
     }
 
+    function _applyContrastToPreview() {
+        const raw = wallustRawColors
+        if (!raw || raw.length === 0) return
+        if (wallustEnforceContrast <= 0 && wallustContrastSpread === 0 && wallustSatCompensation === 0) {
+            wallustColors = raw.slice()
+            return
+        }
+        const mc = wallustEnforceContrast, sp = wallustContrastSpread, sc = wallustSatCompensation
+        const result = raw.slice()
+        const bg = result[0]  // term0 = background
+        // Enforce colors 1–15 against background
+        for (let i = 1; i < result.length; i++)
+            result[i] = _enforceOne(result[i], bg, mc, sp, sc)
+        wallustColors = []
+        wallustColors = result
+    }
+
+    onWallustEnforceContrastChanged: _applyContrastToPreview()
+    onWallustContrastSpreadChanged:  _applyContrastToPreview()
+    onWallustSatCompensationChanged: _applyContrastToPreview()
+
+    // ── Wallust process ───────────────────────────────────────────────────
     // Run wallust and read output in one process — avoids two-step chain issues.
     // wallust writes to ~/.cache/wal/colors.json via its template config.
-    // We run it, optionally post-process with enforce_contrast, then cat the file.
+    // We run it then cat the file. The preview swatches show raw wallust output.
+    // Contrast enforcement happens at apply-time via enforce_contrast_scss.py
+    // which patches material_colors.scss — the actual source for terminal colors.
     function _runWallust() {
         if (!wallpaperPath) {
             statusMessage = "No wallpaper path found"
@@ -221,10 +320,7 @@ Singleton {
         }
         const backend = wallustBackends[wallustBackend]
         const palette = wallustPalettes[wallustPalette]
-        const contrastLabel = wallustEnforceContrast > 0
-            ? `, contrast ≥${wallustEnforceContrast.toFixed(1)}`
-            : ""
-        statusMessage = `Running ✦ Wallust (${backend}, ${palette}${contrastLabel})…`
+        statusMessage = `Running ✦ Wallust (${backend}, ${palette})…`
         wallustProc.exec(["bash", "-lc",
             `wallust run "${wallpaperPath}"` +
             ` --backend ${backend}` +
@@ -232,7 +328,6 @@ Singleton {
             ` --saturation ${wallustSaturation.toFixed(0)}` +
             ` --threshold ${wallustThreshold.toFixed(0)}` +
             ` >/dev/null 2>&1` +
-            _enforceContrastSnippet() +
             ` && python3 -c "import sys; sys.stdout.write(open(__import__('os').path.expanduser('~/.cache/wal/colors.json')).read())"`
         ])
     }
@@ -255,19 +350,15 @@ Singleton {
             try {
                 const parsed = JSON.parse(raw)
                 const cols = []
-                // special: background and foreground
                 const special = parsed?.special ?? {}
                 cols.push(special.background ?? "#000000")
                 cols.push(special.foreground ?? "#ffffff")
-                // colors: color0..color15
                 const c = parsed?.colors ?? {}
-                for (let i = 0; i <= 15; i++) {
+                for (let i = 0; i <= 15; i++)
                     cols.push(c[`color${i}`] ?? "#333333")
-                }
-                // Reassign via temp to guarantee QML property change signal fires
-                const next = cols.slice()
-                root.wallustColors = []
-                root.wallustColors = next
+                // Store raw colors then apply contrast for preview
+                root.wallustRawColors = cols.slice()
+                root._applyContrastToPreview()
                 root.statusMessage = "Preview ready — hit Apply to use"
             } catch(e) {
                 root.statusMessage = "✦ Wallust: JSON parse error — " + e.message
@@ -276,23 +367,36 @@ Singleton {
     }
 
     // ── Apply ─────────────────────────────────────────────────────────────
+    // Before calling apply-colors we write enforce_contrast.cfg so that
+    // apply-colors' step 6b (enforce_contrast_scss.py) picks up the current
+    // slider values and patches material_colors.scss in-place.
+    function _writeEnforceContrastConfig() {
+        const mc = wallustEnforceContrast.toFixed(2)
+        const sp = wallustContrastSpread.toFixed(2)
+        const sc = wallustSatCompensation.toFixed(2)
+        const wm = (generatorMode === 1) ? "1" : "0"
+        const cfgContent = "min_contrast=" + mc + "\\nspread=" + sp + "\\nsat_compensation=" + sc + "\\nwallust_mode=" + wm + "\\n"
+        const cfgPath = "$HOME/.local/state/quickshell/user/generated/enforce_contrast.cfg"
+        return "mkdir -p \"$HOME/.local/state/quickshell/user/generated\" && " +
+               "printf '" + cfgContent + "' > \"" + cfgPath + "\" && "
+    }
+
     function applyScheme() {
         if (applying || loading) return
         applying = true; statusMessage = "Applying…"
-        if (generatorMode === 1) {
-            const backend = wallustBackends[wallustBackend]
-            const palette = wallustPalettes[wallustPalette]
-            applyProc.exec(["bash", "-c",
-                `wallust run "${wallpaperPath}" --backend ${backend} --palette ${palette}` +
-                ` --saturation ${wallustSaturation.toFixed(0)} --threshold ${wallustThreshold.toFixed(0)}` +
-                _enforceContrastSnippet() +
-                ` && apply-colors`
-            ])
-        } else {
-            applyProc.exec(["bash", "-c",
-                `matugen image "${wallpaperPath}" --mode ${modes[selectedMode]} --type ${schemes[selectedScheme]} --contrast ${contrast.toFixed(1)} && apply-colors`
-            ])
-        }
+        // Write enforce_contrast.json first so apply-colors picks it up via
+        // enforce_contrast_scss.py after material_colors.scss is regenerated.
+        // Then call switchwall.sh --noswitch which: reads wallpaper from config,
+        // runs wallust + generate_colors_material.py → material_colors.scss,
+        // then calls apply-colors. This is the same path as a normal wallpaper
+        // switch, just without changing the wallpaper.
+        const modeArg = modes[selectedMode]
+        const schemeArg = schemes[selectedScheme]
+        applyProc.exec(["bash", "-lc",
+            _writeEnforceContrastConfig() +
+            `~/.config/quickshell/ii/scripts/colors/switchwall.sh --noswitch` +
+            (generatorMode === 0 ? ` --mode ${modeArg} --type ${schemeArg}` : "")
+        ])
     }
 
     Process {
