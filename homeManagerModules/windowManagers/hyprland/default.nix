@@ -61,7 +61,7 @@ in {
           "TERMINAL,alacritty"
         ];
 
-        monitor = "eDPI-1,2880x1800@90,auto,2";
+        monitor = "eDP-1,2880x1800@90,auto,1.33";
 
         input = {
           kb_layout = "pt";
