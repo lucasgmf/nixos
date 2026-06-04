@@ -140,8 +140,8 @@
       "Super+Shift, P, exec, playerctl play-pause"
 
       # Zoom
-      "Super, Minus, exec, ~/.config/hypr/hyprland/scripts/zoom.sh decrease 0.3"
-      "Super, Equal, exec, ~/.config/hypr/hyprland/scripts/zoom.sh increase 0.3"
+      "Super+Alt, Minus, exec, ~/.config/hypr/hyprland/scripts/zoom.sh decrease 0.3"
+      "Super+Alt, Equal, exec, ~/.config/hypr/hyprland/scripts/zoom.sh increase 0.3"
 
       # Mute
       "Super+Shift, M, exec, wpctl set-mute @DEFAULT_SINK@ toggle"
