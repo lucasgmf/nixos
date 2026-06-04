@@ -19,6 +19,7 @@
           python-lsp-server
           python-lsp-black
           pylsp-mypy
+          pylsp-rope
           black
         ]
     ))

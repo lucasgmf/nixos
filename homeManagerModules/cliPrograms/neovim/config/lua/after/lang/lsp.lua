@@ -75,11 +75,12 @@ local servers = {
         settings = {
             pylsp = {
                 plugins = {
-                    black = { enabled = true, line_length = LINE_LENGTHS.python },
-                    mypy = { enabled = true, live_mode = true },
-                    pyflakes = { enabled = false },
-                    pycodestyle = { enabled = false },
-                    mccabe = { enabled = false },
+                    black           = { enabled = true, line_length = LINE_LENGTHS.python },
+                    mypy            = { enabled = true, live_mode = true },
+                    pyflakes        = { enabled = false },
+                    pycodestyle     = { enabled = false },
+                    mccabe          = { enabled = false },
+                    rope_completion = { enabled = true },
                 }
             }
         }
