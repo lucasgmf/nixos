@@ -2,6 +2,7 @@
   user,
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   imports =
@@ -51,7 +52,15 @@
   zsh.enable = true;
 
   # track app time
-  services.activitywatch.enable = true;
+  services.activitywatch = {
+    enable = true;
+    watchers = {
+      aw-watcher-window = {
+        package = pkgs.aw-watcher-window-wayland;
+        executable = "aw-watcher-window-wayland";
+      };
+    };
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release
