@@ -82,5 +82,7 @@
 
     intel-gpu-tools
     wallust
+    #
+    # kicad
   ];
 }
