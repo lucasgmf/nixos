@@ -303,8 +303,25 @@ switch() {
 
     matugen "${matugen_args[@]}"
 
-    echo "wallust imgpath: $imgpath" >> /tmp/switchwall-debug.log
-    wallust run "$imgpath" --backend kmeans --palette dark --saturation 2 --threshold 5 >> /tmp/switchwall-debug.log 2>&1 || true
+    echo "wallust imgpath: $imgpath" >>/tmp/switchwall-debug.log
+    # Read wallust config if present
+    WALLUST_CFG="$HOME/.config/wallpaper-theme"
+    WB_BACKEND="kmeans"
+    WB_PALETTE="dark"
+    WB_SAT="2"
+    WB_THRESH="5"
+    if [ -f "$WALLUST_CFG" ]; then
+        WB_BACKEND=$(grep '^WALLUST_BACKEND=' "$WALLUST_CFG" | cut -d= -f2 | tr -d '\n')
+        WB_PALETTE=$(grep '^WALLUST_PALETTE=' "$WALLUST_CFG" | cut -d= -f2 | tr -d '\n')
+        WB_SAT=$(grep '^WALLUST_SATURATION=' "$WALLUST_CFG" | cut -d= -f2 | tr -d '\n')
+        WB_THRESH=$(grep '^WALLUST_THRESHOLD=' "$WALLUST_CFG" | cut -d= -f2 | tr -d '\n')
+    fi
+
+    wallust run "$imgpath" \
+        --backend "${WB_BACKEND:-kmeans}" \
+        --palette "${WB_PALETTE:-dark}" \
+        --saturation "${WB_SAT:-2}" \
+        --threshold "${WB_THRESH:-5}" >>/tmp/switchwall-debug.log 2>&1 || true
 
     source "$(eval echo $ILLOGICAL_IMPULSE_VIRTUAL_ENV)/bin/activate"
     python3 "$SCRIPT_DIR/generate_colors_material.py" "${generate_colors_material_args[@]}" \

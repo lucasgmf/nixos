@@ -57,7 +57,7 @@ Singleton {
         }
     }
 
-	FileView { 
+    FileView { 
         id: themeFileView
         path: Qt.resolvedUrl(root.filePath)
         watchChanges: true
@@ -70,5 +70,13 @@ Singleton {
             root.applyColors(fileContent)
         }
         onLoadFailed: root.resetFilePathNextTime();
+    }
+
+    IpcHandler {
+        target: "reloadTheme"
+
+        function reload(message: string): void {
+            root.reapplyTheme()
+        }
     }
 }
