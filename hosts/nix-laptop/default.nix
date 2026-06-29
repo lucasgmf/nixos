@@ -24,6 +24,7 @@
       47989
       47990
       48010
+      3000 # open-webui
     ];
     firewall.allowedUDPPorts = [
       47998
