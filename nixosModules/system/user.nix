@@ -13,7 +13,17 @@
     # empty uinput group
     users.groups.uinput = {};
 
-    services.udev.extraRules = '' KERNEL=="uinput", GROUP="uinput", MODE="0660" '';
+    services.udev.extraRules = ''
+      KERNEL=="uinput", GROUP="uinput", MODE="0660"
+
+      # Raspberry Pi Pico in BOOTSEL mode
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="0666", GROUP="plugdev"
+
+      # Pico W running firmware
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000a", MODE="0666", GROUP="plugdev"
+    '';
+
+    services.udev.packages = [ pkgs.probe-rs-tools ];
 
     programs.zsh.enable = true;
     users.users.${user.name} = {
