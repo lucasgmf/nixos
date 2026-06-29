@@ -24,8 +24,16 @@
       ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme "" 2>/dev/null || true
       ${pkgs.glib}/bin/gsettings set org.gnome.desktop.interface gtk-theme "adw-gtk3-dark" 2>/dev/null || true
 
-      # 6. Quickshell — touch the colors file to trigger live reload
-      touch "''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/colors.json" 2>/dev/null || true
+      # 6. Quickshell — write new content to trigger live reload, then notify via IPC
+      COLORS_OUT="''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/colors.json"
+      # Re-generate the colors.json in case matugen didn't update it (force a content change)
+      if [ -f "''${COLORS_OUT}" ]; then
+        # Touch with a tiny delay to ensure mtime changes even if called quickly
+        sleep 0.05
+        touch "''${COLORS_OUT}" 2>/dev/null || true
+      fi
+      # Also explicitly tell quickshell to reload its theme via IPC
+      qs -c ii ipc call reloadTheme 2>/dev/null || true
 
       # 6b. Terminal colors — generate sequences.txt from material_colors.scss and broadcast to all PTYs
       SCSS="''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/material_colors.scss"
