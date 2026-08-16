@@ -82,7 +82,9 @@
 
     intel-gpu-tools
     wallust
-    #
-    # kicad
+
+    kicad-unstable
+
+    kmonad # trying home row mods
   ];
 }
