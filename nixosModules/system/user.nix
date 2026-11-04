@@ -21,9 +21,12 @@
 
       # Pico W running firmware
       SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000a", MODE="0666", GROUP="plugdev"
+
+      # Disable runtime PM for this device permanently via NixOS udev rule
+      SUBSYSTEM=="i2c", KERNEL=="i2c-MSFT0001:00", ATTR{power/control}="on"
     '';
 
-    services.udev.packages = [ pkgs.probe-rs-tools ];
+    services.udev.packages = [pkgs.probe-rs-tools];
 
     programs.zsh.enable = true;
     users.users.${user.name} = {
