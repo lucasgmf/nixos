@@ -22,12 +22,15 @@
       builders-use-substitutes = true;
     };
 
+    security.pam.services.sddm.enableGnomeKeyring = true;
+
     # Enable CUPS to print documents
     services.printing.enable = true;
 
     # Audio
     services.pulseaudio.enable = false;
     security.rtkit.enable = true;
+
     services.pipewire = {
       enable = true;
       alsa = {

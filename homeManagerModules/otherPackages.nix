@@ -1,13 +1,17 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   home.packages = with pkgs; [
     #network management
     networkmanagerapplet
+    gnome-keyring
+    seahorse
 
     # feup l2tp vpn
     networkmanager_strongswan
     networkmanager-l2tp
     xl2tpd
+
+    blueman
+    pavucontrol
 
     # other Cli tools
     fastfetch
@@ -24,25 +28,70 @@
     fd
     gh
 
+    kitty
+    pix
+
     # GUI apps
     firefox
     vesktop # alternative discord client
-    stremio
+    # stremio
     obsidian
     vscode-fhs
     spotify
     google-chrome
-    mendeley # for master's thesis
     drawio
     postman
     wireshark
 
-    picoprobe-udev-rules # probe-rs udev rules
-    platformio-core.udev # platformio
-    openocd # platformio
-    platformio
-
     python312
     discord
+
+    # TODO: remove this from here
+    rose-pine-hyprcursor
+    nautilus
+
+    # adjust screen color temperature to reduce blue light
+    gammastep
+    mpvpaper
+
+    # remote control
+    sunshine
+    moonlight-qt
+
+    # ebook reader
+    foliate
+
+    # nds emulator
+    melonds
+
+    # password manager
+    keepassxc
+
+    # screenshot tools
+    grimblast # capture
+    slurp # select
+    swappy # annotate
+    wl-clipboard # TODO: change with cliphist?
+
+    googlesans-code # font
+
+    cliphist # clipboard history
+    imagemagick # wallpaper processing
+    libsecret # contains secret-tool for storing API keys
+    ddcutil # monitor brightness settings
+
+    intel-gpu-tools
+    wallust
+
+    kicad-unstable
+
+    kmonad # trying home row mods
+
+    # trying new note taking apps
+    xournalpp
+    rnote
+
+    # tablet drivers
+    opentabletdriver
   ];
 }

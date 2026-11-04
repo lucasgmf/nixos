@@ -1,74 +1,131 @@
-local lsp_zero = require('lsp-zero')
+vim.lsp.set_log_level('error')
 
-lsp_zero.on_attach(function(client, bufnr)
-    lsp_zero.default_keymaps({ buffer = bufnr })
-    -- see :help lsp-zero-keybindings
-    -- to learn the available actions lsp_zero.default_keymaps({buffer = bufnr})
-    local function opts(desc)
-        return { desc = "LSP: " .. desc, buffer = bufnr, nowait = true, remap = false }
+-- ============================================================
+-- Line lengths
+-- ============================================================
+local LINE_LENGTHS = {
+    python = 88,
+    lua    = 120,
+    go     = 100,
+    c      = 100,
+    cpp    = 100,
+    sh     = 100,
+}
+
+-- vim.opt.colorcolumn = tostring(LINE_LENGTHS.python)
+
+vim.diagnostic.config({
+    virtual_text = true,
+    signs = true,
+    underline = true,
+    update_in_insert = false, -- errors while typing
+    severity_sort = true,
+})
+
+-- Keymaps set up on every LSP attach
+vim.api.nvim_create_autocmd('LspAttach', {
+    callback = function(event)
+        local bufnr = event.buf
+        local function opts(desc)
+            return { desc = "LSP: " .. desc, buffer = bufnr, nowait = true, remap = false }
+        end
+        local builtin = require("telescope.builtin")
+        vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, opts("Code action"))
+        vim.keymap.set("n", "<leader>cf", vim.lsp.buf.format, opts("Format buffer"))
+        vim.keymap.set("n", "<leader>cs", builtin.lsp_document_symbols, opts("Find symbols"))
+        vim.keymap.set("n", "gd", function() builtin.lsp_definitions({ reuse_win = true }) end, opts("Goto definition"))
+        vim.keymap.set("n", "gr", function() builtin.lsp_references({ reuse_win = true }) end, opts("Goto references"))
+        vim.keymap.set("n", "gi", function() builtin.lsp_implementations({ reuse_win = true }) end,
+            opts("Goto Implementation"))
+        vim.keymap.set("n", "gt", function() builtin.lsp_type_definitions({ reuse_win = true }) end,
+            opts("Goto Type Definition"))
+        vim.keymap.set("n", "K", vim.lsp.buf.hover, opts("Hover docs"))
+
+        -- Rust-specific keymaps (rustaceanvim overrides)
+        if vim.bo[bufnr].filetype == "rust" then
+            vim.keymap.set("n", "<leader>ca", function()
+                vim.cmd.RustLsp("codeAction")
+            end, { desc = "LSP: Code action (Rust)", buffer = bufnr })
+            vim.keymap.set("n", "<leader>cr", function()
+                vim.cmd.RustLsp("runnables")
+            end, { desc = "LSP: Rust Runnables", buffer = bufnr })
+            vim.keymap.set("n", "<leader>cd", function()
+                vim.cmd.RustLsp("debuggables")
+            end, { desc = "LSP: Rust Debuggables", buffer = bufnr })
+        end
     end
+})
 
-    local builtin = require "telescope.builtin"
-
-    vim.keymap.set("n", "<leader>ca", function() vim.lsp.buf.code_action() end, opts("Code action"))
-    vim.keymap.set("n", "<leader>R", function() vim.lsp.buf.rename() end, opts("Rename"))
-    vim.keymap.set("n", "<leader>cf", function() vim.lsp.buf.format() end, opts("Format buffer"))
-    vim.keymap.set('n', '<leader>cs', builtin.lsp_document_symbols, opts("Find git files"))
-
-    vim.keymap.set("n", "gd", function() builtin.lsp_definitions({ reuse_win = true }) end, opts("Goto definition"))
-    vim.keymap.set("n", "gr", function() builtin.lsp_references({ reuse_win = true }) end, opts("Goto references"))
-    vim.keymap.set("n", "gi", function() builtin.lsp_implementations({ reuse_win = true }) end,
-        opts("Goto Implementation"))
-    vim.keymap.set("n", "gt", function() builtin.lsp_type_definitions({ reuse_win = true }) end,
-        opts("Goto Type Definition"))
-end)
-
-local nvim_lsp = require('lspconfig')
-
-nvim_lsp.taplo.setup {}   -- TOML
-nvim_lsp.nushell.setup {} -- nushell
-nvim_lsp.jsonls.setup {}  -- json
-
-nvim_lsp.gopls.setup {}   -- go
-nvim_lsp.zls.setup {}     -- zig
-nvim_lsp.clangd.setup {}  -- c / cpp
-
-nvim_lsp.lua_ls.setup {}  -- lua
-nvim_lsp.biome.setup {}   -- js / ts
-nvim_lsp.denols.setup {}  -- deno
-
-nvim_lsp.nil_ls.setup({   -- nix
-    settings = {
-        ['nil'] = {
-            formatting = {
-                command = { "nixfmt" },
+-- Define LSP server configurations
+local servers = {
+    marksman = { -- markdown
+        cmd = { 'marksman', 'server' },
+        filetypes = { 'markdown', 'markdown.mdx' },
+        root_dir = vim.fs.root(0, { '.marksman.toml', '.git' }),
+    },
+    clangd = { -- c / cpp
+        cmd = { 'clangd' },
+        filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda', 'proto' },
+        root_dir = vim.fs.root(0, { '.clangd', 'compile_commands.json', 'compile_flags.txt', '.git' }),
+    },
+    pylsp = { -- python
+        cmd = { 'pylsp' },
+        filetypes = { 'python' },
+        root_dir = vim.fs.root(0, { 'pyproject.toml', 'setup.py', '.git' }),
+        settings = {
+            pylsp = {
+                plugins = {
+                    black           = { enabled = true, line_length = LINE_LENGTHS.python },
+                    mypy            = { enabled = true, live_mode = true },
+                    pyflakes        = { enabled = false },
+                    pycodestyle     = { enabled = false },
+                    mccabe          = { enabled = false },
+                    rope_completion = { enabled = true },
+                }
+            }
+        }
+    },
+    lua_ls = { -- lua
+        cmd = { 'lua-language-server' },
+        filetypes = { 'lua' },
+        root_dir = vim.fs.root(0, { '.luarc.json', '.luarc.jsonc', '.stylua.toml', '.git' }),
+        settings = {
+            Lua = {
+                format = {
+                    defaultConfig = {
+                        max_line_length = tostring(LINE_LENGTHS.lua),
+                    }
+                }
+            }
+        }
+    },
+    gopls = { -- go
+        cmd = { 'gopls' },
+        filetypes = { 'go', 'gomod', 'gowork', 'gotmpl' },
+        root_dir = vim.fs.root(0, { 'go.work', 'go.mod', '.git' }),
+    },
+    nil_ls = { -- nix
+        cmd = { 'nil' },
+        filetypes = { 'nix' },
+        root_dir = vim.fs.root(0, { 'flake.nix', '.git' }),
+        settings = {
+            ['nil'] = {
+                formatting = {
+                    command = { "alejandra", "--quiet" },
+                },
             },
         },
     },
-})
 
--- python
-nvim_lsp.pylsp.setup {
-    pylsp = {
-        plugins = {
-            ruff = {
-                enabled = true,                  -- Enable the plugin
-                formatEnabled = true,            -- Enable formatting using ruffs formatter
-                extendSelect = { "I" },          -- Rules that are additionally used by ruff
-                extendIgnore = { "C90" },        -- Rules that are additionally ignored by ruff
-                format = { "I" },                -- Rules that are marked as fixable by ruff that should be fixed when running textDocument/formatting
-                severities = { ["D212"] = "I" }, -- Optional table of rules where a custom severity is desired
-                unsafeFixes = false,             -- Whether or not to offer unsafe fixes as code actions. Ignored with the "Fix All" action
-
-                -- Rules that are ignored when a pyproject.toml or ruff.toml is present:
-                lineLength = 88,                                 -- Line length to pass to ruff checking and formatting
-                exclude = { "__about__.py" },                    -- Files to be excluded by ruff checking
-                select = { "F" },                                -- Rules to be enabled by ruff
-                ignore = { "D210" },                             -- Rules to be ignored by ruff
-                perFileIgnores = { ["__init__.py"] = "CPY001" }, -- Rules that should be ignored for specific files
-                preview = false,                                 -- Whether to enable the preview style linting and formatting.
-                targetVersion = "py312",                         -- The minimum python version to target (applies for both linting and formatting).
-            }
-        }
-    }
+    bashls = { -- bash / shell scripts
+        cmd = { 'bash-language-server', 'start' },
+        filetypes = { 'sh', 'bash' },
+        root_dir = vim.fs.root(0, { '.git' }),
+    },
 }
+
+-- Register and enable all servers
+for name, config in pairs(servers) do
+    vim.lsp.config(name, config)
+    vim.lsp.enable(name)
+end

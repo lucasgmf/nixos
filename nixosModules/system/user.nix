@@ -10,6 +10,25 @@
   };
 
   config = lib.mkIf config.user.enable {
+    # empty uinput group
+    users.groups.uinput = {};
+
+    services.udev.extraRules = ''
+      KERNEL=="uinput", GROUP="uinput", MODE="0660"
+
+      # Raspberry Pi Pico in BOOTSEL mode
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="0003", MODE="0666", GROUP="plugdev"
+
+      # Pico W running firmware
+      SUBSYSTEM=="usb", ATTRS{idVendor}=="2e8a", ATTRS{idProduct}=="000a", MODE="0666", GROUP="plugdev"
+
+      # Disable runtime PM for this device permanently via NixOS udev rule
+      SUBSYSTEM=="i2c", KERNEL=="i2c-MSFT0001:00", ATTR{power/control}="on"
+    '';
+
+    services.udev.packages = [pkgs.probe-rs-tools];
+
+    programs.zsh.enable = true;
     users.users.${user.name} = {
       isNormalUser = true;
       description = user.description;
@@ -22,9 +41,11 @@
         "wireshark"
         "dialout"
         "uucp"
+        "input"
+        "uinput"
       ];
       openssh.authorizedKeys.keys = [];
-      shell = pkgs.nushell;
+      shell = pkgs.zsh;
       uid = user.uid;
     };
 

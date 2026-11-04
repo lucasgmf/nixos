@@ -2,8 +2,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options = {
     alacritty.enable = lib.mkEnableOption "enable alacritty terminal";
   };
@@ -13,8 +12,9 @@
       enable = true;
 
       settings = {
+        general.import = ["~/.config/alacritty/colors.toml"];
         cursor = {
-          blink_interval = 550;
+          blink_interval = 500;
           unfocused_hollow = false;
 
           style = {
@@ -26,11 +26,23 @@
         window = {
           decorations = "none";
           dynamic_title = true;
-          opacity = 1.0;
+          opacity = 0.85;
           padding = {
-            x = 15;
-            y = 15;
+            # x = 12;
+            x = 6;
+            y = 12;
           };
+        };
+
+        colors = {
+          primary = {
+            # background = "0x1d1f21";
+            # foreground = "0xffffff";
+          };
+        };
+
+        font = {
+          size = 16.0;
         };
       };
     };

@@ -8,7 +8,6 @@
     # shell configuration
     ./shell/zsh.nix
     ./shell/ohMyPosh
-    ./shell/nushell
 
     ./shell/direnv.nix
     ./shell/zoxide.nix
@@ -21,10 +20,8 @@
 
     # editors
     ./neovim
-    ./helix.nix
 
     # terminal multiplexers
-    ./tmux
     ./zellij
 
     ./git.nix
@@ -32,11 +29,10 @@
     # custom scripts
     ./scripts/rebuild.nix
     ./scripts/update.nix
-    ./scripts/build-iso.nix
-    ./scripts/encr.nix
-    ./scripts/rename_media.nix
-    ./scripts/clean_photo.nix
-  ];
+
+    ./opencode
+  ]
+  ++ (if builtins.pathExists ../../nixosSecrets then [ ../../nixosSecrets ] else [ ]);
 
   options = {
     cliPrograms.enable = lib.mkEnableOption "enable various cli programs and tools";
@@ -46,7 +42,6 @@
     zsh.enable = lib.mkDefault true;
     ohMyPosh.enable = lib.mkDefault true;
 
-    nushell.enable = lib.mkDefault false;
     direnv.enable = lib.mkDefault true;
     zoxide.enable = lib.mkDefault true;
     eza.enable = lib.mkDefault true;
@@ -57,7 +52,6 @@
 
     nvim.enable = lib.mkDefault true;
 
-    tmux.enable = lib.mkDefault false;
     zellij.enable = lib.mkDefault true;
 
     git.enable = lib.mkDefault true;

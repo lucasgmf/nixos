@@ -1,0 +1,10 @@
+{
+  lib,
+  user,
+  ...
+  }: {
+  imports = [
+    ./hyprland
+  ];
+}
+

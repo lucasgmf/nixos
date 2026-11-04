@@ -4,80 +4,78 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.92.0.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # TODO: remove heart and replace with matugen
     stylix.url = "github:danth/stylix";
+
+    quickshell = {
+      url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    rounded-polygon-qmljs = {
+      url = "github:end-4/rounded-polygon-qmljs";
+      flake = false;
+    };
+
+    hyprland = {
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
-  outputs =
-    {
-      self,
-      nixpkgs,
-      lix-module,
-      ...
-    }@inputs:
-    let
-      lib = nixpkgs.lib;
+  outputs = {
+    self,
+    nixpkgs,
+    ...
+  } @ inputs: let
+    lib = nixpkgs.lib;
 
-      user = {
-        name = "lucasgmf";
-        description = "Lucas Freitas";
-        email = "lucasgalvaomfreitas@gmail.com";
-        uid = 1000;
-      };
+    user = {
+      name = "lucasgmf";
+      description = "Lucas Freitas";
+      email = "lucasgalvaomfreitas@gmail.com";
+      uid = 1000;
+    };
 
-      homeConfig = homeConfigPath: [
-        ./nixosModules
-        inputs.stylix.nixosModules.stylix
+    homeConfig = homeConfigPath: [
+      ./nixosModules
+      inputs.home-manager.nixosModules.home-manager
+      {
+        home-manager = {
+          useGlobalPkgs = true;
+          useUserPackages = true;
+          backupFileExtension = "backup";
+          verbose = true;
 
-        inputs.home-manager.nixosModules.home-manager
-        {
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-
-            extraSpecialArgs = {
-              inherit inputs user;
-            };
-
-            users.${user.name} = import homeConfigPath;
-          };
-        }
-      ];
-    in
-    {
-      nixosConfigurations = {
-        nix-laptop = lib.nixosSystem {
-          specialArgs = {
+          extraSpecialArgs = {
             inherit inputs user;
           };
 
-          modules = [
-            lix-module.nixosModules.default
+          users.${user.name} = import homeConfigPath;
+          sharedModules = [
+            inputs.stylix.homeModules.stylix
+          ];
+        };
+      }
+    ];
+  in {
+    nixosConfigurations = {
+      nix-laptop = lib.nixosSystem {
+        specialArgs = {
+          inherit inputs user;
+        };
+
+        modules =
+          [
             ./hosts/nix-laptop
-          ] ++ homeConfig ./homeManagerModules/laptop.nix;
-        };
-
-        iso = lib.nixosSystem {
-          modules = [
-            "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-graphical-gnome.nix"
-            "${nixpkgs}/nixos/modules/installer/cd-dvd/channel.nix"
-            lix-module.nixosModules.default
-            ./hosts/iso
-          ] ++ homeConfig ./homeManagerModules/iso.nix;
-
-          specialArgs = {
-            inherit inputs user;
-          };
-        };
+          ]
+          ++ homeConfig ./homeManagerModules/laptop.nix;
       };
     };
+  };
 }

@@ -1,17 +1,41 @@
-{ user, lib, ... }:
 {
-  imports = [
-    ./cliPrograms
-    ./otherPackages.nix
-  ];
+  user,
+  lib,
+  inputs,
+  pkgs,
+  ...
+}: {
+  imports =
+    [
+      ./cliPrograms
+      ./rice
+      ./stylix
+      ./windowManagers
+      ./otherPackages.nix
+    ]
+    ++ (
+      if builtins.pathExists /home/lucasgmf/nixos/secrets/default.nix
+      then [/home/lucasgmf/nixos/secrets/default.nix]
+      else []
+    );
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
   nixpkgs.overlays = lib.mkForce null;
 
+  # Enable and configure Hyprland
+  hyprlandConf.enable = true;
+
+  autoStyling = {
+    enable = false;
+    useDynamicColors = false;
+  };
+
   home = {
     username = user.name;
     homeDirectory = "/home/${user.name}";
-    sessionVariables = { };
+    sessionVariables = {
+      QT_QPA_PLATFORM = "wayland";
+    };
   };
 
   xdg = {
@@ -23,8 +47,20 @@
   };
 
   cliPrograms.enable = true;
+
   nvim.enable = true;
   zsh.enable = true;
+
+  # track app time
+  services.activitywatch = {
+    enable = true;
+    watchers = {
+      aw-watcher-window = {
+        package = pkgs.aw-watcher-window-wayland;
+        executable = "aw-watcher-window-wayland";
+      };
+    };
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

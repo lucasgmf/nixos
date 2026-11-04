@@ -2,8 +2,8 @@ local o = vim.opt
 local g = vim.g
 
 -- disable netrw
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
+-- g.loaded_netrw = 1
+-- g.loaded_netrwPlugin = 1
 
 -- Undo Files
 o.swapfile = false
@@ -34,6 +34,7 @@ o.scrolloff = 8
 -- o.colorcolumn = "80"
 o.signcolumn = "yes"
 o.background = "dark"
+o.guicursor = "a:block"
 
 -- Remove viminfo file
 -- o.viminfo = ""
@@ -49,16 +50,8 @@ o.timeoutlen = 3000
 o.ttimeoutlen = 100
 o.hidden = true
 o.shortmess = "atI"
-o.wrap = false
+o.wrap = true -- testing
 o.splitright = true
 o.splitbelow = true
 o.errorbells = false
 o.updatetime = 50
-
-o.listchars = {
-    tab = "▸ ",
-    trail = "·",
-    extends = "…",
-    precedes = "…",
-    nbsp = "␣",
-}
