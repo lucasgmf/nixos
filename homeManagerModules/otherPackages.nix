@@ -86,5 +86,12 @@
     kicad-unstable
 
     kmonad # trying home row mods
+
+    # trying new note taking apps
+    xournalpp
+    rnote
+
+    # tablet drivers
+    opentabletdriver
   ];
 }
