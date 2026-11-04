@@ -26,6 +26,7 @@
       48010
       3000 # open-webui
       445
+      8188
     ];
     firewall.allowedUDPPorts = [
       47998
@@ -40,6 +41,13 @@
     ];
   };
 
+  services.sunshine = {
+    enable = true;
+    autoStart = true;
+    capSysAdmin = true; # needed for screen capture on Wayland/KMS
+    openFirewall = true; # opens the ports Moonlight needs
+  };
+
   services.gnome.gnome-keyring.enable = true;
   # services.resolved.enable = true;
   services.gvfs.enable = true;
@@ -50,10 +58,13 @@
     enable = true;
     nssmdns4 = true;
     openFirewall = true;
+    publish.enable = true;
+    publish.userServices = true;
   };
 
   # Enable bluetooth
   hardware.bluetooth.enable = true;
+  services.blueman.enable = true;
 
   services = {
     # Enable touchpad support (enabled default in most desktopManager).
@@ -81,6 +92,10 @@
   };
 
   programs.wireshark.enable = true;
+
+  hardware.opentabletdriver.enable = true;
+
+  programs.kdeconnect.enable = true;
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
