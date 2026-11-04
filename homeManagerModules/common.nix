@@ -2,25 +2,21 @@
   user,
   lib,
   inputs,
+  pkgs,
   ...
 }: {
   imports =
     [
       ./cliPrograms
-      ./windowManagers
+      ./rice
       ./stylix
+      ./windowManagers
       ./otherPackages.nix
     ]
     ++ (
-      if
-        builtins.pathExists (
-          /home/lucasgmf/nixos/secrets/default.nix
-        )
-      then
-        builtins.trace "secrets found!" [
-          /home/lucasgmf/nixos/secrets/default.nix
-        ]
-      else builtins.trace "secrets NOT found!" []
+      if builtins.pathExists /home/lucasgmf/nixos/secrets/default.nix
+      then [/home/lucasgmf/nixos/secrets/default.nix]
+      else []
     );
 
   # NOTE: fixes https://github.com/danth/stylix/issues/865
@@ -30,8 +26,8 @@
   hyprlandConf.enable = true;
 
   autoStyling = {
-    enable = true;
-    useDynamicColors = true;
+    enable = false;
+    useDynamicColors = false;
   };
 
   home = {
@@ -56,7 +52,15 @@
   zsh.enable = true;
 
   # track app time
-  services.activitywatch.enable = true;
+  services.activitywatch = {
+    enable = true;
+    watchers = {
+      aw-watcher-window = {
+        package = pkgs.aw-watcher-window-wayland;
+        executable = "aw-watcher-window-wayland";
+      };
+    };
+  };
 
   # This value determines the Home Manager release that your configuration is
   # compatible with. This helps avoid breakage when a new Home Manager release

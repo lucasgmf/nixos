@@ -62,7 +62,7 @@
     foliate
 
     # nds emulator
-    melonDS
+    melonds
 
     # password manager
     keepassxc
@@ -71,6 +71,27 @@
     grimblast # capture
     slurp # select
     swappy # annotate
-    wl-clipboard # clipboard manag
+    wl-clipboard # TODO: change with cliphist?
+
+    googlesans-code # font
+
+    cliphist # clipboard history
+    imagemagick # wallpaper processing
+    libsecret # contains secret-tool for storing API keys
+    ddcutil # monitor brightness settings
+
+    intel-gpu-tools
+    wallust
+
+    kicad-unstable
+
+    kmonad # trying home row mods
+
+    # trying new note taking apps
+    xournalpp
+    rnote
+
+    # tablet drivers
+    opentabletdriver
   ];
 }

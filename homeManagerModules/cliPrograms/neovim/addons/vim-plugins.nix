@@ -1,10 +1,10 @@
-{ pkgs, ... }:
-{
+{pkgs, ...}: {
   programs.neovim.plugins = with pkgs.vimPlugins; [
-
     #   # File tree
     #   nvim-web-devicons
     #   nvim-tree-lua
+
+    wal-vim
 
     #   copilot-vim
     lsp-zero-nvim
@@ -17,8 +17,8 @@
     nvim-cmp
     #   vim-nix # better nix language support
 
-    #   rustaceanvim # rust specific features
-    #   crates-nvim
+    rustaceanvim # rust specific features
+    crates-nvim
 
     #   ccc-nvim # Hex visualizer
     mini-nvim

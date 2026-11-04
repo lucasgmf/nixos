@@ -17,6 +17,16 @@
       xwayland.enable = true; # enable x applications within wayland compositor
     };
 
+    fonts.packages = with pkgs; [
+      noto-fonts
+      noto-fonts-cjk-sans
+      noto-fonts-cjk-serif
+      noto-fonts-color-emoji
+      nerd-fonts.fira-mono
+      nerd-fonts.jetbrains-mono
+      font-awesome
+    ];
+
     # Critical: Enable proper session management
     security.polkit.enable = true;
 
@@ -28,6 +38,18 @@
     ];
 
     hardware.graphics.enable = true;
+
+    environment.sessionVariables = {
+      QSG_RHI_BACKEND = "vulkan"; # runs better overall
+      QML_USE_GLSL_OPTIMIZER = "1 qs -c ~/.config/quickshell/ii";
+
+      QML2_IMPORT_PATH = [
+        "${pkgs.qt6.qt5compat}/lib/qt-6/qml"
+        "${pkgs.kdePackages.kirigami.unwrapped}/lib/qt-6/qml"
+        "${pkgs.kdePackages.syntax-highlighting}/lib/qt-6/qml"
+        "${pkgs.kdePackages.qtpositioning}/lib/qt-6/qml"
+      ];
+    };
 
     environment.systemPackages = with pkgs; [
       # enables workspaces displayed correctly? test without it!
@@ -50,27 +72,26 @@
       # eww
 
       # notifications
-      dunst
+      # dunst
       # notifications dependency
-      libnotify
+      # libnotify
 
       # wallpapers
-      # hyprpaper
-      # swaybg
-      # wpaperd
-      # mpvpaper
       swww
 
       #app launcher
       rofi
 
       #gtk rofi
+      #TODO: Remove it
       wofi
 
-      #hyprland suggests...
-      bemenu
       fuzzel
-      tofi
+
+      wtype
+
+      cava
+      adw-gtk3
     ];
   };
 }

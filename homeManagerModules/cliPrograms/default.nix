@@ -30,6 +30,7 @@
     ./scripts/rebuild.nix
     ./scripts/update.nix
 
+    ./opencode
   ]
   ++ (if builtins.pathExists ../../nixosSecrets then [ ../../nixosSecrets ] else [ ]);
 

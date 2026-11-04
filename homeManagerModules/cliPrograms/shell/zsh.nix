@@ -2,8 +2,7 @@
   lib,
   config,
   ...
-}:
-{
+}: {
   options = {
     zsh.enable = lib.mkEnableOption "enable zsh";
   };
@@ -41,6 +40,14 @@
       syntaxHighlighting = {
         enable = true;
       };
+
+      initContent = ''
+        # replay terminal colors on new shell
+        sequences="''${XDG_STATE_HOME:-$HOME/.local/state}/quickshell/user/generated/terminal/sequences.txt"
+        if [ -f "$sequences" ]; then
+          cat "$sequences"
+        fi
+      '';
 
       shellAliases = {
         ".." = "cd ..";

@@ -2,8 +2,7 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   options = {
     zellij.enable = lib.mkEnableOption "enable zellij";
     zellij.zshIntegration = lib.mkEnableOption "enable zellij integration with Zsh";
@@ -21,9 +20,12 @@
       # colors = config.lib.stylix.colors.withHashtag;
       # in
       {
-        ".config/zellij/config.kdl".text = ''
-          ${builtins.readFile ./config.kdl}
-        '';
+        ".config/zellij/config.kdl" = {
+          text = ''
+            ${builtins.readFile ./config.kdl}
+          '';
+          force = true;
+        };
 
         ".config/zellij/layouts" = {
           source = ./layouts;
