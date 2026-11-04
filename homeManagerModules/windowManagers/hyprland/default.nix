@@ -33,6 +33,7 @@ in {
 
         exec-once = [
           "qs -c ${qsConfig}"
+          "kdeconnect-indicator"
 
           # wallpaper
           # "swww-daemon"
